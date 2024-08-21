@@ -1,1 +1,6 @@
 # CSC490-CAPSTONE
+
+
+TUTORING MESSENGER (IDEA)
+- UNCG email authentication
+
