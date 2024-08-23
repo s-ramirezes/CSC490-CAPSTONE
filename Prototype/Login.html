@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  href="style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Login</title>
 </head>
-<body>
-    
+
+<body class=>
+    <!-- Page Filler -->
+    <div class=" split filler">
+
+    </div>
+
+    <!-- Login Form -->
+    <div class="split login">
+        <div class="login-content">
+            <h1 class="login-title">Spartan-Aid</h2>
+            <p>Enter login details below</p>
+
+            <form action="./home.html">
+                <div class="login-form">
+                    <!-- email -->
+                    <div class="email">
+                        <label for="email">Email</label><br>
+                        <input type="text" id="email" name="email" placeholder="Enter the email"><br>
+                    </div>
+                    <!-- password -->
+                    <div class="password">
+                        <label for="password">Last Password</label><br>
+                        <input type="text" id="password" name="password" placeholder="Enter the password"><br><br>
+                    </div>
+                    <p>Forgot password?</p>
+                </div>
+                <button class="login-button">Sign in</button>
+            </form>
+
+            <script src="https://accounts.google.com/gsi/client" async></script>
+            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                data-login_uri="https://your.domain/your_login_endpoint" data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
+                data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
+            </div>
+
+            <p class="signup">Dont have an account? <a href="./signup.html">Sign up</a></p>
+        </div>
+    </div>
 </body>
+
 </html>
