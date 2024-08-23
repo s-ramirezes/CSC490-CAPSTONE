@@ -1,0 +1,25 @@
+body {
+    margin:0;
+}
+
+.subjects{
+    list-style-type: none;
+    padding: 0;
+    margin:0;
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    overflow: auto;
+}
+
+li a{
+    display: block;
+    padding: 8px;
+    overflow: auto;
+}
+
+.pageContent{
+    margin-left: 25%;
+    padding: 16px;
+}
+
