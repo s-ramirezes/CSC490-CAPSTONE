@@ -42,14 +42,9 @@
     text-indent: 5px;
 }
 
-.login-form p{
-    text-align: end;
-}
-
 .login-content {
     display: flex;
     flex-direction: column;
-    outline: 2px solid red;
     width: 500px;
     padding-left: 80px;
     padding-right: 80px;
@@ -75,6 +70,15 @@
 .separator {
     text-align: center;
     margin-bottom: 16px;
+}
+
+.forgot a{
+    text-decoration: none;
+    display: flex;
+    justify-content: end;
+    color: grey;
+    font-style: italic;
+    
 }
 
 /* Sign up */
