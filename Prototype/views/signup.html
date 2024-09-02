@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <title>Sign up</title>
 </head>
+
 <body>
     <!-- Page Filler -->
     <div class=" split filler-signup">
@@ -14,34 +16,45 @@
 
     <!-- Login Form -->
     <div class="split signup-info">
+        
         <div class="login-content">
+            <div><button class="back-button" onclick="history.back()">Back</button></div>
             <h1 class="login-title">Spartan-Aid</h2>
-            <p>Enter sign up information below</p>
+                <p>Enter sign up information below</p>
 
-            <form action="./Login.html">
-                <div class="login-form">
-                    <!-- email -->
-                    <div class="email">
-                        <label for="email">Email</label><br>
-                        <input type="text" id="email" name="email" placeholder="Enter the email"><br>
-                    </div>
-                    <!-- password -->
-                    <div class="password">
-                        <label for="password">Password</label><br>
-                        <input type="password" id="password" name="password" placeholder="Enter the password"><br><br>
-                    </div>
-                    <!-- First Name -->
-                    <div class="fname">
-                        <label for="fname">First Name</label><br>
-                        <input type="text" id="fname" name="fname" placeholder="Enter first name"><br><br>
-                    </div>
-                    <!-- Last Name -->
-                    <div class="lname">
-                        <label for="lname">Last Name</label><br>
-                        <input type="text" id="lname" name="lname" placeholder="Enter last name"><br><br>
-                    </div>
-                </div>
-                <button class="login-button">Sign up</button>
-            </form>
+                <form action="./login.html" method="post">
+                    <div class="login-form">
+                        <!-- email -->
+                        <div class="email">
+                            <label for="email">Email</label><br>
+                            <input type="text" id="email" name="email" placeholder="Enter the email"><br>
+                        </div>
+                        <!-- password -->
+                        <div class="password">
+                            <label for="password">Password</label><br>
+                            <input type="password" id="password" name="password"
+                                placeholder="Enter the password"><br><br>
+                        </div>
+                        <!-- First Name -->
+                        <div class="fname">
+                            <label for="fname">First Name</label><br>
+                            <input type="text" id="fname" name="fname" placeholder="Enter first name"><br><br>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="lname">
+                            <label for="lname">Last Name</label><br>
+                            <input type="text" id="lname" name="lname" placeholder="Enter last name"><br><br>
+                        </div>
+                        <!-- Role -->
+                        <div class="role">
+                            <label for="role">Role</label><br>
+                            <select id="role" name="role">
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select><br><br>
+                        </div>
+                        <button class="login-button">Sign up</button>
+                </form>
 </body>
+
 </html>
