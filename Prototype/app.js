@@ -5,6 +5,7 @@ const app = express();
 const multer = require("multer");
 const session = require("express-session");
 const path = require("path");
+const passport = require('passport');
 
 // const imageStorage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -40,6 +41,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', require('./auth/auth.route'));
 
 const moderatorRouter = require("./routes/moderator.route");
 const userRouter = require("./routes/user.route");
