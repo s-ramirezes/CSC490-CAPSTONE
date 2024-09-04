@@ -16,46 +16,59 @@
 
     <!-- Login Form -->
     <div class="split signup-info">
-        
+
         <div class="login-content">
             <div><button class="back-button" onclick="history.back()">Back</button></div>
             <h1 class="login-title">Sign Up</h2>
                 <img class="spartan" src="../images/Spartan.png" alt="Spartan">
                 <p style="font-weight: bold;">Enter sign up information below:</p>
 
-                <form action="/signupinfo" method="post">
+                <form action="/signupinfo" method="post" onsubmit="return emailValidation()">
                     <div class="login-form">
                         <!-- email -->
                         <div class="email">
                             <label for="email">Email</label><br>
-                            <input type="text" id="email" name="email" placeholder="Enter the email"><br>
+                            <input type="text" id="email" name="email" placeholder="Enter the email" required><br>
                         </div>
                         <!-- password -->
                         <div class="password">
                             <label for="password">Password</label><br>
-                            <input type="password" id="password" name="password"
-                                placeholder="Enter the password"><br><br>
+                            <input type="password" id="password" name="password" placeholder="Enter the password"
+                                required><br><br>
                         </div>
                         <!-- First Name -->
                         <div class="fname">
                             <label for="fname">First Name</label><br>
-                            <input type="text" id="fname" name="fname" placeholder="Enter first name"><br><br>
+                            <input type="text" id="fname" name="fname" placeholder="Enter first name" required><br><br>
                         </div>
                         <!-- Last Name -->
                         <div class="lname">
                             <label for="lname">Last Name</label><br>
-                            <input type="text" id="lname" name="lname" placeholder="Enter last name"><br><br>
+                            <input type="text" id="lname" name="lname" placeholder="Enter last name" required><br><br>
                         </div>
                         <!-- Role -->
                         <div class="role">
                             <label for="role">Role</label><br>
-                            <select id="role" name="role">
+                            <select id="role" name="role" required>
                                 <option value="student">student</option>
                                 <option value="teacher">teacher</option>
                             </select><br><br>
                         </div>
                         <button class="login-button" type="submit">Sign up</button>
                 </form>
+
+
+                <script>
+                    function emailValidation() {
+                        const email = document.querySelector('input[name="email"]').value;
+                        const domain = '@uncg.edu';
+                        if (!email.endsWith(domain)) {
+                            alert('Email must end with @uncg.edu');
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
 </body>
 
 </html>
