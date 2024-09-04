@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../public/style.css">
     <title>Sign up</title>
 </head>
 
@@ -23,7 +23,7 @@
                 <img class="spartan" src="../images/Spartan.png" alt="Spartan">
                 <p style="font-weight: bold;">Enter sign up information below:</p>
 
-                <form action="/signup" method="post">
+                <form action="/signupinfo" method="post">
                     <div class="login-form">
                         <!-- email -->
                         <div class="email">
@@ -50,8 +50,8 @@
                         <div class="role">
                             <label for="role">Role</label><br>
                             <select id="role" name="role">
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
+                                <option value="student">student</option>
+                                <option value="teacher">teacher</option>
                             </select><br><br>
                         </div>
                         <button class="login-button" type="submit">Sign up</button>
