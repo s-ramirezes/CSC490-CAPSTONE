@@ -30,24 +30,24 @@ router.get(
                 if (err) {
                     return next(err);
                 }
-                res.redirect(req.session.returnTo || "/");
+                res.redirect("/feed"); // put redirect address here
             });
         })(req, res, next);
     }
 );
 
-router.get("/login", (req, res) => {
-    // console.log("=====" + req.session.returnTo)
-    res.render("login");
-});
+// router.get("/login", (req, res) => {
+//     console.log("=====" + req.session.returnTo)
+//     res.render("login");
+// });
 
-router.get("/logout", function (req, res, next) {
-    req.logout(function (err) {
-        if (err) {
-            return next(err);
-        }
-        res.redirect("/");
-    });
-});
+// router.get("/logout", function (req, res, next) {
+//     req.logout(function (err) {
+//         if (err) {
+//             return next(err);
+//         }
+//         res.redirect("/");
+//     });
+// });
 
 module.exports = router;
