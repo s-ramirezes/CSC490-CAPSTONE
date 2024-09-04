@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Login</title>
 </head>
@@ -18,7 +19,8 @@
     <div class="split login">
         <div class="login-content">
             <h1 class="login-title">Spartan-Aid</h2>
-            <p>Enter login details below</p>
+                <img class="spartan" src="../images/Spartan.png" alt="spartan">
+            <p style="font-weight: bold;">Enter login details below:</p>
 
             <form action="./home.html">
                 <div class="login-form">
@@ -32,7 +34,7 @@
                         <label for="password">Password</label><br>
                         <input type="password" id="password" name="password" placeholder="Enter the password"><br><br>
                     </div>
-                   <p class="forgot"><a href="./forgot.html">Forgot password?</a></p>
+                    <p class="forgot"><a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot password?</a></p>
                 </div>
                 <button class="login-button">Sign in</button>
             </form>
@@ -50,6 +52,29 @@
             <p class="signup">Dont have an account? <a href="./signup.html">Sign up</a></p>
         </div>
     </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="forgotPasswordLabel">Reset Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="forgotPasswordForm" method="POST" action="/forgot-password">
+            <div class="mb-3">
+              <label for="email" class="form-label">Enter your email address:</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
