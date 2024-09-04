@@ -6,6 +6,7 @@ const multer = require("multer");
 const session = require("express-session");
 const path = require("path");
 const passport = require('passport');
+require("./auth/passport");
 
 // const imageStorage = multer.diskStorage({
 //   destination: function (req, file, cb) {
