@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  href="home.css" >
+    <link rel="stylesheet"  href="modUsers.css" >
     <title>Home</title>
 </head>
 <body>
@@ -45,42 +45,40 @@
 
     <nav>
         <ul class="topBar">
-            <li><a href="home.html"><h2>Spartan Aid</h2></a></li>
-            <li><a href="home.html"><h2>Messages</h2></a></li>
-            <li><a href="home.html"><h2>Account</h2></a></li>
-            <li><a href="home.html"><h2>Logout</h2></a></li>
+            <li><a href="#"><h2>Spartan Aid</h2></a></li>
+            <li><a href="#"><h2>Messages</h2></a></li>
+            <li><a href="#"><h2>Account</h2></a></li>
+            <li><a href="modUsers.html"><h2>Users</h2></a></li>
+            <li><a href="modPosts.html"><h2>Posts</h2></a></li>
+            <li><a href="#"><h2>Logout</h2></a></li>
         </ul>
     </nav>
-    <ul class="DMs">
-        <h2>Messages</h2>
+    <ul class="flaggedUserList">
+        <li><h2>Flagged Users</h2></li>
         <li>
-            <img src="/Prototype/images/blank-pf.png" alt="profile-pic">
-            <a href="#">UserName</a>
-            <p> # of new notifications</p>
-
+            <div class="flaggedUser">
+                <a href="#"> Username </a>
+                <p>Reason for flag</p>
+                <button class="unflagUser">Delete</button>
+                <button class="deleteUser">Unflag</button>
+            </div>
         </li>
         <li>
-            <img src="/Prototype/images/blank-pf.png" alt="profile-pic">
-            <a href="#">UserName</a>
-            <p> # of new notifications</p>
-
+            <div class="flaggedUser">
+                <a href="#"> Username </a>
+                <p>Reason for flag</p>
+                <button class="unflagUser">Delete</button>
+                <button class="deleteUser">Unflag</button>
+            </div>
         </li>
         <li>
-            <img src="/Prototype/images/blank-pf.png" alt="profile-pic">
-            <a href="#">UserName</a>
-            <p> # of new notifications</p>
-
+            <div class="flaggedUser">
+                <a href="#"> Username </a>
+                <p>Reason for flag</p>
+                <button class="unflagUser">Delete</button>
+                <button class="deleteUser">Unflag</button>
+            </div>
         </li>
     </ul>
-    <div class="pageContent">
-        <h1>Spartan Aid</h1>
-        <p>
-            Welcome to Spartan Aid. <br>
-            Please pick a subject you need help with.
-        </p>
-    </div>
-
 </body>
-
-
 </html>
