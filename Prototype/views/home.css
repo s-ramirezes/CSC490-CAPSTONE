@@ -19,6 +19,33 @@ h1{
     text-align: center;
     background-color: purple;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.subjects::-webkit-scrollbar{
+    display: none;
+}
+
+.topBar{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-evenly;
+    margin:0;
+    height: 9%;
+    width: 90%;
+    position: fixed;
+    align-items: baseline;
+    text-align: center;
+    right: 0;
+    left:10%;
+    background-color:purple;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.topBar li a{
+    text-decoration: none;
+    color: black;
+    
 }
 
 .DMs{
@@ -32,6 +59,7 @@ h1{
     text-align: center;
     right:0;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding-top: 75px;
 }
 
 h2{
@@ -77,6 +105,7 @@ li img{
     margin-left: 10%;
     margin-right: 25%;
     padding: 16px;
+    padding-top: 75px;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
