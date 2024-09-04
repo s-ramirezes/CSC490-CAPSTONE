@@ -65,6 +65,7 @@
 
 .signup {
     text-align: end;
+    margin-top: 16px;
 }
 
 .separator {
@@ -79,6 +80,10 @@
     color: grey;
     font-style: italic;
     
+}
+.spartan{
+    margin-top: -36px;
+    margin-bottom: 16px;
 }
 
 /* Sign up */
@@ -99,4 +104,12 @@
 
 body {
     font-family: 'Times New Roman', Times, serif;
+}
+
+.back-button {
+    float: right;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 16px;
 }
