@@ -13,7 +13,13 @@ const model = require("../models/user.model");
 function feedPage(req, res) {
     try {
         // const error = null;
-        res.render("feed");
+        const subjects = model.getSubjects();
+        const role = 'student';
+        // const role = 'teacher';
+        // const role = 'moderator';
+        // const role = 'tutor';
+
+        res.render("feed", {subjects: subjects, role: role});
     } catch (err) {
         // console.error("Error while rendering feed page: " + err.message);
     }
