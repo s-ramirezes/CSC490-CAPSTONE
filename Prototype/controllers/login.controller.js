@@ -19,6 +19,15 @@ function loginPage(req, res) {
     }
 }
 
+function homePage(req, res) {
+    try {
+        // const error = null;
+        res.render("home");
+    } catch (err) {
+        // console.error("Error while rendering login page: " + err.message);
+    }
+}
+
 function Signup(req, res) {
     try {
         // const error = null;
@@ -39,7 +48,25 @@ function createUser(req, res, next) {
             res.render('signup', { error: 'Failed to create user' });
         }
     } catch (err) {
-        console.error("Error while creating user ", err.message);
+        console.error('Error while creating user ', err.message);
+        next(err);
+    }
+}
+
+function loginUser(req, res, next){
+    try {
+        const result = model.getUser(req.body.email, req.body.password);
+        console.log("Login attempt for user:", req.body.email);
+
+        if (result === 'success') {
+            res.redirect('/home');
+        } else if(result === 'notFound') {
+            res.render('login', { error: 'User not found' });
+        } else if(result === 'incorrectPass') {
+            res.render('login', { error: 'Incorrect password' });
+        } 
+    } catch (err) {
+        console.error("Error while logging in user ", err.message);
         next(err);
     }
 }
@@ -47,5 +74,7 @@ function createUser(req, res, next) {
 module.exports = {
     loginPage,
     Signup,
-    createUser
+    homePage,
+    createUser,
+    loginUser
 };

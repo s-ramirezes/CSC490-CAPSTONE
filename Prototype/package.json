@@ -9,13 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^9.4.3",
-=======
     "better-sqlite3": "^9.6.0",
->>>>>>> 8eadf80897d5e9abceb849bb58b33d3812da4d25
     "csc300x-project": "file:",
     "csc490-capstone": "file:",
     "dotenv": "^16.4.5",

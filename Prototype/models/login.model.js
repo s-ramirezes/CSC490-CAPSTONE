@@ -28,6 +28,30 @@ function createUser(email, password, fname, lname, role) {
     }
 }
 
+function getUser(email, password) {
+    let sqlCheck = `SELECT * FROM Users WHERE email = ?`;
+    const paramsCheck = [email];
+    const userFound = db.get(sqlCheck, ...paramsCheck);
+
+    if (!userFound) {
+        return 'notFound';
+    }
+
+    const passwordCheck = bcrypt.compareSync(password, userFound.password);
+
+    console.log("Checking user:", email);
+    console.log("Password check result:", passwordCheck);
+
+
+    if (passwordCheck) {
+        return 'success';
+    } else {
+        return 'incorrectPass';
+    }
+
+}
+
 module.exports = {
     createUser,
+    getUser
 };
