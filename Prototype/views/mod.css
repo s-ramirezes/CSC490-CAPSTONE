@@ -82,7 +82,7 @@ h2{
     font-size: 20px;
     font-weight: bolder;
 }
-.flaggedUser button, .flaggedPost button{
+.flaggedUser button, .flaggedPost button, .tutorApp button{
     float: right;
     background-color: white;
     text-align: center;
