@@ -63,7 +63,7 @@ h2{
     font-size: 20pt;
     background-color:rgb(164, 6, 164);
 }
-.flaggedUserList{
+.flaggedUserList, .flaggedPostList, .tutorList{
     list-style: none;
     margin: 0;
     margin-left: 10%;
@@ -71,18 +71,18 @@ h2{
     padding-top: 75px;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
-.flaggedUser{
+.flaggedUser, .flaggedPost, .tutorApp{
     border: solid 2px black;
     padding:10px;
     margin-top: 20px;
 }
-.flaggedUser a{
+.flaggedUser a, .flaggedPost a, .tutorApp a{
     text-decoration: none;
     color: black;
     font-size: 20px;
     font-weight: bolder;
 }
-.flaggedUser button{
+.flaggedUser button, .flaggedPost button{
     float: right;
     background-color: white;
     text-align: center;
