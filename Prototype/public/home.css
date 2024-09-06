@@ -1,5 +1,6 @@
 body {
     margin:0;
+    padding:0;
 }
 
 h1{
@@ -7,6 +8,24 @@ h1{
     font-size: 45px;
 
 }
+
+h2{
+    text-align: center;
+    font-size: 20 px;
+}
+
+header {
+    height: 120px; 
+    margin-bottom: 20px;
+    background-color: #07394b;
+    background-size: contain;
+}
+
+/* nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+} */
 
 .subjects{
     list-style-type: none;
@@ -62,10 +81,6 @@ h1{
     padding-top: 75px;
 }
 
-h2{
-    text-align: center;
-    font-size: 20 px;
-}
 
 .subjects li a{
     display: block;
@@ -113,3 +128,8 @@ h2{
     font-size: 20pt;
 }
 
+.columns {
+    display: flex;
+    justify-content: space-between;
+    margin-inline-start: 12%;
+}
