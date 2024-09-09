@@ -12,19 +12,34 @@ const model = require("../models/login.model");
 
 function loginPage(req, res) {
     try {
-        // const error = null;
         res.render("login");
     } catch (err) {
-        // console.error("Error while rendering login page: " + err.message);
+        console.error("Error while rendering login page: " + err.message);
+    }
+}
+function logout(req, res) {
+    try {
+        req.session.destroy();
+        res.redirect("/");
+    } catch (err) {
+        console.error("Error while rendering login page: " + err.message);
     }
 }
 
 function homePage(req, res) {
     try {
-        // const error = null;
-        res.render('home', { session: req.session, error});
+        if (req.session && req.session.email) {
+            res.render("home", {
+                email: req.session.email,
+                fname: req.session.fname,
+                lname: req.session.lname,
+                role: req.session.role
+            });
+        } else {
+            res.redirect("/");
+        }
     } catch (err) {
-        // console.error("Error while rendering home page: " + err.message);
+        console.error("Error while rendering home page: " + err.message);
     }
 }
 
@@ -33,7 +48,7 @@ function Signup(req, res) {
         // const error = null;
         res.render("signup");
     } catch (err) {
-        // console.error("Error while rendering signup page: " + err.message);
+        console.error("Error while rendering signup page: " + err.message);
     }
 }
 
@@ -66,7 +81,7 @@ function loginUser(req, res, next) {
             req.session.lname = user.lname;
             req.session.role = user.role;
 
-            res.redirect("/home");
+            res.render("home");
         } else if (result === "notFound") {
             res.render("login", { error: "User not found" });
         } else if (result === "notVerified") {
@@ -98,6 +113,7 @@ function verifyUser(req, res) {
 
 module.exports = {
     loginPage,
+    logout,
     Signup,
     homePage,
     createUser,

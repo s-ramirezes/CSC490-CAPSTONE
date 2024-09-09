@@ -25,22 +25,24 @@ function createUser(email, password, fname, lname, role) {
 
         // Email verification
         const token = jwt.sign({ email: email }, secretkey, { expiresIn: "1d" });
-        const url = "http://localhost:8000/verify?token=${token}";
+        const url = `http://localhost:8000/verify?token=${token}`;
+
 
         const transporter = nodemailer.createTransport({
             service: "Gmail",
             auth: {
                 //add an email
-                user: "",
-                pass: "",
+                user: "spartanaid991@gmail.com",
+                pass: "zycizijlowoqwodc",
             },
         });
 
         transporter.sendMail({
             to: email,
             subject: "Spartan-Aid email verification",
-            html: "Click the link to verify: <a href='${url}'>${url}</a>",
+            html: `Click the link to verify: <a href="${url}">${url}</a>`,
         });
+        
 
         return "success";
     } catch (error) {
@@ -91,9 +93,9 @@ function isVerified(token) {
 }
 
 //for session auth
-function getUserEmail(username) {
-    let sql = `SELECT * FROM Users WHERE Username = ?`;
-    const params = [username];
+function getUserEmail(email) {
+    let sql = `SELECT * FROM Users WHERE email = ?`;
+    const params = [email];
     return db.get(sql, ...params);
 }
 
