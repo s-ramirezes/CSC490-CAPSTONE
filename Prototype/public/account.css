@@ -1,0 +1,17 @@
+.columns {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-inline-start: 12%;
+}
+
+#account {
+    align-items: center;
+    text-align: center;
+    margin: 0 auto; 
+}
+
+#posts h1 {
+    background-color: rgb(219, 128, 8);
+    
+}

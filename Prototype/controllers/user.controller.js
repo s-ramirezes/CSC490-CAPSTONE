@@ -14,6 +14,7 @@ function feedPage(req, res) {
     try {
         // const error = null;
         const subjects = model.getSubjects();
+        req.session.subjects = subjects;
         const role = 'student';
         // const role = 'teacher';
         // const role = 'moderator';
@@ -25,8 +26,22 @@ function feedPage(req, res) {
     }
 }
 
+function accountPage(req, res) {
+    try {
+        // const error = null;
+        // const subjects = model.getSubjects();
+        const role = 'student';
+        // const role = 'teacher';
+        // const role = 'moderator';
+        // const role = 'tutor';
+
+        res.render("account", {subjects: req.session.subjects, role: role});
+    } catch (err) {
+        // console.error("Error while rendering feed page: " + err.message);
+    }
+}
 
 module.exports = {
     feedPage,
-    
+    accountPage,
 };
