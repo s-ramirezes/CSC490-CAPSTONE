@@ -22,7 +22,7 @@ function loginPage(req, res) {
 function homePage(req, res) {
     try {
         // const error = null;
-        res.render("home");
+        res.render('home', { session: req.session, error});
     } catch (err) {
         // console.error("Error while rendering home page: " + err.message);
     }
@@ -59,6 +59,13 @@ function loginUser(req, res, next) {
         console.log("Login attempt for user:", req.body.email);
 
         if (result === "success") {
+            const user = model.getUserEmail(req.body.email);
+
+            req.session.email = user.email;
+            req.session.fname = user.fname;
+            req.session.lname = user.lname;
+            req.session.role = user.role;
+
             res.redirect("/home");
         } else if (result === "notFound") {
             res.render("login", { error: "User not found" });

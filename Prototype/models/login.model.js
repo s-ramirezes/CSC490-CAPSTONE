@@ -49,6 +49,7 @@ function createUser(email, password, fname, lname, role) {
     }
 }
 
+//for email verification/login
 function getUser(email, password) {
     let sqlCheck = "SELECT * FROM Users WHERE email = ?";
     const paramsCheck = [email];
@@ -89,8 +90,16 @@ function isVerified(token) {
     }
 }
 
+//for session auth
+function getUserEmail(username) {
+    let sql = `SELECT * FROM Users WHERE Username = ?`;
+    const params = [username];
+    return db.get(sql, ...params);
+}
+
 module.exports = {
     createUser,
     getUser,
+    getUserEmail,
     isVerified
 };
