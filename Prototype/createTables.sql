@@ -3,3 +3,28 @@ CREATE TABLE category(
 	catAbbr varchar (4) NOT NULL,
 	catName varchar (100) NOT NULL
 );
+
+CREATE TABLE conversation(
+	convId INTEGER PRIMARY KEY,
+	userId1 INTEGER NOT NULL,
+	userId2 INTEGER NOT NULL,
+	FOREIGN KEY (userId1)
+	REFERENCES users (userId)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	FOREIGN KEY (userId2)
+	REFERENCES users (userId)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
+
+CREATE TABLE messages (
+	messageId INTEGER PRIMARY KEY,
+	convId INTEGER NOT NULL,
+	description varchar (300) NOT NULL,
+	messageTime INTEGER NOT NULL,
+	FOREIGN KEY (convId) 
+	REFERENCES conversation (convId)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+);
