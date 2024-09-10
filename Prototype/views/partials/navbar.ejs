@@ -2,12 +2,13 @@
     <ul class="subjects">
         <li> <h2> Subjects</h2></li>
     <% subjects.forEach(function(subject) { %>
-            <li><a class="subjectLink" href=" #"><%= subject.catAbbr %></a></li>
+            <li><a class="subjectLink" href="/<%= subject.catAbbr %>?catId=<%= subject.catId %>"><%= subject.catAbbr %></a></li>
+            
     <% }); %>
     </ul>
 </nav>
 
-<nav>
+<nav style="position: fixed; top: 0; width: 100%; z-index: 1000;">
     <ul class="topBar flex-container">
 
         <% if (role === 'moderator') { %>

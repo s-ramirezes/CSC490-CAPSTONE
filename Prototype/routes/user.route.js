@@ -6,6 +6,8 @@ const userController = require("../controllers/user.controller");
 
 router.get("/feed", userController.feedPage);
 router.get("/account", userController.accountPage);
+router.get("/:catAbbr", userController.feedPage);
+router.post("/like", userController.likePost);
 
 
 module.exports = router; 
