@@ -4,7 +4,7 @@ const router = express.Router();
 
 const moderatorController = require("../controllers/moderator.controller");
 
-
+router.get("/modHome", moderatorController.homePage);
 
 
 
