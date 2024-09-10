@@ -21,12 +21,6 @@ header {
     background-size: contain;
 }
 
-/* nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-} */
-
 .subjects{
     list-style-type: none;
     padding: 0;
