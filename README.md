@@ -1,14 +1,4 @@
 # CSC490-CAPSTONE
 
-
-TUTORING MESSENGER (IDEA)
-- UNCG email authentication (Login)
-- types of users (teacher/student/mod)
-- apis (google calender/authentication)
-- facebook / reddit style
-- Account status (certified tutor/teacher)
-- peer review system *
-- badges for courses/subjects/roles *
-- upload study repo for subjects (files/pcitures/websites) *
-- analytics for teachers (student topics) *
-
+Signup verification
+This currently only works on localhost with port 8000. To verify the email it has to be done on the device the app is running.
