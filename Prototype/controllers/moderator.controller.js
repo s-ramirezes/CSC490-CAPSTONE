@@ -10,8 +10,19 @@ const multer = require("multer");
 
 const model = require("../models/moderator.model");
 
+function homePage (req,res) {
+    try {
+        const subjects = model.getSubjects();
+        req.session.subjects = subjects;
+        const role= 'moderator';
+        res.render ("modHome", {subjects : subjects, role: role});
+    } catch (err) {
+        console.error("Failed to render modHome page: "+ err.message);
+    }
+}
+
 
 
 module.exports = {
-    
+    homePage,
 };
