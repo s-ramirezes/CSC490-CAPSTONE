@@ -30,6 +30,7 @@ function homePage(req, res) {
     try {
         if (req.session && req.session.email) {
             res.render("home", {
+                subjects: req.session.subjects,
                 email: req.session.email,
                 fname: req.session.fname,
                 lname: req.session.lname,
@@ -75,11 +76,14 @@ function loginUser(req, res, next) {
 
         if (result === "success") {
             const user = model.getUserEmail(req.body.email);
+            const subjects = model.getSubjects();
 
+            req.session.subjects = subjects;
             req.session.email = user.email;
             req.session.fname = user.fname;
             req.session.lname = user.lname;
             req.session.role = user.role;
+            req.session.userId = user.userId;
 
             res.redirect("/home");
         } else if (result === "notFound") {

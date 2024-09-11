@@ -99,9 +99,15 @@ function getUserEmail(email) {
     return db.get(sql, ...params);
 }
 
+function getSubjects() {
+    const sql = "SELECT * FROM category";
+    return db.all(sql);
+}
+
 module.exports = {
     createUser,
     getUser,
     getUserEmail,
-    isVerified
+    isVerified,
+    getSubjects,
 };

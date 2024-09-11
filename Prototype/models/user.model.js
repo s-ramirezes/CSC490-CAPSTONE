@@ -1,11 +1,6 @@
 "use strict";
 const db = require("../models/db-conn");
 
-function getSubjects() {
-    const sql = "SELECT * FROM category";
-    return db.all(sql);
-}
-
 function getPosts() {
     const sql = "SELECT * FROM posts";
     return db.all(sql);
@@ -56,7 +51,6 @@ function isPostLiked(userId, postId) {
 }
 
 module.exports = {
-    getSubjects,
     getPosts,
     getSubjectPosts,
     getUserPost,
