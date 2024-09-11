@@ -55,6 +55,11 @@ header {
 
 }
 
+.nav-style{
+    display: flex;
+    width: 50px;
+}
+
 .topBar li a{
     text-decoration: none;
     color: black;
@@ -126,4 +131,10 @@ header {
     display: flex;
     justify-content: space-between;
     margin-inline-start: 12%;
+}
+
+.post-button{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 16px;
 }
