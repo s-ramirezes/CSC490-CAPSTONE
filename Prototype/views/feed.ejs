@@ -33,10 +33,13 @@
             <div id="feed-header">
                 <h1>Feed</h1>
             </div>
-            <div class="post-button">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">
-                    Post
-                </button>
+            <div class="nav-buttons">
+                <a href="/resources">Resources</a>
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">
+                        Post
+                    </button>
+                </div>
             </div>
             <div id="feed-content">
                 <% if (!posts || posts.length===0) { %>

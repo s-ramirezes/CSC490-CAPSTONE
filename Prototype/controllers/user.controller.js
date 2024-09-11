@@ -25,6 +25,15 @@ function feedPage(req, res) {
     }
 }
 
+function resourcePage(req, res) {
+    try {
+        const userId = req.session.userId;
+        res.render("resources", {subjects: req.session.subjects, role: req.session.role, catId: req.query.catId});
+    } catch (err) {
+        console.error("Error while rendering resoruce page: " + err.message);
+    }
+}
+
 function accountPage(req, res) {
     try {
         const userId = req.session.userId;
@@ -72,6 +81,7 @@ function post(req, res){
 module.exports = {
     feedPage,
     accountPage,
+    resourcePage,
     likePost,
     post,
 };

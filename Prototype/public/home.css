@@ -55,11 +55,6 @@ header {
 
 }
 
-.nav-style{
-    display: flex;
-    width: 50px;
-}
-
 .topBar li a{
     text-decoration: none;
     color: black;
@@ -133,8 +128,9 @@ header {
     margin-inline-start: 12%;
 }
 
-.post-button{
+.nav-buttons{
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 16px;
 }
