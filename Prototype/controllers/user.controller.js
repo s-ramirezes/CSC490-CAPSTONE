@@ -19,7 +19,7 @@ function feedPage(req, res) {
             return { ...post, liked };
         });
 
-        res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts});
+        res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts, catId: req.query.catId});
     } catch (err) {
         // console.error("Error while rendering feed page: " + err.message);
     }
@@ -52,8 +52,26 @@ function likePost(req, res) {
     }
 }
 
+function post(req, res){
+    try {
+        const userId = req.session.userId;
+        console.log(userId);
+        const title = req.body.title;
+        console.log(title);
+        const description = req.body.description;
+        console.log(description);
+        const catId = req.body.catId;
+        console.log(catId);
+        model.createPost(catId, userId, title, description);
+        res.redirect("/category/=?" + catId);
+    } catch (err) {
+        console.error("Error while rendering feed page: " + err.message);
+    }
+}
+
 module.exports = {
     feedPage,
     accountPage,
     likePost,
+    post,
 };

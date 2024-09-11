@@ -25,7 +25,7 @@ function createUser(email, password, fname, lname, role) {
 
         // Email verification
         const token = jwt.sign({ email: email }, secretkey, { expiresIn: "1d" });
-        const url = `http://localhost:8000/verify?token=${token}`;
+        const url = `https://7dec-152-13-147-215.ngrok-free.app/verify?token=${token}`;
 
 
         const transporter = nodemailer.createTransport({
