@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Feed</title>
     <meta charset="UTF-8">
@@ -26,59 +27,75 @@
                 
             </ul>
         </div>     -->
-    
+
 
         <div id="feed">
             <div id="feed-header">
                 <h1>Feed</h1>
             </div>
+            <div class="post-button">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">
+                    Post
+                </button>
+            </div>
             <div id="feed-content">
-                <% if (!posts || posts.length === 0) { %>
-                        <h2>No posts found, be the first to make one!</h2>
-                <% } %>
-                <% posts.forEach(post => { %>
-                <div class="post">
-                    <div class="card">
-                        <div class="card-header" style="background-color: <%= '#' + Math.floor(Math.random()*16777215).toString(16) %>;">
-                            <h2><%= post.title %></h2>
-                        </div>
-                        <div class="card-body" >
-                            <p><%= post.description %></p>
-
-                            <div class="d-flex justify-content-end align-items-center me-4">
-                                <div class="d-flex align-items-center me-4">
-                                    <button type="button" class="btn btn-link p-0 border-0 me-2">
-                                        <img src="/images/comment.png" alt="Comment" width="30" height="30">
-                                    </button>
-                                    <div class="text-muted small">0 comments</div>
-                                </div>
-                                    <div class="d-flex align-items-center me-4">
-                                        
-                                        <button type="submit" id="likeButton" class="btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
-                                            <input type="hidden" name="postId" value="<%= post.postId %>">
-                                            <input type="hidden" name="liked" value="<%= post.liked %>">
-                                            <input type="hidden" name="likeCount" value="<%= post.likeCount %>">
-                                            <% if (post.liked) { %>
-                                                <img src="/images/likeClicked.png" alt="Like" width="30" height="30">
-                                            <% } else { %>
-                                                <img src="/images/likeUnclicked.png" alt="Like" width="30" height="30">
-                                            <% } %>
-                                        </button>
-                                        <div class="text-muted small"><%= post.likeCount %> likes</div>
+                <% if (!posts || posts.length===0) { %>
+                    <h2>No posts found, be the first to make one!</h2>
+                    <% } %>
+                        <% posts.forEach(post=> { %>
+                            <div class="post">
+                                <div class="card">
+                                    <div class="card-header"
+                                        style="<%= 'background-color: #' + Math.floor(Math.random()*16777215).toString(16) %>;">
+                                        <h2>
+                                            <%= post.title %>
+                                        </h2>
                                     </div>
-                                <div class="d-flex align-items-center">
-                                    <button type="button" id="flagButton" class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
-                                        <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
-                                    </button>
+                                    <div class="card-body">
+                                        <p>
+                                            <%= post.description %>
+                                        </p>
+
+                                        <div class="d-flex justify-content-end align-items-center me-4">
+                                            <div class="d-flex align-items-center me-4">
+                                                <button type="button" class="btn btn-link p-0 border-0 me-2">
+                                                    <img src="/images/comment.png" alt="Comment" width="30" height="30">
+                                                </button>
+                                                <div class="text-muted small">0 comments</div>
+                                            </div>
+                                            <div class="d-flex align-items-center me-4">
+
+                                                <button type="submit" id="likeButton"
+                                                    class="btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
+                                                    <input type="hidden" name="postId" value="<%= post.postId %>">
+                                                    <input type="hidden" name="liked" value="<%= post.liked %>">
+                                                    <input type="hidden" name="likeCount" value="<%= post.likeCount %>">
+                                                    <% if (post.liked) { %>
+                                                        <img src="/images/likeClicked.png" alt="Like" width="30"
+                                                            height="30">
+                                                        <% } else { %>
+                                                            <img src="/images/likeUnclicked.png" alt="Like" width="30"
+                                                                height="30">
+                                                            <% } %>
+                                                </button>
+                                                <div class="text-muted small">
+                                                    <%= post.likeCount %> likes
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <button type="button" id="flagButton"
+                                                    class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
+                                                    <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- add any other buttons we may need here-->
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <!-- add any other buttons we may need here-->
-                        </div>
-                    </div>                  
-                </div> <br>
-                <% }) %>
-                
+                            </div> <br>
+                            <% }) %>
+
             </div>
         </div>
 
@@ -86,18 +103,20 @@
             <h1>Private Messages</h1>
 
             <ul class="users">
-                <li class="user-info"> 
+                <li class="user-info">
                     <a href="#">
-                        <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50" width="50">
+                        <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
+                            width="50">
                         <span>Username</span>
                     </a>
                     <span> # of new notifications</span>
                     <button type="button" class="btn btn-primary">Message</button>
                 </li>
                 <br>
-                <li class="user-info"> 
+                <li class="user-info">
                     <a href="#">
-                        <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50" width="50">
+                        <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
+                            width="50">
                         <span>Username</span>
                     </a>
                     <span> # of new notifications</span>
@@ -109,6 +128,38 @@
 
         </div>
     </div>
+
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel">Create a Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/post" method="POST">
+                    <input type="hidden" id="catId" value="<%= catId %>" name="catId">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4"
+                                required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
 </body>
 

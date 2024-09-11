@@ -50,6 +50,12 @@ function isPostLiked(userId, postId) {
     return like !== undefined;
 }
 
+function createPost(catId, userId, title, description){
+    const sql = 'INSERT INTO posts (catId, userId, title, description) VALUES (?, ?, ?, ?)';
+    const params = [catId, userId, title, description];
+    return db.run(sql, params);
+}
+
 module.exports = {
     getPosts,
     getSubjectPosts,
@@ -57,4 +63,5 @@ module.exports = {
     getUser,
     likePost,
     isPostLiked,
+    createPost,
 };
