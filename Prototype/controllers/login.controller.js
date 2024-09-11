@@ -81,7 +81,7 @@ function loginUser(req, res, next) {
             req.session.lname = user.lname;
             req.session.role = user.role;
 
-            res.render("home");
+            res.redirect("/home");
         } else if (result === "notFound") {
             res.render("login", { error: "User not found" });
         } else if (result === "notVerified") {
