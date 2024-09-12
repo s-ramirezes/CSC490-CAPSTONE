@@ -23,7 +23,7 @@ CREATE TABLE messages (
 	convId INTEGER NOT NULL,
 	description varchar (300) NOT NULL,
 	userId INTEGER NOT NULL,
-	messageTime INTEGER NOT NULL,
+	messageTime datetime DEFAULT (DATETIME('now', 'localtime')),
 	FOREIGN KEY (userId) 
 	REFERENCES users (userId)
 	ON DELETE CASCADE
