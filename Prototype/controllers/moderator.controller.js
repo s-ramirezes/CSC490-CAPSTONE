@@ -21,8 +21,21 @@ function homePage (req,res) {
     }
 }
 
+function messages (req, res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const role= 'moderator';
+        res.render ("modMessages", {subjects : subjects, role: role});
+    } catch (err) {
+        console.error("Failed to render modMessages page "+ err.message);
+    }
+}
+
 
 
 module.exports = {
     homePage,
+    messages,
+    
 };
