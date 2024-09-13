@@ -2,7 +2,8 @@
 
 const express = require("express");
 const app = express();
-// const path = require('path')
+const path = require('path')
+const fs = require("fs");
 const multer = require("multer");
 // app.use(multer().none());
 // app.use(express.urlencoded({ extended: true }));
@@ -32,7 +33,27 @@ function upload(req, res) {
     }
 }
 
+function deleteResource(req, res) {
+    try {
+        const resourceId = req.body.resourceId;
+        const catId = req.body.catId;
+        const filePath = path.join(__dirname, "../uploads/" + req.body.fileName);
+
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                console.error("Error while deleting file: " + err.message);
+            }
+        });
+
+        model.deleteResource(resourceId);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while deleting resource: " + err.message);
+    }
+}
+
 
 module.exports = {
-    upload
+    upload,
+    deleteResource,
 };

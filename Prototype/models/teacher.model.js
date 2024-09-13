@@ -7,6 +7,13 @@ function uploadResource(userId, catId, title, fileName, url) {
     return db.run(sql, params);
 }
 
+function deleteResource(resourceId) {
+    const sql = 'DELETE FROM resources WHERE resourceId = ?';
+    const params = [resourceId];
+    return db.run(sql, params);
+}
+
 module.exports = {
     uploadResource,
+    deleteResource,
 };

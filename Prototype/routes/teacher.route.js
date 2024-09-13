@@ -10,6 +10,7 @@ module.exports = function (fileUpload) {
     
 
     router.post("/upload", fileUpload.single("file"), teacherController.upload);
+    router.post("/deleteResource", teacherController.deleteResource);
 
 
     return router; 

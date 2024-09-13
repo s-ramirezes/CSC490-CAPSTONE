@@ -113,6 +113,14 @@
                                         <input type="hidden" name="fileName" value="<%= resource.fileName %>">
                                         <button type="submit" class="btn btn-primary">Download</button>
                                     </form>
+                                    <% if (role === 'teacher') { %>
+                                        <form action="/deleteResource" method="POST" class="d-inline">
+                                            <input type="hidden" name="resourceId" value="<%= resource.resourceId %>">
+                                            <input type="hidden" name="catId" value="<%= catId %>">
+                                            <input type="hidden" name="fileName" value="<%= resource.fileName %>">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
