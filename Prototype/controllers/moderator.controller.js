@@ -25,12 +25,8 @@ function messages (req, res){
     try{
         const subjects= model.getSubjects();
         req.session.subjects = subjects;
-        const messages= model.getMessages(req.query.convId);
-        const userId= req.session.userId;
-        const recipient= model.getReceivers (userId);
         const role= 'moderator';
-        res.render ("modMessages", {subjects : subjects, role: role, 
-            messages: messages, userId: userId, recipient: recipient});
+        res.render ("modMessages", {subjects : subjects, role: role});
     } catch (err) {
         console.error("Failed to render modMessages page "+ err.message);
     }
@@ -41,4 +37,5 @@ function messages (req, res){
 module.exports = {
     homePage,
     messages,
+    
 };
