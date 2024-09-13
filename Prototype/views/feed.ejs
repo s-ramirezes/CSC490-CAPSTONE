@@ -11,30 +11,26 @@
     <script src="/public/script.js" defer></script>
 </head>
 
-
-
 <body>
     <header>
         <%- include('partials/navbar') %>
     </header>
 
     <div class="columns">
-        <!-- <div id="categories">
-            <h1>Categories</h1>
-            <ul class="list-group">
-                <li class="list-group-item"> <a href="#">Category 1</a> </li>
-                <li class="list-group-item"> <a href="#">Category 2</a> </li>
-                
-            </ul>
-        </div>     -->
-
-
         <div id="feed">
             <div id="feed-header">
                 <h1>Feed</h1>
             </div>
             <div class="nav-buttons">
-                <a href="/resources">Resources</a>
+                <button id="viewPostsButton" onclick="toggleView('posts')">View Posts</button>
+                <button id="viewResourcesButton" onclick="toggleView('resources')">View Resources</button>
+                <% if (role === 'teacher') { %>
+                    <div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resourceModal">
+                            Add Resource
+                        </button>
+                    </div>
+                <% } %>
                 <div>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">
                         Post
@@ -42,69 +38,100 @@
                 </div>
             </div>
             <div id="feed-content">
-                <% if (!posts || posts.length===0) { %>
+                <% if (!posts || posts.length === 0) { %>
                     <h2>No posts found, be the first to make one!</h2>
-                    <% } %>
-                        <% posts.forEach(post=> { %>
-                            <div class="post">
-                                <div class="card">
-                                    <div class="card-header"
-                                        style="<%= 'background-color: #' + Math.floor(Math.random()*16777215).toString(16) %>;">
-                                        <h2>
-                                            <%= post.title %>
-                                        </h2>
-                                    </div>
-                                    <div class="card-body">
-                                        <p>
-                                            <%= post.description %>
-                                        </p>
+                <% } else { %>
+                    <% posts.forEach(post => { %>
+                        <div class="post">
+                            <div class="card">
+                                <div class="card-header"
+                                    style="<%= 'background-color: #' + Math.floor(Math.random() * 16777215).toString(16) %>;">
+                                    <h2>
+                                        <%= post.title %>
+                                    </h2>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        <%= post.description %>
+                                    </p>
 
-                                        <div class="d-flex justify-content-end align-items-center me-4">
-                                            <div class="d-flex align-items-center me-4">
-                                                <button type="button" class="btn btn-link p-0 border-0 me-2">
-                                                    <img src="/images/comment.png" alt="Comment" width="30" height="30">
-                                                </button>
-                                                <div class="text-muted small">0 comments</div>
-                                            </div>
-                                            <div class="d-flex align-items-center me-4">
-
-                                                <button type="submit" id="likeButton"
-                                                    class="btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
-                                                    <input type="hidden" name="postId" value="<%= post.postId %>">
-                                                    <input type="hidden" name="liked" value="<%= post.liked %>">
-                                                    <input type="hidden" name="likeCount" value="<%= post.likeCount %>">
-                                                    <% if (post.liked) { %>
-                                                        <img src="/images/likeClicked.png" alt="Like" width="30"
-                                                            height="30">
-                                                        <% } else { %>
-                                                            <img src="/images/likeUnclicked.png" alt="Like" width="30"
-                                                                height="30">
-                                                            <% } %>
-                                                </button>
-                                                <div class="text-muted small">
-                                                    <%= post.likeCount %> likes
-                                                </div>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <button type="button" id="flagButton"
-                                                    class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
-                                                    <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
-                                                </button>
+                                    <div class="d-flex justify-content-end align-items-center me-4">
+                                        <div class="d-flex align-items-center me-4">
+                                            <button type="button" class="btn btn-link p-0 border-0 me-2">
+                                                <img src="/images/comment.png" alt="Comment" width="30" height="30">
+                                            </button>
+                                            <div class="text-muted small">0 comments</div>
+                                        </div>
+                                        <div class="d-flex align-items-center me-4">
+                                            <button type="submit" id="likeButton"
+                                                class="btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
+                                                <input type="hidden" name="postId" value="<%= post.postId %>">
+                                                <input type="hidden" name="liked" value="<%= post.liked %>">
+                                                <input type="hidden" name="likeCount" value="<%= post.likeCount %>">
+                                                <% if (post.liked) { %>
+                                                    <img src="/images/likeClicked.png" alt="Like" width="30"
+                                                        height="30">
+                                                <% } else { %>
+                                                    <img src="/images/likeUnclicked.png" alt="Like" width="30"
+                                                        height="30">
+                                                <% } %>
+                                            </button>
+                                            <div class="text-muted small">
+                                                <%= post.likeCount %> likes
                                             </div>
                                         </div>
-
-                                        <!-- add any other buttons we may need here-->
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" id="flagButton"
+                                                class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
+                                                <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div> <br>
-                            <% }) %>
-
+                            </div>
+                        </div>
+                        <br>
+                    <% }) %>
+                <% } %>
+            </div>
+            <div id="resources-content" style="display: none;">
+                <h2>Resources</h2>
+                <% if (!resources || resources.length === 0) { %>
+                    <h2>No resources found, be the first to make one!</h2>
+                <% } else { %>
+                    <% resources.forEach(resource => { %>
+                        <div class="resource">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2><%= resource.title %></h2>
+                                </div>
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1 text-center">
+                                        <a href="<%= resource.url %>" class="btn btn-link"><%= resource.url %></a>
+                                    </div>
+                                    <form action="/download/<%= resource.fileName %>" method="get" class="d-inline">
+                                        <input type="hidden" name="fileName" value="<%= resource.fileName %>">
+                                        <button type="submit" class="btn btn-primary">Download</button>
+                                    </form>
+                                    <% if (role === 'teacher') { %>
+                                        <form action="/deleteResource" method="POST" class="d-inline">
+                                            <input type="hidden" name="resourceId" value="<%= resource.resourceId %>">
+                                            <input type="hidden" name="catId" value="<%= catId %>">
+                                            <input type="hidden" name="fileName" value="<%= resource.fileName %>">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    <% }) %>
+                <% } %>
             </div>
         </div>
 
         <div id="private-messages">
             <h1>Private Messages</h1>
-
             <ul class="users">
                 <li class="user-info">
                     <a href="#">
@@ -125,10 +152,39 @@
                     <span> # of new notifications</span>
                     <button type="button" class="btn btn-primary">Message</button>
                 </li>
-
             </ul>
+        </div>
+    </div>
 
-
+    <div class="modal fade" id="resourceModal" tabindex="-1" aria-labelledby="resourceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel">Add a resource</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" id="catId" value="<%= catId %>" name="catId">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Link</label>
+                            <textarea class="form-control" id="url" name="url" rows="1"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fileUpload" class="form-label">File upload?</label>
+                            <input type="file" class="form-control" id="fileUpload" name="file">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

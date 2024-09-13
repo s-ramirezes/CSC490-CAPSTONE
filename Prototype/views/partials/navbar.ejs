@@ -2,7 +2,7 @@
     <ul class="subjects">
         <li> <h2> Subjects</h2></li>
     <% subjects.forEach(function(subject) { %>
-            <li><a class="subjectLink" href="/category/<%= subject.catAbbr %>?catId=<%= subject.catId %>"><%= subject.catAbbr %></a></li>
+            <li><a class="subjectLink" href="/category/<%= subject.catId %>"><%= subject.catAbbr %></a></li>
             
     <% }); %>
     </ul>

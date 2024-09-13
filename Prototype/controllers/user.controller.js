@@ -2,7 +2,7 @@
 
 const express = require("express");
 const app = express();
-// const path = require('path')
+const path = require('path')
 const multer = require("multer");
 // app.use(multer().none());
 // app.use(express.urlencoded({ extended: true }));
@@ -13,26 +13,18 @@ const model = require("../models/user.model");
 function feedPage(req, res) {
     try {
         const userId = req.session.userId;
-        const posts = model.getSubjectPosts(req.query.catId);
+        const posts = model.getSubjectPosts(req.params.catId);
+        const resources = model.getResourcesforCategory(req.params.catId);
         const likedPosts = posts.map(post => {
             const liked = model.isPostLiked(userId, post.postId); 
             return { ...post, liked };
         });
-
-        res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts, catId: req.query.catId});
+        res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts, catId: req.params.catId, role: req.session.role, resources: resources});
     } catch (err) {
         // console.error("Error while rendering feed page: " + err.message);
     }
 }
 
-function resourcePage(req, res) {
-    try {
-        const userId = req.session.userId;
-        res.render("resources", {subjects: req.session.subjects, role: req.session.role, catId: req.query.catId});
-    } catch (err) {
-        console.error("Error while rendering resoruce page: " + err.message);
-    }
-}
 
 function accountPage(req, res) {
     try {
@@ -64,24 +56,30 @@ function likePost(req, res) {
 function post(req, res){
     try {
         const userId = req.session.userId;
-        console.log(userId);
         const title = req.body.title;
-        console.log(title);
         const description = req.body.description;
-        console.log(description);
         const catId = req.body.catId;
-        console.log(catId);
         model.createPost(catId, userId, title, description);
-        res.redirect("/category/=?" + catId);
+        res.redirect("/category/" + catId);
     } catch (err) {
         console.error("Error while rendering feed page: " + err.message);
+    }
+}
+
+function downloadResource(req, res) {
+    try {
+        const fileName = req.params.fileName;
+        const file = path.join(__dirname, "../uploads", fileName);
+        res.download(file);
+    } catch (err) {
+        console.error("Error while downloading file: " + err.message);
     }
 }
 
 module.exports = {
     feedPage,
     accountPage,
-    resourcePage,
     likePost,
     post,
+    downloadResource
 };

@@ -50,3 +50,15 @@ function toggleLike(event) {
         console.error('Error:', error);
     });
 }
+
+function toggleView(view) {
+    const postsContent = document.getElementById('feed-content');
+    const resourcesContent = document.getElementById('resources-content');
+    if (view === 'posts') {
+        postsContent.style.display = 'block';
+        resourcesContent.style.display = 'none';
+    } else {
+        postsContent.style.display = 'none';
+        resourcesContent.style.display = 'block';
+    }
+}
