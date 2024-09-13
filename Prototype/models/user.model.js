@@ -56,6 +56,11 @@ function createPost(catId, userId, title, description){
     return db.run(sql, params);
 }
 
+function getResourcesforCategory(catId) {
+    const sql = "SELECT * FROM resources WHERE catId = ?";
+    return db.all(sql, catId);
+}
+
 module.exports = {
     getPosts,
     getSubjectPosts,
@@ -64,4 +69,5 @@ module.exports = {
     likePost,
     isPostLiked,
     createPost,
+    getResourcesforCategory,
 };

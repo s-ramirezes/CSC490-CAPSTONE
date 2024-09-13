@@ -22,15 +22,15 @@ app.use(session({
 // });
 // const imageUpload = multer({ storage: imageStorage });
 
-// const uploadStorage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './uploads');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//   }
-// });
-// const upload = multer({ storage: uploadStorage });
+const uploadStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({ storage: uploadStorage });
 
 //^^^^^^for storing post images and file resources
 
@@ -45,7 +45,7 @@ app.set('partials', path.join(__dirname, 'views', 'partials'));
 
 const moderatorRouter = require("./routes/moderator.route");
 const userRouter = require("./routes/user.route");
-const teacherRouter = require("./routes/teacher.route");
+const teacherRouter = require("./routes/teacher.route")(upload);
 const tutorRouter = require("./routes/tutor.route");
 const loginRouter = require("./routes/login.route");
 
