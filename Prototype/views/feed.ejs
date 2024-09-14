@@ -49,6 +49,15 @@
                                     <h2>
                                         <%= post.title %>
                                     </h2>
+                                    <div class="delete-button">
+                                        <% if (userId === post.userId || role === 'teacher' || role === 'moderator') { %>
+                                            <form action="/deletePost" method="POST" class="ms-4">
+                                                <input type="hidden" id="catId" value="<%= catId %>" name="catId">
+                                                <input type="hidden" name="postId" value="<%= post.postId %>">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        <% } %>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <p>

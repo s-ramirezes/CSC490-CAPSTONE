@@ -31,7 +31,6 @@ function createUser(email, password, fname, lname, role) {
         const transporter = nodemailer.createTransport({
             service: "Gmail",
             auth: {
-                //add an email
                 user: "spartanaid991@gmail.com",
                 pass: "zycizijlowoqwodc",
             },
@@ -40,7 +39,7 @@ function createUser(email, password, fname, lname, role) {
         transporter.sendMail({
             to: email,
             subject: "Spartan-Aid email verification",
-            html: `Click the link to verify: <a href="${url}">${url}</a>`,
+            html: `Click the link to verify: <a href="${url}">${url}</a><br><br>This link expires in 1 day.`,
         });
         
 
@@ -104,10 +103,65 @@ function getSubjects() {
     return db.all(sql);
 }
 
+function sendForgot(email){
+    let sqlCheck = "SELECT * FROM Users WHERE email = ?";
+    const paramsCheck = [email];
+    const userExists = db.get(sqlCheck, ...paramsCheck);
+
+    if (!userExists) {
+        return "DNE";
+    }
+    try {
+        const token = jwt.sign({ email: email }, secretkey, { expiresIn: "10m" });
+        const url = `http://localhost:8000/forgotPage?token=${token}`;
+
+
+        const transporter = nodemailer.createTransport({
+            service: "Gmail",
+            auth: {
+                user: "spartanaid991@gmail.com",
+                pass: "zycizijlowoqwodc",
+            },
+        });
+
+        transporter.sendMail({
+            to: email,
+            subject: "Spartan-Aid password reset",
+            html: `Click the link to reset your password: <a href="${url}">${url}</a><br><br>This link expires in 5 minutes.`
+
+        });
+        
+
+        return "success";
+    } catch (error) {
+        console.error(error);
+        return "error";
+    }
+}
+
+function resetPassword(password, token) {
+    try {
+        const decode = jwt.verify(token, secretkey);
+        const email = decode.email;
+
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+
+        db.run("UPDATE users SET password = ? WHERE email = ?", [hash, email]);
+
+        return "success";
+    } catch (err) {
+        console.error("Error during token verification:", err.message);
+        return "error";
+    }
+}
+
 module.exports = {
     createUser,
     getUser,
     getUserEmail,
     isVerified,
     getSubjects,
+    sendForgot,
+    resetPassword,
 };

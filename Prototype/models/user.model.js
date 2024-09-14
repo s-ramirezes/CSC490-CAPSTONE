@@ -61,6 +61,13 @@ function getResourcesforCategory(catId) {
     return db.all(sql, catId);
 }
 
+function deletePost(postId){
+    const sql = 'DELETE FROM posts where postId = ?';
+    const params = [postId];
+    return db.run(sql, params);
+}
+
+
 module.exports = {
     getPosts,
     getSubjectPosts,
@@ -70,4 +77,5 @@ module.exports = {
     isPostLiked,
     createPost,
     getResourcesforCategory,
+    deletePost,
 };
