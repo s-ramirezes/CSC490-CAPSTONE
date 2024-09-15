@@ -7,7 +7,12 @@ function getPosts() {
 }
 
 function getSubjectPosts(catId) {
-    const sql = "SELECT * FROM posts WHERE catId = ?";
+    const sql = `
+        SELECT posts.*, users.email
+        FROM posts
+        JOIN users ON posts.userId = users.userId
+        WHERE posts.catId = ?;
+    `;
     return db.all(sql, catId);
 }
 
@@ -74,7 +79,12 @@ function createReply(userId, catId, postId, description){
 }
 
 function getRepliesforPost(postId) {
-    const sql = "SELECT * FROM replies WHERE postId = ?";
+    const sql = `
+        SELECT replies.*, users.email
+        FROM replies
+        JOIN users ON replies.userId = users.userId
+        WHERE replies.postId = ?;
+    `;
     return db.all(sql, postId);
 }
 

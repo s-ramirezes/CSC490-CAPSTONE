@@ -49,6 +49,7 @@
                                     <h2>
                                         <%= post.title %>
                                     </h2>
+                                    <h4>By:  <%= post.email %></h4>
                                     <div class="delete-button">
                                         <% if (userId === post.userId || role === 'teacher' || role === 'moderator') { %>
                                             <form action="/deletePost" method="POST" class="ms-4">
@@ -104,6 +105,7 @@
                                             <% post.replies.forEach(reply => { %>
                                                 <div class="reply card mb-2">
                                                     <div class="card-body">
+                                                        <p> <%= reply.email %></p>
                                                         <p> <%= reply.description %></p>
                                                         <div class="delete-button">
                                                             <% if (userId === reply.userId || role === 'teacher' || role === 'moderator') { %>
