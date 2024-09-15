@@ -67,6 +67,11 @@ function deletePost(postId){
     return db.run(sql, params);
 }
 
+function createReply(userId, catId, postId, description){
+    const sql = 'INSERT INTO replies (userId, catId, postId, description) VALUES (?, ?, ?, ?)';
+    const params = [userId, catId, postId, description];
+    return db.run(sql, params);
+}
 
 module.exports = {
     getPosts,
@@ -78,4 +83,5 @@ module.exports = {
     createPost,
     getResourcesforCategory,
     deletePost,
+    createReply,
 };

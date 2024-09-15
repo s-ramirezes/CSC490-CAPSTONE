@@ -66,6 +66,7 @@
 
                                     <div class="d-flex justify-content-end align-items-center me-4">
                                         <div class="d-flex align-items-center me-4">
+                                            <button type="button" class="btn btn-link p-0 border-0 me-2" data-bs-toggle="modal" data-bs-target="#replyModal" onclick="setReplyModalValues('<%= post.postId %>')">Reply</button>
                                             <button type="button" class="btn btn-link p-0 border-0 me-2">
                                                 <img src="/images/comment.png" alt="Comment" width="30" height="30">
                                             </button>
@@ -226,9 +227,41 @@
         </div>
     </div>
 
+    <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="replyModalLabel">Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/reply" method="POST">
+                    <input type="hidden" id="catId" value="<%= catId %>" name="catId">
+                    <input type="hidden" id="postId" name="postId">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4"
+                                required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
+    <script>
+        function setReplyModalValues(postId) {
+    document.getElementById('postId').value = postId;
+}
+    </script>
 </body>
 
 </html>

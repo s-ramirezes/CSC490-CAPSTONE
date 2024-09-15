@@ -87,6 +87,20 @@ function deletePost(req, res){
     }
 }
 
+function reply(req, res){
+    try {
+        const userId = req.session.userId;
+        const catId = req.body.catId;
+        const postId = req.body.postId;
+        const description = req.body.description;
+
+        model.createReply(userId, catId, postId, description);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while rendering feed page: " + err.message);
+    }
+}
+
 module.exports = {
     feedPage,
     accountPage,
@@ -94,4 +108,5 @@ module.exports = {
     post,
     downloadResource,
     deletePost,
+    reply,
 };
