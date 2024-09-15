@@ -73,6 +73,17 @@ function createReply(userId, catId, postId, description){
     return db.run(sql, params);
 }
 
+function getRepliesforPost(postId) {
+    const sql = "SELECT * FROM replies WHERE postId = ?";
+    return db.all(sql, postId);
+}
+
+function deleteReply(replyId){
+    const sql = 'DELETE FROM replies where replyId = ?';
+    const params = [replyId];
+    return db.run(sql, params);
+}
+
 module.exports = {
     getPosts,
     getSubjectPosts,
@@ -84,4 +95,6 @@ module.exports = {
     getResourcesforCategory,
     deletePost,
     createReply,
+    getRepliesforPost,
+    deleteReply,
 };

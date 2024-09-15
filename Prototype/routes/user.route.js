@@ -13,6 +13,7 @@ router.post("/like", userController.likePost);
 router.post("/post", userController.post);
 router.post("/deletePost", userController.deletePost);
 router.post("/reply", userController.reply);
+router.post("/deleteReply", userController.deleteReply);
 
 
 module.exports = router; 

@@ -97,6 +97,28 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <div class="replies">
+                                        <% if (!post.replies || post.replies.length === 0) { %>
+                                            <p>No replies found for this post.</p>
+                                        <% } else { %>
+                                            <% post.replies.forEach(reply => { %>
+                                                <div class="reply card mb-2">
+                                                    <div class="card-body">
+                                                        <p> <%= reply.description %></p>
+                                                        <div class="delete-button">
+                                                            <% if (userId === reply.userId || role === 'teacher' || role === 'moderator') { %>
+                                                                <form action="/deleteReply" method="POST" class="ms-4">
+                                                                    <input type="hidden" id="catId" value="<%= catId %>" name="catId">
+                                                                    <input type="hidden" name="replyId" value="<%= reply.replyId %>">
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </form>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <% }) %>
+                                        <% } %>
+                                    </div>
                                 </div>
                             </div>
                         </div>

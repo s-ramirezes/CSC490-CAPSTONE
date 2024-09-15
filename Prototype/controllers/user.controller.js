@@ -16,8 +16,9 @@ function feedPage(req, res) {
         const posts = model.getSubjectPosts(req.params.catId);
         const resources = model.getResourcesforCategory(req.params.catId);
         const likedPosts = posts.map(post => {
-            const liked = model.isPostLiked(userId, post.postId); 
-            return { ...post, liked };
+            const liked = model.isPostLiked(userId, post.postId);
+            const replies = model.getRepliesforPost(post.postId);
+            return { ...post, liked, replies };
         });
         res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts, catId: req.params.catId, role: req.session.role, resources: resources, userId: userId});
     } catch (err) {
@@ -101,6 +102,17 @@ function reply(req, res){
     }
 }
 
+function deleteReply(req, res){
+    try{
+        const replyId = req.body.replyId;
+        const catId = req.body.catId;
+        model.deleteReply(replyId);
+        res.redirect("/category/" + catId);
+    }catch(err){
+        console.error("Error while deleting post" + err.message)
+    }
+}
+
 module.exports = {
     feedPage,
     accountPage,
@@ -109,4 +121,5 @@ module.exports = {
     downloadResource,
     deletePost,
     reply,
+    deleteReply,
 };
