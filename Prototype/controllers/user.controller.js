@@ -58,9 +58,10 @@ function post(req, res){
     try {
         const userId = req.session.userId;
         const title = req.body.title;
+        const courseId = req.body.courseId;
         const description = req.body.description;
         const catId = req.body.catId;
-        model.createPost(catId, userId, title, description);
+        model.createPost(catId, userId, title, description, courseId);
         res.redirect("/category/" + catId);
     } catch (err) {
         console.error("Error while rendering feed page: " + err.message);

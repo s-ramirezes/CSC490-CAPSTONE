@@ -66,7 +66,7 @@
 
                 <script>
                     function emailValidation() {
-                        const email = document.querySelector('input[name="email"]').value;
+                        const email = document.getElementById('email').value;
                         const domain = '@uncg.edu';
                         if (!email.endsWith(domain)) {
                             alert('Email must end with @uncg.edu');
