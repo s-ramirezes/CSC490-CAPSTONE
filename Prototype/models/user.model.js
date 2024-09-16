@@ -7,7 +7,12 @@ function getPosts() {
 }
 
 function getSubjectPosts(catId) {
-    const sql = "SELECT * FROM posts WHERE catId = ?";
+    const sql = `
+        SELECT posts.*, users.email
+        FROM posts
+        JOIN users ON posts.userId = users.userId
+        WHERE posts.catId = ?;
+    `;
     return db.all(sql, catId);
 }
 
@@ -61,6 +66,34 @@ function getResourcesforCategory(catId) {
     return db.all(sql, catId);
 }
 
+function deletePost(postId){
+    const sql = 'DELETE FROM posts where postId = ?';
+    const params = [postId];
+    return db.run(sql, params);
+}
+
+function createReply(userId, catId, postId, description){
+    const sql = 'INSERT INTO replies (userId, catId, postId, description) VALUES (?, ?, ?, ?)';
+    const params = [userId, catId, postId, description];
+    return db.run(sql, params);
+}
+
+function getRepliesforPost(postId) {
+    const sql = `
+        SELECT replies.*, users.email
+        FROM replies
+        JOIN users ON replies.userId = users.userId
+        WHERE replies.postId = ?;
+    `;
+    return db.all(sql, postId);
+}
+
+function deleteReply(replyId){
+    const sql = 'DELETE FROM replies where replyId = ?';
+    const params = [replyId];
+    return db.run(sql, params);
+}
+
 module.exports = {
     getPosts,
     getSubjectPosts,
@@ -70,4 +103,8 @@ module.exports = {
     isPostLiked,
     createPost,
     getResourcesforCategory,
+    deletePost,
+    createReply,
+    getRepliesforPost,
+    deleteReply,
 };

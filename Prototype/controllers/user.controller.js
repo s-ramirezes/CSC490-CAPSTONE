@@ -16,10 +16,11 @@ function feedPage(req, res) {
         const posts = model.getSubjectPosts(req.params.catId);
         const resources = model.getResourcesforCategory(req.params.catId);
         const likedPosts = posts.map(post => {
-            const liked = model.isPostLiked(userId, post.postId); 
-            return { ...post, liked };
+            const liked = model.isPostLiked(userId, post.postId);
+            const replies = model.getRepliesforPost(post.postId);
+            return { ...post, liked, replies };
         });
-        res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts, catId: req.params.catId, role: req.session.role, resources: resources});
+        res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts, catId: req.params.catId, role: req.session.role, resources: resources, userId: userId});
     } catch (err) {
         // console.error("Error while rendering feed page: " + err.message);
     }
@@ -76,10 +77,49 @@ function downloadResource(req, res) {
     }
 }
 
+function deletePost(req, res){
+    try{
+        const postId = req.body.postId;
+        const catId = req.body.catId;
+        model.deletePost(postId);
+        res.redirect("/category/" + catId);
+    }catch(err){
+        console.error("Error while deleting post" + err.message)
+    }
+}
+
+function reply(req, res){
+    try {
+        const userId = req.session.userId;
+        const catId = req.body.catId;
+        const postId = req.body.postId;
+        const description = req.body.description;
+
+        model.createReply(userId, catId, postId, description);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while rendering feed page: " + err.message);
+    }
+}
+
+function deleteReply(req, res){
+    try{
+        const replyId = req.body.replyId;
+        const catId = req.body.catId;
+        model.deleteReply(replyId);
+        res.redirect("/category/" + catId);
+    }catch(err){
+        console.error("Error while deleting post" + err.message)
+    }
+}
+
 module.exports = {
     feedPage,
     accountPage,
     likePost,
     post,
-    downloadResource
+    downloadResource,
+    deletePost,
+    reply,
+    deleteReply,
 };

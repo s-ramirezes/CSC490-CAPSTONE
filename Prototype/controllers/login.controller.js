@@ -115,6 +115,49 @@ function verifyUser(req, res) {
     }
 }
 
+function forgotPage(req, res) {
+    try {
+        const token = req.query.token;
+        res.render("forgotPage", { token });
+    } catch (err) {
+        console.error("Error while rendering forgot page: " + err.message);
+    }
+}
+
+function forgot(req, res){
+    try {
+        const result = model.sendForgot(req.body.email);
+        if (result === "success") {
+            res.redirect("/");
+        } else if (result === "DNE") {
+            res.render("login", { error: "Email does not exist" });
+        } else {
+            res.render("login", { error: "Failed to send email" });
+        }
+    } catch (err) {
+        console.error("Error while sending email ", err.message);
+        next(err);
+    }
+}
+
+function resetPassword(req, res) {
+    try {
+        const token = req.body.token;
+        const password = req.body.password;
+
+        const result = model.resetPassword(password, token);
+
+        if (result === "success") {
+            res.render("login", { success: "Password reset successfully" });
+        } else {
+            res.render("login", { error: "Invalid token or failed to reset password" });
+        }
+    } catch (err) {
+        console.error("Error while resetting password:", err.message);
+        res.redirect("/", { error: "Error while resetting password" });
+    }
+}
+
 module.exports = {
     loginPage,
     logout,
@@ -122,5 +165,8 @@ module.exports = {
     homePage,
     createUser,
     loginUser,
-    verifyUser
+    verifyUser,
+    forgotPage,
+    forgot,
+    resetPassword,
 };

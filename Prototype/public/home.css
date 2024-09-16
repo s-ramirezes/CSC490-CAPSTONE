@@ -134,3 +134,9 @@ header {
     align-items: center;
     margin-bottom: 16px;
 }
+
+.delete-button{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 8px;
+}
