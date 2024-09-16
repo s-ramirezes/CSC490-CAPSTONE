@@ -55,9 +55,9 @@ function isPostLiked(userId, postId) {
     return like !== undefined;
 }
 
-function createPost(catId, userId, title, description){
-    const sql = 'INSERT INTO posts (catId, userId, title, description) VALUES (?, ?, ?, ?)';
-    const params = [catId, userId, title, description];
+function createPost(catId, userId, title, description, courseId){
+    const sql = 'INSERT INTO posts (catId, userId, title, description, courseId) VALUES (?, ?, ?, ?, ?)';
+    const params = [catId, userId, title, description, courseId];
     return db.run(sql, params);
 }
 

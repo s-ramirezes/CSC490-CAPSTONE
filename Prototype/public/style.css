@@ -100,10 +100,24 @@
     background-color: purple;
 }
 
+/*    forgot page      */
+
+.forgot-title{
+    margin-bottom: 40px;
+}
+
+.forgot-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 /*               */
 
 body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman';
 }
 
 .back-button {

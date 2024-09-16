@@ -22,8 +22,8 @@
                 <h1>Feed</h1>
             </div>
             <div class="nav-buttons">
-                <button id="viewPostsButton" onclick="toggleView('posts')">View Posts</button>
-                <button id="viewResourcesButton" onclick="toggleView('resources')">View Resources</button>
+                <button id="viewPostsButton" class="btn btn-secondary" onclick="toggleView('posts')">View Posts</button>
+                <button id="viewResourcesButton" class="btn btn-secondary" onclick="toggleView('resources')">View Resources</button>
                 <% if (role === 'teacher') { %>
                     <div>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resourceModal">
@@ -49,7 +49,7 @@
                                     <h2>
                                         <%= post.title %>
                                     </h2>
-                                    <h4>By:  <%= post.email %></h4>
+                                    <h4>By:  <%= post.email %> Course:<%= post.courseId %> </h4>
                                     <div class="delete-button">
                                         <% if (userId === post.userId || role === 'teacher' || role === 'moderator') { %>
                                             <form action="/deletePost" method="POST" class="ms-4">
@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="replies">
                                         <% if (!post.replies || post.replies.length === 0) { %>
-                                            <p>No replies found for this post.</p>
+                                            <p>No replies found, be the first to make one!</p>
                                         <% } else { %>
                                             <% post.replies.forEach(reply => { %>
                                                 <div class="reply card mb-2">
@@ -237,9 +237,12 @@
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
                         <div class="mb-3">
+                            <label for="courseId" class="form-label">Course ID</label>
+                            <input type="number" class="form-control" id="courseId" name="courseId" min="100" max="999" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="4"
-                                required></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -250,6 +253,7 @@
             </div>
         </div>
     </div>
+    
 
     <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
         <div class="modal-dialog">

@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/style.css">
     <title>Forgot Password</title>
 </head>
 <body>
+    <div class="forgot-form">
+        <h1 class="forgot-title">Reset Password</h1>
+        <img class="spartan" src="../images/Spartan.png" alt="spartan">
     <form action="/resetPassword" method="POST" class="mt-3">
         <input type="hidden" name="token" value="<%= token %>">
         <div class="form-group">
-            <label for="password">New Password</label>
+            <label style="font-weight: bold;" for="password">Enter new password below:</label>
             <input type="password" id="password" name="password" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">Reset Password</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+</div>
 </body>
 </html>
