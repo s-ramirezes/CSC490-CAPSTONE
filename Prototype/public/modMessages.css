@@ -165,6 +165,11 @@ p{
     justify-content: space-between;
     padding: 10px;
     background-color: blue;
+    z-index: 1;
+}
+
+.formContainer{
+    z-index: 99999; 
 }
 
 .messageBox{
@@ -180,4 +185,11 @@ p{
     background-color: white;
     border-radius: 20px;
     cursor: pointer;
+}
+.calendarEvent {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }

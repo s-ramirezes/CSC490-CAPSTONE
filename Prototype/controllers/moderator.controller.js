@@ -50,9 +50,28 @@ function sendMessage (req, res){
         res.status(500).send("Failed to send message");
     }
 }
+function createCalendar (req,res){
+    try{
+        const convId = req.query.convId;
+        const userId = req.body.userId;
+        const name= req.body.name;
+        const location= req.body.location;
+        const startDate= req.body.startDate;
+        const endDate= req.body.endDate;
+        const startTime= req.body.startTime;
+        const endTime= req.body.endTime;
+        model.storeCalendar(convId, userId, name, location,
+            startDate, endDate, startTime, endTime);
+        res.redirect(`/modMessages?convId=${convId}`);
+    } catch (err) {
+        console.error ("Failed to set calendar: " + err.message);
+        res.status(500).send("Failed to set calendar");
+    }
+}
 module.exports = {
     homePage,
     messages,
     sendMessage,
+    createCalendar,
 
 };

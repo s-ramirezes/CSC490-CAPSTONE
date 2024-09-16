@@ -6,10 +6,15 @@ function getSubjects (){
 }
 
 function getMessages (convId){
-    const sql = `SELECT * FROM messages
-        WHERE convId= ?
+    const sql = `SELECT messageId AS id, description, userId, messageTime, 'message' AS source, NULL AS name, NULL AS location, NULL AS startDate, NULL AS endDate, NULL AS startTime, NULL AS endTime
+        FROM messages
+        WHERE convId = ?
+        UNION ALL
+        SELECT calendarId AS id, NULL AS description, userId, messageTime, 'calendar' AS source, name, location, startDate, endDate, startTime, endTime
+        FROM calendar
+        WHERE convId = ?
         ORDER BY messageTime ASC;`;
-    return db.all(sql, convId);
+    return db.all(sql, convId, convId);
 }
 
 function getReceiver(userId){
@@ -31,10 +36,20 @@ function storeMessage(convId, messageTxt, userId) {
     return db.run(sql, [convId, messageTxt, userId]);
 }
 
+function storeCalendar(convId, userId, name, location, 
+    startDate, endDate, startTime, endTime) {
+    console.log(convId, userId, name, location, startDate, endDate, startTime, endTime);
+    const sql = `INSERT INTO calendar (convId, userId, 
+        name, location, startDate, endDate, startTime, 
+        endTime)
+        VALUES (?,?,?,?,?,?,?,?);`;
+    return db.run(sql, [convId, userId, name, location, startDate, endDate, startTime, endTime]);
+}
+
 module.exports = {
     getSubjects,
     getMessages,
     getReceiver,
     storeMessage,
-
+    storeCalendar,
 };
