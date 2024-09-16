@@ -12,22 +12,35 @@
         <%- include('partials/navbar') %>
     </header>
     <div class="pageContent">
-        <h1>UserName</h1>
+        <h1><%= receiver.fname %> <%= receiver.lname %> </h1>
         <div class="messages">
-            <p class="incoming">
-                Hello
-            </p>
-            <p class="outgoing">
-                Goodbye
-            </p>
-            <p class="incoming">
-                Hello
-            </p>
-            <p class="outgoing">
-                Goodbye
-            </p>
+            <% if (!messages || messages.length ===0) { %> 
+                <h2> No messages </h2>
+            <% } else { %>
+                <% messages.forEach(message => { %>
+                    <% if (message.userId === userId){ %>
+                        <p class="incoming">
+                            <%= message.description %>
+                        </p>
+                    <% } else { %>
+                        <p class="outgoing">
+                            <%= message.description %>
+                        </p>
+                    <% } %>
+                <% }) %>
+            <% } %>
         </div>
+        <form action="/sendMessage?convId=<%= convId %>" method="POST" class="messageContainer">
+            <input type="text" class="messageBox" name="message" placeholder="Write Message" required>
+            <input type="hidden" name="userId" value="<%= userId %>">
+            <button type="submit" class="sendBtn">SEND</button>
+        </form>
     </div>
+    <form action="/sendMessage?convId=<%= convId %>" method="POST" class="messageContainer">
+        <input type="text" class="messageBox" name="message" placeholder="Write Message" required>
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <button type="submit" class="sendBtn">SEND</button>
+    </form>
 
 </body>
 

@@ -127,7 +127,9 @@ p{
 
 .messages{
     display: block;
-
+    margin-bottom: 60px;
+    padding-bottom: 60px;
+    overflow-y: scroll;
 }
 
 .incoming {
@@ -152,4 +154,30 @@ p{
     border-radius: 100px;
     float: left;
     text-align: left;
+}
+
+.messageContainer{
+    position: fixed;
+    bottom: 0;
+    left: 10%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: blue;
+}
+
+.messageBox{
+    width: 85%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+}
+
+.sendBtn{
+    width: 10%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 20px;
+    cursor: pointer;
 }
