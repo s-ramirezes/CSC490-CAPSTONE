@@ -22,8 +22,8 @@
                 <h1>Feed</h1>
             </div>
             <div class="nav-buttons">
-                <button id="viewPostsButton" onclick="toggleView('posts')">View Posts</button>
-                <button id="viewResourcesButton" onclick="toggleView('resources')">View Resources</button>
+                <button id="viewPostsButton" class="btn btn-secondary" onclick="toggleView('posts')">View Posts</button>
+                <button id="viewResourcesButton" class="btn btn-secondary" onclick="toggleView('resources')">View Resources</button>
                 <% if (role === 'teacher') { %>
                     <div>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resourceModal">
@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="replies">
                                         <% if (!post.replies || post.replies.length === 0) { %>
-                                            <p>No replies found for this post.</p>
+                                            <p>No replies found, be the first to make one!</p>
                                         <% } else { %>
                                             <% post.replies.forEach(reply => { %>
                                                 <div class="reply card mb-2">
