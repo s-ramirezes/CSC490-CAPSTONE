@@ -52,8 +52,19 @@ function deleteResource(req, res) {
     }
 }
 
+function teacherResourcePage(req, res) {
+    try {
+        const userId = req.session.userId;
+        const resources = model.getTeacherResources(userId);
+        res.render("teacherResources", {subjects: req.session.subjects, role: req.session.role, resources: resources});
+    } catch (err) {
+        console.error("Error while rendering teacher resource page: " + err.message);
+    }
+}
+
 
 module.exports = {
     upload,
     deleteResource,
+    teacherResourcePage,
 };

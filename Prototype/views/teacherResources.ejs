@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet"  href="/public/home.css" >
+        <link rel="stylesheet"  href="/public/account.css" >
+        <script src="/public/script.js" defer></script>
+            
+        <title>Teacher Resources</title>
+    </head>
+
+    <body>
+        <header>
+            <%- include('partials/navbar') %>
+        </header>
+        <div class="columns">
+            <div id="resources-content">
+                <h2>Your posted Resources</h2>
+                <% if (!resources || resources.length === 0) { %>
+                    <h2>No resources found, be the first to make one!</h2>
+                <% } else { %>
+                    <% resources.forEach(resource => { %>
+                        <div class="resource">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2><%= resource.catAbbr + "- " + resource.title %></h2>                                </div>
+
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1 text-center">
+                                        <a href="<%= resource.url %>" class="btn btn-link"><%= resource.url %></a>
+                                    </div>
+                                    <form action="/download/<%= resource.fileName %>" method="get" class="d-inline">
+                                        <input type="hidden" name="fileName" value="<%= resource.fileName %>">
+                                        <button type="submit" class="btn btn-primary">Download</button>
+                                    </form>
+                                    <% if (role === 'teacher') { %>
+                                        <form action="/deleteResource" method="POST" class="d-inline">
+                                            <input type="hidden" name="resourceId" value="<%= resource.resourceId %>">
+                                            <input type="hidden" name="catId" value="<%= resource.catId %>">
+                                            <input type="hidden" name="fileName" value="<%= resource.fileName %>">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    <% }) %>
+                <% } %>
+            </div>
+    </body>
+
+</html>
