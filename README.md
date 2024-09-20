@@ -1,4 +1,13 @@
 # CSC490-CAPSTONE
 
-Signup verification
-This currently only works on localhost with port 8000. To verify the email it has to be done on the device the app is running.
+Work needed to be done:
+- Peer review
+- maybe teacher analytics
+- mod functions (ban user, change user roles, etc)
+- frontend design/bugs
+- selecting subjects for teachers (on login?)
+- connecting messaging to pages/posts
+
+For later:
+- Voice chat
+- maybe teacher analytics

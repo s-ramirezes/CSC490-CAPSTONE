@@ -20,7 +20,18 @@ function feedPage(req, res) {
             const replies = model.getRepliesforPost(post.postId);
             return { ...post, liked, replies };
         });
-        res.render("feed", {subjects: req.session.subjects, role: req.session.role, posts: likedPosts, catId: req.params.catId, role: req.session.role, resources: resources, userId: userId});
+        const ids = model.getConversations(userId);
+        const convUsers = ids.map(id => model.getUser(id.otherUserId));
+
+        res.render("feed", {
+            subjects: req.session.subjects,
+            role: req.session.role,
+            posts: likedPosts, catId: req.params.catId,
+            role: req.session.role,
+            resources: resources,
+            userId: userId,
+            convUsers: convUsers
+        });
     } catch (err) {
         // console.error("Error while rendering feed page: " + err.message);
     }

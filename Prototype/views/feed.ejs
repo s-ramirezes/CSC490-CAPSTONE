@@ -166,27 +166,22 @@
 
         <div id="private-messages">
             <h1>Private Messages</h1>
+            <% if (convUsers) { %>
             <ul class="users">
-                <li class="user-info">
-                    <a href="#">
-                        <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
-                            width="50">
-                        <span>Username</span>
-                    </a>
-                    <span> # of new notifications</span>
-                    <button type="button" class="btn btn-primary">Message</button>
-                </li>
-                <br>
-                <li class="user-info">
-                    <a href="#">
-                        <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
-                            width="50">
-                        <span>Username</span>
-                    </a>
-                    <span> # of new notifications</span>
-                    <button type="button" class="btn btn-primary">Message</button>
-                </li>
+                <% convUsers.forEach(user => { %>
+                    <li class="user-info">
+                        <a href="/messages/<%= user.userId %>">
+                            <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
+                                width="50">
+                            <span><%= user.fname + " " + user.lname %></span>
+                        </a>
+                        <span> # of new notifications</span>
+                        <button type="button" class="btn btn-primary">Message</button>
+                    </li>
+                    <br>
+                <% }) %> 
             </ul>
+            <% } %>
         </div>
     </div>
 

@@ -94,6 +94,21 @@ function deleteReply(replyId){
     return db.run(sql, params);
 }
 
+function getConversations(userId) {
+    const sql = `
+        SELECT 
+            CASE 
+                WHEN c.userId1 = ? THEN c.userId2 
+                ELSE c.userId1 
+            END AS otherUserId
+        FROM conversation c
+        JOIN users u ON (u.userId = c.userId1 OR u.userId = c.userId2)
+        WHERE (c.userId1 = ? OR c.userId2 = ?)
+        GROUP BY otherUserId;
+    `;
+    return db.all(sql, userId, userId, userId);
+}
+
 module.exports = {
     getPosts,
     getSubjectPosts,
@@ -107,4 +122,5 @@ module.exports = {
     createReply,
     getRepliesforPost,
     deleteReply,
+    getConversations
 };
