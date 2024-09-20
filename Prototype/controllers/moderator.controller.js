@@ -68,10 +68,24 @@ function createCalendar (req,res){
         res.status(500).send("Failed to set calendar");
     }
 }
+function userList (req,res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const flaggedUsers= model.getFlaggedUsers();
+        const allUsers=model.getAllUsers();
+        const role= 'moderator';
+        res.render ("modUsers", {subjects : subjects, role: role, 
+            flaggedUsers : flaggedUsers, allUsers: allUsers});
+    } catch (err) {
+        console.error("Failed to render modUsers page "+ err.message);
+    }
+}
 module.exports = {
     homePage,
     messages,
     sendMessage,
     createCalendar,
-
+    userList,
+    
 };

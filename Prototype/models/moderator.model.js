@@ -46,10 +46,24 @@ function storeCalendar(convId, userId, name, location,
     return db.run(sql, [convId, userId, name, location, startDate, endDate, startTime, endTime]);
 }
 
+function getFlaggedUsers (){
+    const sql = `SELECT * FROM users
+        WHERE flagged =1; `;
+    return db.all(sql);
+}
+
+function getAllUsers(){
+    const sql = `SELECT * FROM users;`;
+    return db.all(sql);
+}
+
 module.exports = {
     getSubjects,
     getMessages,
     getReceiver,
     storeMessage,
     storeCalendar,
+    getFlaggedUsers,
+    getAllUsers,
+
 };
