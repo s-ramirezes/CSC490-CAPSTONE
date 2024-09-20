@@ -125,6 +125,17 @@ function deleteReply(req, res){
     }
 }
 
+function createConv(req, res){
+    try{
+        const userId1 = req.session.userId;
+        const userId2 = req.body.userId2;
+        model.createConv(userId1,userId2);
+        res.redirect("/home");
+    }catch(err){
+        console.error("Error while creating conversation" + err.message)
+    }
+}
+
 module.exports = {
     feedPage,
     accountPage,
@@ -134,4 +145,5 @@ module.exports = {
     deletePost,
     reply,
     deleteReply,
+    createConv
 };

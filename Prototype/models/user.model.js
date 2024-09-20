@@ -109,6 +109,12 @@ function getConversations(userId) {
     return db.all(sql, userId, userId, userId);
 }
 
+function createConv(userId1, userId2){
+    const sql = 'INSERT INTO conversation (userId1, userId2) VALUES (?, ?)';
+    const params = [userId1, userId2];
+    return db.run(sql, params);
+}
+
 module.exports = {
     getPosts,
     getSubjectPosts,
@@ -122,5 +128,6 @@ module.exports = {
     createReply,
     getRepliesforPost,
     deleteReply,
-    getConversations
+    getConversations,
+    createConv
 };
