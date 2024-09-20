@@ -14,6 +14,7 @@ router.post("/post", userController.post);
 router.post("/deletePost", userController.deletePost);
 router.post("/reply", userController.reply);
 router.post("/deleteReply", userController.deleteReply);
+router.post("/createConv", userController.createConv);
 
 
 module.exports = router; 

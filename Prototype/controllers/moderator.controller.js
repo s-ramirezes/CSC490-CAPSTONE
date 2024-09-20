@@ -42,6 +42,10 @@ function sendMessage (req, res){
             throw new Error("Missing required parameters");
         }
         model.storeMessage(convId, messageTxt, userId);
+        const messageId = model.getLastRowId().id;
+        model.addMessageStatus(messageId, userId);
+        const receiver = model.getReceiver(userId);
+        model.addMessageStatus(messageId, receiver.userId);
 
 
         res.redirect(`/modMessages?convId=${convId}`);

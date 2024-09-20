@@ -18,7 +18,7 @@ function getMessages (convId){
 }
 
 function getReceiver(userId){
-    const sql = `SELECT u.fName, u.lname FROM conversation c
+    const sql = `SELECT u.fName, u.lname, u.userId FROM conversation c
         JOIN users u
         ON u.userId = 
             CASE 
@@ -57,6 +57,16 @@ function getAllUsers(){
     return db.all(sql);
 }
 
+function addMessageStatus(messageId, userId) {
+    const sql = `INSERT INTO messageStatus (messageId, userId)
+        VALUES (?,?);`;
+    return db.run(sql, [messageId, userId]);
+}
+
+function getLastRowId() {
+    return db.get("SELECT last_insert_rowid() as id");
+}
+
 module.exports = {
     getSubjects,
     getMessages,
@@ -66,4 +76,6 @@ module.exports = {
     getFlaggedUsers,
     getAllUsers,
 
+    addMessageStatus,
+    getLastRowId,
 };

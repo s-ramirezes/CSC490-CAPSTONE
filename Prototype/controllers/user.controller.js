@@ -21,8 +21,14 @@ function feedPage(req, res) {
             return { ...post, liked, replies };
         });
         const ids = model.getConversations(userId);
-        const convUsers = ids.map(id => model.getUser(id.otherUserId));
-
+        const convUsers = ids.map(id => {
+            const otherUser = model.getUser(id.otherUserId);
+            return { 
+                convId: id.convId, 
+                otherUser, 
+                unreadCount: id.unreadCount
+            };
+        });
         res.render("feed", {
             subjects: req.session.subjects,
             role: req.session.role,
@@ -125,6 +131,17 @@ function deleteReply(req, res){
     }
 }
 
+function createConv(req, res){
+    try{
+        const userId1 = req.session.userId;
+        const userId2 = req.body.userId2;
+        model.createConv(userId1,userId2);
+        res.redirect("/home");
+    }catch(err){
+        console.error("Error while creating conversation" + err.message)
+    }
+}
+
 module.exports = {
     feedPage,
     accountPage,
@@ -134,4 +151,5 @@ module.exports = {
     deletePost,
     reply,
     deleteReply,
+    createConv
 };

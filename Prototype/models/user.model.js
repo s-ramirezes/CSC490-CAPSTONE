@@ -97,17 +97,36 @@ function deleteReply(replyId){
 function getConversations(userId) {
     const sql = `
         SELECT 
+            c.convId,
             CASE 
                 WHEN c.userId1 = ? THEN c.userId2 
                 ELSE c.userId1 
-            END AS otherUserId
+            END AS otherUserId,
+            COUNT(ms.isRead) AS unreadCount
         FROM conversation c
-        JOIN users u ON (u.userId = c.userId1 OR u.userId = c.userId2)
+        LEFT JOIN messages m ON m.convId = c.convId
+        LEFT JOIN messageStatus ms ON ms.messageId = m.messageId AND ms.userId = ? AND ms.isRead = 0
         WHERE (c.userId1 = ? OR c.userId2 = ?)
-        GROUP BY otherUserId;
+        GROUP BY c.convId;
     `;
-    return db.all(sql, userId, userId, userId);
+    const params = [userId, userId, userId, userId];
+    return db.all(sql, ...params);
 }
+
+function createConv(userId1, userId2){
+    const sql = 'INSERT INTO conversation (userId1, userId2) VALUES (?, ?)';
+    const params = [userId1, userId2];
+    return db.run(sql, params);
+}
+// function getUnreadMessages(convId, userId) {
+//     const sql = `
+//         SELECT m.messageId, m.description, ms.isRead
+//         FROM messageStatus ms
+//         JOIN messages m ON ms.messageId = m.messageId
+//         WHERE m.convId = ? AND ms.isRead = 0 AND ms.userId = ?;
+//     `;
+//     return db.all(sql, convId, userId);
+// }
 
 module.exports = {
     getPosts,
@@ -122,5 +141,6 @@ module.exports = {
     createReply,
     getRepliesforPost,
     deleteReply,
-    getConversations
+    getConversations,
+    createConv
 };
