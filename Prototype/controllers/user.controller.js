@@ -21,8 +21,14 @@ function feedPage(req, res) {
             return { ...post, liked, replies };
         });
         const ids = model.getConversations(userId);
-        const convUsers = ids.map(id => model.getUser(id.otherUserId));
-
+        const convUsers = ids.map(id => {
+            const otherUser = model.getUser(id.otherUserId);
+            return { 
+                convId: id.convId, 
+                otherUser, 
+                unreadCount: id.unreadCount
+            };
+        });
         res.render("feed", {
             subjects: req.session.subjects,
             role: req.session.role,

@@ -180,9 +180,9 @@
                         <a href="/messages/<%= user.userId %>">
                             <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
                                 width="50">
-                            <span><%= user.fname + " " + user.lname %></span>
+                            <span><%= user.otherUser.fname + " " + user.otherUser.lname %></span>
                         </a>
-                        <span> # of new notifications</span>
+                        <span> <%= user.unreadCount %> unread messages</span>
                         <button type="button" class="btn btn-primary">Message</button>
                     </li>
                     <br>
