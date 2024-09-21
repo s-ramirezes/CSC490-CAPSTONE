@@ -142,6 +142,15 @@ function createConv(req, res){
     }
 }
 
+function getMessagePage(req, res){
+    try{
+        const convId = req.body.convId;
+        res.redirect(`/modMessages?convId=${convId}`);
+    }catch(err){
+        console.error("Error while getting message page:  " + err.message)
+    }
+}
+
 module.exports = {
     feedPage,
     accountPage,
@@ -151,5 +160,6 @@ module.exports = {
     deletePost,
     reply,
     deleteReply,
-    createConv
+    createConv,
+    getMessagePage
 };

@@ -75,12 +75,11 @@
                                             <div class="text-muted small">0 comments</div>
                                         </div>
                                         <div class="d-flex align-items-center me-4">
-                                            <div class="message-button"></div>
                                             <form action="/createConv" method="POST" class="ms-4">
                                                 <input type="hidden" id="userId2" value="<%= post.userId %>" name="userId2">
                                                 <button type="submit" class="btn btn-primary">Message</button>
                                             </form>
-                                    </div>
+                                    
                                             <button type="submit" id="likeButton"
                                                 class="btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
                                                 <input type="hidden" name="postId" value="<%= post.postId %>">
