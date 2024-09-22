@@ -5,6 +5,7 @@ const app = express();
 const multer = require("multer");
 const session = require("express-session");
 const path = require("path");
+const setSessionData = require("./routes/setSessionData");
 
 app.use(session({
   secret: 'secret_key',
@@ -12,15 +13,15 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// const imageStorage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './images');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//   }
-// });
-// const imageUpload = multer({ storage: imageStorage });
+const imageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const imageUpload = multer({ storage: imageStorage });
 
 const uploadStorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -37,6 +38,8 @@ const upload = multer({ storage: uploadStorage });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(setSessionData);
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));
 app.set('partials', path.join(__dirname, 'views', 'partials'));
@@ -44,7 +47,7 @@ app.set('partials', path.join(__dirname, 'views', 'partials'));
 
 
 const moderatorRouter = require("./routes/moderator.route");
-const userRouter = require("./routes/user.route");
+const userRouter = require("./routes/user.route")(imageUpload);
 const teacherRouter = require("./routes/teacher.route")(upload);
 const tutorRouter = require("./routes/tutor.route");
 const loginRouter = require("./routes/login.route");

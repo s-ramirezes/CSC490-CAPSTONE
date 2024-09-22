@@ -6,7 +6,6 @@ const loginController = require("../controllers/login.controller");
 
 router.get("/", loginController.loginPage);
 router.get("/signup", loginController.Signup);
-router.get("/home", loginController.homePage);
 router.get("/verify", loginController.verifyUser);
 router.get("/logout", loginController.logout);
 router.get("/forgotPage", loginController.forgotPage);

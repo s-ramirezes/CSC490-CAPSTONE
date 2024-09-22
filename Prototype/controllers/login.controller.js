@@ -26,24 +26,6 @@ function logout(req, res) {
     }
 }
 
-function homePage(req, res) {
-    try {
-        if (req.session && req.session.email) {
-            res.render("home", {
-                subjects: req.session.subjects,
-                email: req.session.email,
-                fname: req.session.fname,
-                lname: req.session.lname,
-                role: req.session.role
-            });
-        } else {
-            res.redirect("/");
-        }
-    } catch (err) {
-        console.error("Error while rendering home page: " + err.message);
-    }
-}
-
 function Signup(req, res) {
     try {
         // const error = null;
@@ -162,7 +144,6 @@ module.exports = {
     loginPage,
     logout,
     Signup,
-    homePage,
     createUser,
     loginUser,
     verifyUser,

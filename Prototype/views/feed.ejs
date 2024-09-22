@@ -75,12 +75,11 @@
                                             <div class="text-muted small">0 comments</div>
                                         </div>
                                         <div class="d-flex align-items-center me-4">
-                                            <div class="message-button"></div>
                                             <form action="/createConv" method="POST" class="ms-4">
                                                 <input type="hidden" id="userId2" value="<%= post.userId %>" name="userId2">
                                                 <button type="submit" class="btn btn-primary">Message</button>
                                             </form>
-                                    </div>
+                                    
                                             <button type="submit" id="likeButton"
                                                 class="btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
                                                 <input type="hidden" name="postId" value="<%= post.postId %>">
@@ -177,9 +176,8 @@
             <ul class="users">
                 <% convUsers.forEach(user => { %>
                     <li class="user-info">
-                        <a href="/messages/<%= user.userId %>">
-                            <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
-                                width="50">
+                        <a href="/account/<%= user.otherUser.userId %>">
+                            <img src="/images/<%= user.otherUser.profilePic %>" class="rounded-circle" alt="profile" height="40">
                             <span><%= user.otherUser.fname + " " + user.otherUser.lname %></span>
                         </a>
                         <span> <%= user.unreadCount %> unread messages</span>

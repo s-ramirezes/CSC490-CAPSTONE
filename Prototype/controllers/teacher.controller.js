@@ -56,15 +56,25 @@ function teacherResourcePage(req, res) {
     try {
         const userId = req.session.userId;
         const resources = model.getTeacherResources(userId);
-        res.render("teacherResources", {subjects: req.session.subjects, role: req.session.role, resources: resources});
+        res.render("teacherResources", {resources: resources});
     } catch (err) {
         console.error("Error while rendering teacher resource page: " + err.message);
     }
 }
 
+function promoteToTutor(req, res) {
+    try {
+        const userId = req.body.userId;
+        model.promoteToTutor(userId);
+        res.redirect("/home");
+    } catch (err) {
+        console.error("Error while promoting to tutor: " + err.message);
+    }
+}
 
 module.exports = {
     upload,
     deleteResource,
     teacherResourcePage,
+    promoteToTutor
 };
