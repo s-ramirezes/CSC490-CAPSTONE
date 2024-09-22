@@ -144,9 +144,12 @@ header {
 }
 
 .flaggedUser button{
-    right: 0;
-    text-align: center;
+    display: inline-block;
+    padding: 5px 10px;
     font-size: 15px;
     border-radius: 5px;
     background-size: cover;
+    text-align: center;
+    right: 0;
+    align-self:center;
 }
