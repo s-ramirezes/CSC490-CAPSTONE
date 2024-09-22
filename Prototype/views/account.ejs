@@ -18,16 +18,33 @@
     <div class="columns">
         <div id="account">
             <h1>Account Info</h1><br>
-            <img src="/images/blank-pf.png" alt="profile" class="profile-image" width="200">
+            <% if (userId === user.userId) { %>
+                <form id="profileForm" action="/updateProfilePic" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="profilePicInput" style="cursor: pointer;">
+                            <img src="/images/<%= user.profilePic %>" alt="profile" class="profile-image" width="200">
+                            <input type="file" class="form-control" id="profilePicInput" name="file" style="display: none;" onchange="submitForm()">
+                        </label>
+                    </div>
+                </form>
+            <% } else { %>
+                <img src="/images/<%= user.profilePic %>" alt="profile" class="profile-image" width="200">
+            <% } %>
             <br><br><h2><%= user.fname + " " + user.lname %></h2>
             <h4>Role: <%= user.role %></h3>
             <h4>Email: <%= user.email %></h3>
-            <% if (role === 'teacher' && user.role !== role) { %>
+            <% if (user.bio) { %>
+                <h4 style="border-bottom: 1px solid black;">About Me</h4>
+                <p><%= user.bio %></p>
+            <% } %>
+            <% if (role === 'teacher' && user.role === 'student') { %>
                 <form action="/promoteToTutor" method="POST" class="ms-4">
                     <input type="hidden" name="userId" value="<%= user.userId %>">
                     <button type="submit" class="btn btn-primary"> Promote to Tutor </button>
                 </form>
             <% } %>
+            
+
             <!-- Put badges here -->
             
             
@@ -80,5 +97,11 @@
     
 
 </body>
+
+<script>
+    function submitForm() {
+        document.getElementById('profileForm').submit();
+    }
+</script>
 
 </html>

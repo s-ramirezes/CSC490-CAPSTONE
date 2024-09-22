@@ -69,7 +69,7 @@ function accountPage(req, res) {
         const user = model.getUser(userId);
         const userPosts = model.getUserPost(userId);
         const likedPosts = userPosts.map(post => {
-            const liked = model.isPostLiked(userId, post.postId); 
+            const liked = model.isPostLiked(req.session.userId, post.postId); 
             return { ...post, liked };
         });
 
@@ -170,6 +170,19 @@ function getMessagePage(req, res){
     }
 }
 
+function updateProfilePic(req, res){
+    try{
+        const userId = req.session.userId;
+        const fileName = req.file.filename;
+        model.updateProfilePic(fileName, userId);
+        res.redirect("/account/" + userId);
+    }
+    catch(err){
+        console.error("Error while updating profile pic:  " + err.message)
+    }
+}
+
+
 module.exports = {
     homePage,
     feedPage,
@@ -181,5 +194,6 @@ module.exports = {
     reply,
     deleteReply,
     createConv,
-    getMessagePage
+    getMessagePage,
+    updateProfilePic
 };
