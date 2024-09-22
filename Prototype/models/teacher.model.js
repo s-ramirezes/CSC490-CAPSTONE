@@ -22,8 +22,14 @@ function getTeacherResources(userId) {
     return db.all(sql, userId);
 }
 
+function promoteToTutor(userId) {
+    const sql = "UPDATE users SET role = 'tutor' WHERE userId = ?";
+    return db.run(sql, userId);
+}
+
 module.exports = {
     uploadResource,
     deleteResource,
     getTeacherResources,
+    promoteToTutor  
 };

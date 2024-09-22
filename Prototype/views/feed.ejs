@@ -176,7 +176,7 @@
             <ul class="users">
                 <% convUsers.forEach(user => { %>
                     <li class="user-info">
-                        <a href="/messages/<%= user.userId %>">
+                        <a href="/account/<%= user.otherUser.userId %>">
                             <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
                                 width="50">
                             <span><%= user.otherUser.fname + " " + user.otherUser.lname %></span>

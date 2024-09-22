@@ -15,7 +15,7 @@
             <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
             <li><a href="/modHome"><h2>Spartan Aid</h2></a></li>
             <li><a href="/modMessages"><h2>Messages</h2></a></li>
-            <li><a href="/account"><h2>Account</h2></a></li>
+            <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="modUsers.html"><h2>Users</h2></a></li>
             <li><a href="modPosts.html"><h2>Posts</h2></a></li>
             <li><a href="modTutor.html"><h2>Tutors</h2></a></li>
@@ -24,20 +24,20 @@
             <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="#"><h2>Messages</h2></a></li>
-            <li><a href="/account"><h2>Account</h2></a></li>
+            <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'tutor') { %>
             <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="#"><h2>Messages</h2></a></li>
-            <li><a href="/account"><h2>Account</h2></a></li>
+            <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'teacher') { %>
             <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="#"><h2>Messages</h2></a></li>
             <li><a href="/resources"><h2>Study Resources</h2></a></li>
-            <li><a href="/account"><h2>Account</h2></a></li>
+            <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } %>
     

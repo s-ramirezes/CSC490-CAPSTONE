@@ -22,12 +22,18 @@
             <br><br><h2><%= user.fname + " " + user.lname %></h2>
             <h4>Role: <%= user.role %></h3>
             <h4>Email: <%= user.email %></h3>
+            <% if (role === 'teacher' && user.role !== role) { %>
+                <form action="/promoteToTutor" method="POST" class="ms-4">
+                    <input type="hidden" name="userId" value="<%= user.userId %>">
+                    <button type="submit" class="btn btn-primary"> Promote to Tutor </button>
+                </form>
+            <% } %>
             <!-- Put badges here -->
             
             
         </div>
         <div id="posts">
-            <h1>My Posts</h1>
+            <h1>Posts Made</h1>
             <div id="userPosts">
                 <% userPosts.forEach(post => { %>
                 <div class="card">

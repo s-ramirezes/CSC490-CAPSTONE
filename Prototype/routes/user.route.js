@@ -5,7 +5,8 @@ const router = express.Router();
 const userController = require("../controllers/user.controller");
 
 router.get("/feed", userController.feedPage);
-router.get("/account", userController.accountPage);
+router.get("/home", userController.homePage);
+router.get("/account/:userId", userController.accountPage);
 router.get("/category/:catId", userController.feedPage);
 router.get("/download/:fileName", userController.downloadResource);
 router.get("/getMessagePage", userController.getMessagePage);

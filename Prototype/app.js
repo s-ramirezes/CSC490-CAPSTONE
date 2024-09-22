@@ -5,6 +5,7 @@ const app = express();
 const multer = require("multer");
 const session = require("express-session");
 const path = require("path");
+const setSessionData = require("./routes/setSessionData");
 
 app.use(session({
   secret: 'secret_key',
@@ -36,6 +37,8 @@ const upload = multer({ storage: uploadStorage });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(setSessionData);
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));

@@ -10,6 +10,28 @@ const multer = require("multer");
 
 const model = require("../models/user.model");
 
+function homePage(req, res) {
+    try {
+        if (req.session && req.session.email) {
+            const userId = req.session.userId;
+            const ids = model.getConversations(userId);
+            const convUsers = ids.map(id => {
+            const otherUser = model.getUser(id.otherUserId);
+            return { 
+                convId: id.convId, 
+                otherUser, 
+                unreadCount: id.unreadCount
+            };
+        });
+            res.render("home", {convUsers: convUsers});
+        } else {
+            res.redirect("/");
+        }
+    } catch (err) {
+        console.error("Error while rendering home page: " + err.message);
+    }
+}
+
 function feedPage(req, res) {
     try {
         const userId = req.session.userId;
@@ -30,12 +52,9 @@ function feedPage(req, res) {
             };
         });
         res.render("feed", {
-            subjects: req.session.subjects,
-            role: req.session.role,
-            posts: likedPosts, catId: req.params.catId,
-            role: req.session.role,
+            posts: likedPosts,
+            catId: req.params.catId,
             resources: resources,
-            userId: userId,
             convUsers: convUsers
         });
     } catch (err) {
@@ -46,7 +65,7 @@ function feedPage(req, res) {
 
 function accountPage(req, res) {
     try {
-        const userId = req.session.userId;
+        const userId = req.params.userId;
         const user = model.getUser(userId);
         const userPosts = model.getUserPost(userId);
         const likedPosts = userPosts.map(post => {
@@ -54,7 +73,7 @@ function accountPage(req, res) {
             return { ...post, liked };
         });
 
-        res.render("account", {subjects: req.session.subjects, role: req.session.role, user: user, userPosts: likedPosts});
+        res.render("account", {user: user, userPosts: likedPosts});
     } catch (err) {
         console.error("Error while rendering feed page: " + err.message);
     }
@@ -152,6 +171,7 @@ function getMessagePage(req, res){
 }
 
 module.exports = {
+    homePage,
     feedPage,
     accountPage,
     likePost,
