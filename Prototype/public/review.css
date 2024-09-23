@@ -1,0 +1,54 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    background-color: grey;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.review {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    height: 100vh;
+    border-radius: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.header {
+    background-color: purple;
+    border-radius: 20px 20px 0 0;
+}
+
+.content {
+    background-color: white;
+    color: black;
+    height: auto;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.footer {
+    background-color: purple;
+    border-radius: 0 0 20px 20px;
+}
+
+form {
+    padding-top: 16px;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-top: 36px;
+    margin-bottom: 36px;
+    gap: 16px;
+}
+
+.review-desc {
+    width: 700px;
+    height: 400px;
+}
+
