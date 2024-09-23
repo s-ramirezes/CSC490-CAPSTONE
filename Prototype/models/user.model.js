@@ -30,6 +30,11 @@ function getUser(userId) {
     return db.get(sql, userId);
 }
 
+function getAllUsers(excludeUserId) {
+    const sql = "SELECT * FROM users WHERE userId != ? AND verified = 1";
+    return db.all(sql, excludeUserId);
+}
+
 function likePost(userId, postId) {
     let likeCheck = `SELECT * FROM likes WHERE userId = ? AND postId = ?`;
     const params = [userId, postId];
@@ -141,6 +146,7 @@ module.exports = {
     getSubjectPosts,
     getUserPost,
     getUser,
+    getAllUsers,
     likePost,
     isPostLiked,
     createPost,
