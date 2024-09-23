@@ -36,15 +36,18 @@
         <h1>Flagged Users</h1>
         <div class="flaggedUserList">
             <% flaggedUsers.forEach(flaggedUser => { %>
-                <a class="flaggedUser" href="#">
+                <a class="flaggedUser" href="/modUserPage?userId=<%= flaggedUser.userId %>">
                     <p>UserId= <%=flaggedUser.userId %></p>
                     <p>Name= <%=flaggedUser.fname %> <%=flaggedUser.lname %></p>
                     <p>Role= <%=flaggedUser.role %></p>
-                    <button class="unflagUser" userId="<%=flaggedUser.userId %>">
-                        Unflag</button>
-                    <button class="banUser" userId="<%=flaggedUser.userId %>"
-                        action>
-                        Ban</button>
+                    <form action="/unflagUser?userId=<%= flaggedUser.userId %>" method="POST">
+                        <button class="flagUser">
+                            Unflag</button>
+                    </form>
+                    <form action="/banUser?userId=<%= flaggedUser.userId %>" method="POST">
+                        <button class="flagUser">
+                            Ban</button>
+                    </form>
                 </a>
             <% }) %>
             
@@ -52,10 +55,14 @@
         <h1>All Users</h1>
         <div class="allUserList">
             <% allUsers.forEach(user => { %>
-                <a class="user" href="#">
+                <a class="user" href="/modUserPage?userId=<%= user.userId %>">
                     <p>UserId= <%=user.userId %></p>
                     <p>Name= <%=user.fname %> <%=user.lname %></p>
                     <p>Role= <%=user.role %></p>
+                    <form action="/modFlag?userId=<%= user.userId %>" method="POST">
+                        <button class="flagUser">
+                            Flag</button>
+                    </form>
                 </a>
             <% }) %>
             

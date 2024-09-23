@@ -1,5 +1,6 @@
 "use strict";
 const db = require("../models/db-conn");
+const { getUserPost } = require("./user.model");
 function getSubjects (){
     const sql = "SELECT * FROM category";
     return db.all(sql);
@@ -67,6 +68,45 @@ function getLastRowId() {
     return db.get("SELECT last_insert_rowid() as id");
 }
 
+function  unflagUser(userId) {
+    const sql = `UPDATE users
+        SET flagged = 0
+        WHERE userId= ?;`;
+    return db.run(sql, [userId]);
+}
+
+function banUser(userId) {
+    const sql = `UPDATE users 
+        SET flagged = 0, banned= 1
+        WHERE userId= ?;`;
+    return db.run(sql, [userId]);
+}
+
+function  flagUser(userId) {
+    const sql = `UPDATE users
+        SET flagged = 1
+        WHERE userId= ?;`;
+    return db.run(sql, [userId]);
+}
+
+function getUser(userId){
+    const sql = `SELECT * FROM users
+    WHERE userId= ?;`;
+    return db.get(sql, userId);
+}
+
+function getUserPosts(userId){
+    const sql = `SELECT * FROM posts
+    WHERE userId=?;`;
+    return db.all(sql, userId);
+}
+
+function getUserReplies(userId){
+    const sql = `SELECT * FROM replies
+    WHERE userId=?;`;
+    return db.all(sql, userId);
+}
+
 module.exports = {
     getSubjects,
     getMessages,
@@ -75,7 +115,13 @@ module.exports = {
     storeCalendar,
     getFlaggedUsers,
     getAllUsers,
-
     addMessageStatus,
     getLastRowId,
+    unflagUser,
+    banUser,
+    flagUser,
+    getUser,
+    getUserPosts,
+    getUserReplies,
+    
 };
