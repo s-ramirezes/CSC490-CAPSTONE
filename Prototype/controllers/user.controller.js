@@ -62,6 +62,16 @@ function feedPage(req, res) {
     }
 }
 
+function messagePage(req, res) {
+    try {
+        const userId = req.session.userId;
+        const users = model.getAllUsers(userId);
+        res.render("messages", {users: users});
+    } catch (err) {
+        console.error("Error while rendering feed page: " + err.message);
+    }
+}
+
 
 function accountPage(req, res) {
     try {
@@ -183,9 +193,12 @@ function updateProfilePic(req, res){
 }
 
 
+
+
 module.exports = {
     homePage,
     feedPage,
+    messagePage,
     accountPage,
     likePost,
     post,

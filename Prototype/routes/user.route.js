@@ -13,6 +13,7 @@ module.exports = function (imageUpload) {
     router.get("/category/:catId", userController.feedPage);
     router.get("/download/:fileName", userController.downloadResource);
     router.get("/getMessagePage", userController.getMessagePage);
+    router.get("/message", userController.messagePage);
 
     router.post("/updateProfilePic", imageUpload.single("file"), userController.updateProfilePic);
     router.post("/like", userController.likePost);
