@@ -13,15 +13,15 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// const imageStorage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './images');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//   }
-// });
-// const imageUpload = multer({ storage: imageStorage });
+const imageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+const imageUpload = multer({ storage: imageStorage });
 
 const uploadStorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,7 +47,7 @@ app.set('partials', path.join(__dirname, 'views', 'partials'));
 
 
 const moderatorRouter = require("./routes/moderator.route");
-const userRouter = require("./routes/user.route");
+const userRouter = require("./routes/user.route")(imageUpload);
 const teacherRouter = require("./routes/teacher.route")(upload);
 const tutorRouter = require("./routes/tutor.route");
 const loginRouter = require("./routes/login.route");

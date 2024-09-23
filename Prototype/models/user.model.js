@@ -118,6 +118,14 @@ function createConv(userId1, userId2){
     const params = [userId1, userId2];
     return db.run(sql, params);
 }
+
+function updateProfilePic(fileName, userId){
+    const sql = 'UPDATE users SET profilePic = ? WHERE userId = ?';
+    const params = [fileName, userId];
+    return db.run(sql, params);
+}
+
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -142,5 +150,6 @@ module.exports = {
     getRepliesforPost,
     deleteReply,
     getConversations,
-    createConv
+    createConv,
+    updateProfilePic
 };

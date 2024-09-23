@@ -177,8 +177,7 @@
                 <% convUsers.forEach(user => { %>
                     <li class="user-info">
                         <a href="/account/<%= user.otherUser.userId %>">
-                            <img src="/images/blank-pf.png" class="rounded-circle" alt="profile" size="50" height="50"
-                                width="50">
+                            <img src="/images/<%= user.otherUser.profilePic %>" class="rounded-circle" alt="profile" height="40">
                             <span><%= user.otherUser.fname + " " + user.otherUser.lname %></span>
                         </a>
                         <span> <%= user.unreadCount %> unread messages</span>
