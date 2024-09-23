@@ -181,7 +181,10 @@
                             <span><%= user.otherUser.fname + " " + user.otherUser.lname %></span>
                         </a>
                         <span> <%= user.unreadCount %> unread messages</span>
-                        <button type="button" class="btn btn-primary">Message</button>
+                        <form action="/getMessagePage" method="GET">
+                            <input type="hidden" name="convId" value="<%= user.convId %>">
+                            <button type="submit" class="btn btn-primary">Message</button>
+                        </form>
                     </li>
                     <br>
                 <% }) %> 

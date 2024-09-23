@@ -112,7 +112,7 @@ function getConversations(userId) {
     const params = [userId, userId, userId, userId];
     return db.all(sql, ...params);
 }
-
+/* should check for existing conversation first and ultimately should send back a convId */
 function createConv(userId1, userId2){
     const sql = 'INSERT INTO conversation (userId1, userId2) VALUES (?, ?)';
     const params = [userId1, userId2];
