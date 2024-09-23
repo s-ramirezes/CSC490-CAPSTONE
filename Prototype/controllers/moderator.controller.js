@@ -72,10 +72,72 @@ function createCalendar (req,res){
         res.status(500).send("Failed to set calendar");
     }
 }
+function userList (req,res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const flaggedUsers= model.getFlaggedUsers();
+        const allUsers=model.getAllUsers();
+        const role= 'moderator';
+        res.render ("modUsers", {subjects : subjects, role: role, 
+            flaggedUsers : flaggedUsers, allUsers: allUsers});
+    } catch (err) {
+        console.error("Failed to render modUsers page "+ err.message);
+    }
+}
+function unflagUser (req, res){
+    try{
+        const userId= req.query.userId;
+        model.unflagUser(userId);
+        res.redirect(`/modUsers`);
+    } catch (err) {
+        console.error ("Failed to unflag User: " + err.message);
+        res.status(500).send("Failed to unflag User");
+    }
+}
+function banUser (req, res){
+    try{
+        const userId= req.query.userId;
+        model.banUser(userId);
+        res.redirect(`/modUsers`);
+    } catch (err) {
+        console.error ("Failed to ban User: " + err.message);
+        res.status(500).send("Failed to ban User");
+    }
+}
+function modFlag (req, res){
+    try{
+        const userId= req.query.userId;
+        model.flagUser(userId);
+        res.redirect(`/modUsers`);
+    } catch (err) {
+        console.error ("Failed to flag User: " + err.message);
+        res.status(500).send("Failed to flag User");
+    }
+}
+function modUserPage (req, res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const userId= req.query.userId;
+        const user= model.getUser(userId);
+        const userPosts= model.getUserPosts(userId);
+        const userReplies= model.getUserReplies(userId);
+        const role= 'moderator';
+        res.render ("modUserPage", {subjects : subjects, role: role, 
+            userId : userId, user: user, userPosts: userPosts, userReplies: userReplies});
+    } catch (err) {
+        console.error("Failed to render modUserPage page "+ err.message);
+    }
+}
 module.exports = {
     homePage,
     messages,
     sendMessage,
     createCalendar,
-
+    userList,
+    unflagUser,
+    banUser,
+    modFlag,
+    modUserPage,
 };
