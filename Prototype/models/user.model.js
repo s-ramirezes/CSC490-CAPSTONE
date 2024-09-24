@@ -50,7 +50,7 @@ function likePost(userId, postId) {
         const upSql = `UPDATE posts SET likeCount = likeCount + 1 WHERE postId = ?`;
         db.run(upSql, [postId]);
         return db.run(iSql, params);
-    } 
+    }
 }
 
 function isPostLiked(userId, postId) {
@@ -60,7 +60,7 @@ function isPostLiked(userId, postId) {
     return like !== undefined;
 }
 
-function createPost(catId, userId, title, description, courseId){
+function createPost(catId, userId, title, description, courseId) {
     const sql = 'INSERT INTO posts (catId, userId, title, description, courseId) VALUES (?, ?, ?, ?, ?)';
     const params = [catId, userId, title, description, courseId];
     return db.run(sql, params);
@@ -71,13 +71,13 @@ function getResourcesforCategory(catId) {
     return db.all(sql, catId);
 }
 
-function deletePost(postId){
+function deletePost(postId) {
     const sql = 'DELETE FROM posts where postId = ?';
     const params = [postId];
     return db.run(sql, params);
 }
 
-function createReply(userId, catId, postId, description){
+function createReply(userId, catId, postId, description) {
     const sql = 'INSERT INTO replies (userId, catId, postId, description) VALUES (?, ?, ?, ?)';
     const params = [userId, catId, postId, description];
     return db.run(sql, params);
@@ -93,7 +93,7 @@ function getRepliesforPost(postId) {
     return db.all(sql, postId);
 }
 
-function deleteReply(replyId){
+function deleteReply(replyId) {
     const sql = 'DELETE FROM replies where replyId = ?';
     const params = [replyId];
     return db.run(sql, params);
@@ -117,14 +117,24 @@ function getConversations(userId) {
     const params = [userId, userId, userId, userId];
     return db.all(sql, ...params);
 }
-/* should check for existing conversation first and ultimately should send back a convId */
-function createConv(userId1, userId2){
-    const sql = 'INSERT INTO conversation (userId1, userId2) VALUES (?, ?)';
-    const params = [userId1, userId2];
-    return db.run(sql, params);
+/* check for existing conversation first and ultimately should send back a convId */
+function createConv(userId1, userId2) {
+    const checkSql = ` SELECT convId FROM conversation WHERE (userId1 = ? AND userId2 = ?) OR (userId1 = ? AND userId2 = ?) `;
+    const checkParams = [userId1, userId2, userId2, userId1];
+    const existingConv = db.get(checkSql, ...checkParams);
+
+    if (existingConv) {
+        return existingConv.convId;
+    } else {
+        const insertSql = 'INSERT INTO conversation (userId1, userId2) VALUES (?, ?)';
+        const insertParams = [userId1, userId2];
+        db.run(insertSql, insertParams);
+        const newConv = db.get('SELECT last_insert_rowid() AS Id')
+        return newConv.Id;
+    }
 }
 
-function updateProfilePic(fileName, userId){
+function updateProfilePic(fileName, userId) {
     const sql = 'UPDATE users SET profilePic = ? WHERE userId = ?';
     const params = [fileName, userId];
     return db.run(sql, params);

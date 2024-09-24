@@ -164,7 +164,7 @@ function createConv(req, res){
     try{
         const userId1 = req.session.userId;
         const userId2 = req.body.userId2;
-        const convId = model.createConv(userId1, userId2, );
+        const convId = model.createConv(userId1, userId2);
         res.redirect("/modMessages?convId=" + convId);
     }catch(err){
         console.error("Error while creating conversation" + err.message)
