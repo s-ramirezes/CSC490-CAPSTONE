@@ -25,7 +25,7 @@ function messages (req, res){
         const userId= req.session.userId;
         const convId = req.query.convId; 
         const receiver= model.getReceiver(userId, convId);
-        const role= 'moderator';
+        const role= req.session.role;
         res.render ("modMessages", {subjects : subjects, role: role, 
             messages: messages, userId: userId, receiver: receiver, 
             convId: convId});
