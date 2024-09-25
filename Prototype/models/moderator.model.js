@@ -18,7 +18,7 @@ function getMessages (convId){
     return db.all(sql, convId, convId);
 }
 
-function getReceiver(userId){
+function getReceiver(userId, convId){
     const sql = `SELECT u.fName, u.lname, u.userId FROM conversation c
         JOIN users u
         ON u.userId = 
@@ -26,8 +26,9 @@ function getReceiver(userId){
             WHEN c.userId1 = ? THEN c.userId2
             ELSE c.userId1
             END
-        WHERE c.userId1 = ? OR c.userId2 = ?;`;
-    return db.get(sql, userId, userId, userId);
+        WHERE c.userId1 = ? OR c.userId2 = ?
+        AND convId= ?;`;
+    return db.get(sql, userId, userId, userId, convId);
 }
 
 function storeMessage(convId, messageTxt, userId) {
