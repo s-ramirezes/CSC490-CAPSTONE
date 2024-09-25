@@ -35,7 +35,7 @@ function messages (req, res){
 }
 function sendMessage (req, res){
     try{
-        const userId = req.body.userId;
+        const userId = req.session.userId;
         const messageTxt = req.body.message;
         const convId = req.query.convId;
         if (!convId || !userId || !messageTxt) {
@@ -44,7 +44,7 @@ function sendMessage (req, res){
         model.storeMessage(convId, messageTxt, userId);
         const messageId = model.getLastRowId().id;
         model.addMessageStatus(messageId, userId);
-        const receiver = model.getReceiver(userId);
+        const receiver = model.getReceiver(userId, convId);
         model.addMessageStatus(messageId, receiver.userId);
 
 
