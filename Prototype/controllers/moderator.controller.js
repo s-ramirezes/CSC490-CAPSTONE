@@ -22,9 +22,9 @@ function messages (req, res){
         const subjects= model.getSubjects();
         req.session.subjects = subjects;
         const messages= model.getMessages(req.query.convId);
-        const userId= 2;
-        const receiver= model.getReceiver(userId);
+        const userId= req.session.userId;
         const convId = req.query.convId; 
+        const receiver= model.getReceiver(userId, convId);
         const role= 'moderator';
         res.render ("modMessages", {subjects : subjects, role: role, 
             messages: messages, userId: userId, receiver: receiver, 
