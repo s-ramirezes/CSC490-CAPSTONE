@@ -16,11 +16,13 @@
             <h1>Write a review!</h1>
         </div>
         <div class="content">
-            <form action="#" method="POST">
+            <form action="/makeReview" method="POST">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" required>
-                <div><label for="review">Write a review:</label></div>
-                <textarea id="review" name="review" rows="4" required></textarea>
+                <input type="hidden" name="revieweeId" value="<%= revieweeId %>">
+                <input type="hidden" name="convId" value="<%= convId %>">
+                <div><label for="description">Write a description of experience:</label></div>
+                <textarea id="review" name="description" rows="4" required></textarea>
                 <div>
                     <div><label for="rating">Rate the experience (1-10): </label></div>
                     <input type="range" id="rating" name="rating" min="1" max="10" oninput="this.nextElementSibling.value = this.value" required>
@@ -28,10 +30,10 @@
                 </div>
                 <div>
                     <label>Would you recommend this tutor?:</label><br>
-                    <input type="radio" id="recommend1" name="recommend" value="Yes" required>
+                    <input type="radio" id="recommend1" name="recommended" value="Yes" required>
                     <label for="recommend1">Yes</label>
         
-                    <input type="radio" id="recommend2" name="recommend" value="No" required>
+                    <input type="radio" id="recommend2" name="recommended" value="No" required>
                     <label for="recommend2">No</label>
                 </div>
                 <button class="btn btn-primary">Submit</button>

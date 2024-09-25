@@ -1,6 +1,7 @@
 body {
     margin:0;
     padding:0;
+
 }
 
 h1{
@@ -133,7 +134,7 @@ p{
 }
 
 .incoming {
-    background-color: blue;
+    background-color: white;
     background-size:cover;
     padding: 15px;
     font-size: 18pt;
@@ -142,10 +143,11 @@ p{
     border-radius: 100px;
     float: right;
     text-align: right;
+    border: 2px solid black;
 }
 
 .outgoing {
-    background-color: blue;
+    background-color: white;
     background-size:cover;
     padding: 15px;
     font-size: 18pt;
@@ -154,6 +156,7 @@ p{
     border-radius: 100px;
     float: left;
     text-align: left;
+    border: 2px solid black;
 }
 
 .messageContainer{

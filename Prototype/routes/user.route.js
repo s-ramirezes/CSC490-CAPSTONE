@@ -22,6 +22,8 @@ module.exports = function (imageUpload) {
     router.post("/reply", userController.reply);
     router.post("/deleteReply", userController.deleteReply);
     router.post("/createConv", userController.createConv);
+    router.post("/reviewPage", userController.reviewPage);
+    router.post("/makeReview", userController.makeReview);
     
     return router; 
 }

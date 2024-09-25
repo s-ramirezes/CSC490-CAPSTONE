@@ -140,6 +140,12 @@ function updateProfilePic(fileName, userId) {
     return db.run(sql, params);
 }
 
+function postReview(reviewerId, revieweeId, title, description, rating, recommended){
+    const sql = 'INSERT INTO reviews (reviewerId, revieweeId, title, description, rating, recommended) VALUES (?, ?, ?, ?, ?, ?)';
+    const params = [reviewerId, revieweeId, title, description, rating, recommended];
+    return db.run(sql, params);
+}
+
 
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
@@ -167,5 +173,6 @@ module.exports = {
     deleteReply,
     getConversations,
     createConv,
-    updateProfilePic
+    updateProfilePic,
+    postReview
 };
