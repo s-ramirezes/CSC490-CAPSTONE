@@ -70,11 +70,11 @@
             <button type="submit" class="sendBtn">SEND</button>
             <button type="button" class="sendBtn" data-bs-toggle="modal" data-bs-target="#postModal">Create Calendar</button>
         </form>
-        <!-- <form action="/reviewPage" method="POST">
+        <form action="/reviewPage" method="POST">
             <input type="hidden" name="convId" value="<%= convId %>">
-            <input type="hidden" name="userId2" value="<%= userId2 %>"/>
+            <input type="hidden" name="userId2" value="<%= receiver.userId %>"/>
             <button type="submit" class="sendBtn">Review</button>
-          </form> -->
+        </form>
     </div>
     <div class="formContainer">
         <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
