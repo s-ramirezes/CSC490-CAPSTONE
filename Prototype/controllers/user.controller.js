@@ -9,6 +9,7 @@ const multer = require("multer");
 // app.use(express.json());
 
 const model = require("../models/user.model");
+const { deserialize } = require("v8");
 
 function homePage(req, res) {
     try {
@@ -16,14 +17,14 @@ function homePage(req, res) {
             const userId = req.session.userId;
             const ids = model.getConversations(userId);
             const convUsers = ids.map(id => {
-            const otherUser = model.getUser(id.otherUserId);
-            return { 
-                convId: id.convId, 
-                otherUser, 
-                unreadCount: id.unreadCount
-            };
-        });
-            res.render("home", {convUsers: convUsers});
+                const otherUser = model.getUser(id.otherUserId);
+                return {
+                    convId: id.convId,
+                    otherUser,
+                    unreadCount: id.unreadCount
+                };
+            });
+            res.render("home", { convUsers: convUsers });
         } else {
             res.redirect("/");
         }
@@ -45,9 +46,9 @@ function feedPage(req, res) {
         const ids = model.getConversations(userId);
         const convUsers = ids.map(id => {
             const otherUser = model.getUser(id.otherUserId);
-            return { 
-                convId: id.convId, 
-                otherUser, 
+            return {
+                convId: id.convId,
+                otherUser,
                 unreadCount: id.unreadCount
             };
         });
@@ -62,11 +63,40 @@ function feedPage(req, res) {
     }
 }
 
+function reviewPage(req, res) {
+    try {
+        const revieweeId = req.body.userId2;
+        const convId = req.body.convId;
+        res.render("reviewPage", {
+            revieweeId: revieweeId,
+            convId: convId,
+        });
+    } catch (err) {
+        console.error("Error while rendering review page: " + err);
+    }
+}
+
+function makeReview(req, res) {
+    try {
+        const reviewerId = req.session.userId;
+        const revieweeId = req.body.revieweeId;
+        const title = req.body.title;
+        const description = req.body.description;
+        const rating = req.body.rating;
+        const recommended = req.body.recommended;
+        const review = model.postReview(reviewerId, revieweeId, title, description, rating, recommended);
+        const convId = req.body.convId;
+        res.redirect("/modMessages?convId=" + convId);
+    } catch (err) {
+        console.error("Error while posting review: " + err);
+    }
+}
+
 function messagePage(req, res) {
     try {
         const userId = req.session.userId;
         const users = model.getAllUsers(userId);
-        res.render("messages", {users: users});
+        res.render("messages", { users: users });
     } catch (err) {
         console.error("Error while rendering feed page: " + err.message);
     }
@@ -79,11 +109,11 @@ function accountPage(req, res) {
         const user = model.getUser(userId);
         const userPosts = model.getUserPost(userId);
         const likedPosts = userPosts.map(post => {
-            const liked = model.isPostLiked(req.session.userId, post.postId); 
+            const liked = model.isPostLiked(req.session.userId, post.postId);
             return { ...post, liked };
         });
 
-        res.render("account", {user: user, userPosts: likedPosts});
+        res.render("account", { user: user, userPosts: likedPosts });
     } catch (err) {
         console.error("Error while rendering feed page: " + err.message);
     }
@@ -100,7 +130,7 @@ function likePost(req, res) {
     }
 }
 
-function post(req, res){
+function post(req, res) {
     try {
         const userId = req.session.userId;
         const title = req.body.title;
@@ -124,18 +154,18 @@ function downloadResource(req, res) {
     }
 }
 
-function deletePost(req, res){
-    try{
+function deletePost(req, res) {
+    try {
         const postId = req.body.postId;
         const catId = req.body.catId;
         model.deletePost(postId);
         res.redirect("/category/" + catId);
-    }catch(err){
+    } catch (err) {
         console.error("Error while deleting post" + err.message)
     }
 }
 
-function reply(req, res){
+function reply(req, res) {
     try {
         const userId = req.session.userId;
         const catId = req.body.catId;
@@ -149,45 +179,45 @@ function reply(req, res){
     }
 }
 
-function deleteReply(req, res){
-    try{
+function deleteReply(req, res) {
+    try {
         const replyId = req.body.replyId;
         const catId = req.body.catId;
         model.deleteReply(replyId);
         res.redirect("/category/" + catId);
-    }catch(err){
+    } catch (err) {
         console.error("Error while deleting post" + err.message)
     }
 }
 
-function createConv(req, res){
-    try{
+function createConv(req, res) {
+    try {
         const userId1 = req.session.userId;
         const userId2 = req.body.userId2;
-        const convId = model.createConv(userId1, userId2, );
+        const convId = model.createConv(userId1, userId2);
         res.redirect("/modMessages?convId=" + convId);
-    }catch(err){
+    } catch (err) {
         console.error("Error while creating conversation" + err.message)
     }
 }
 
-function getMessagePage(req, res){
-    try{
+function getMessagePage(req, res) {
+    try {
         const convId = req.query.convId;
         res.redirect("/modMessages?convId=" + convId);
-    }catch(err){
+    } catch (err) {
         console.error("Error while getting message page:  " + err.message)
     }
 }
 
-function updateProfilePic(req, res){
-    try{
+function updateProfilePic(req, res) {
+    try {
         const userId = req.session.userId;
         const fileName = req.file.filename;
         model.updateProfilePic(fileName, userId);
         res.redirect("/account/" + userId);
     }
-    catch(err){
+    catch (err) {
         console.error("Error while updating profile pic:  " + err.message)
     }
 }
@@ -198,6 +228,8 @@ function updateProfilePic(req, res){
 module.exports = {
     homePage,
     feedPage,
+    reviewPage,
+    makeReview,
     messagePage,
     accountPage,
     likePost,
