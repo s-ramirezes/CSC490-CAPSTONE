@@ -61,4 +61,9 @@ function toggleView(view) {
         postsContent.style.display = 'none';
         resourcesContent.style.display = 'block';
     }
+    if (view === 'resources') {
+        document.getElementById('postButton').style.display = 'none';
+    } else {
+        document.getElementById('postButton').style.display = 'block';
+    }
 }
