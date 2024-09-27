@@ -1,0 +1,167 @@
+body {
+    margin:0;
+    padding:0;
+}
+
+h1{
+    text-align: center;
+    font-size: 45px;
+
+}
+
+header {
+    height: 120px; 
+    margin-bottom: 20px;
+    background-color: #07394b;
+    background-size: contain;
+}
+
+.subjects{
+    list-style-type: none;
+    padding: 0;
+    margin:0;
+    height:100%;
+    width: 10%;
+    position: fixed;
+    overflow: auto;
+    text-align: center;
+    background-color: purple;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.subjects::-webkit-scrollbar{
+    display: none;
+}
+
+.topBar{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-evenly;
+    margin:0;
+    height: 9%;
+    width: 90%;
+    position: fixed;
+    align-items: baseline;
+    text-align: center;
+    right: 0;
+    left:10%;
+    background-color:purple;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.topBar li a{
+    text-decoration: none;
+    color: black;
+    
+}
+
+.DMs{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height:100%;
+    width: 25%;
+    position: fixed;
+    overflow:auto;
+    text-align: center;
+    right:0;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding-top: 75px;
+}
+
+
+.subjects li a{
+    display: block;
+    padding: 0px;
+    margin: 5px;
+    overflow: auto;
+    text-decoration: none;
+    color:black;
+    font-size: 20pt;
+    background-color:rgb(164, 6, 164);
+}
+
+.DMs li{
+    display: flex;
+    border-style: solid;
+    padding: 10px;
+    margin: 5px;
+    overflow: auto;
+    text-decoration: none;
+    color:black;
+    font-size: 20pt;
+    align-items: center;
+    justify-content: space-between;
+}
+/* li img{
+    max-width: 50px;
+    border-radius: 100px;
+} */
+
+.DMs li p, .DMs li a{
+    font-size: 20px;
+    text-decoration: none;
+    color:black;
+}
+
+.pageContent{
+    margin-left: 10%;
+    margin-right: 15%;
+    padding: 16px;
+    padding-top: 75px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.pageContent p{
+    font-size: 20pt;
+}
+
+.columns {
+    display: flex;
+    justify-content: space-between;
+    margin-inline-start: 12%;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+}
+
+.user-card{
+    border: 2px solid black;
+    text-align: center;
+}
+
+.user-card h2{
+    text-align: center;
+}
+
+.role-box {
+    border-radius: 5px;
+    width: auto;
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.tutor-role {
+    background-color: #B2E8E0;
+    color: #005B5C;
+}
+
+.mod-role {
+    background-color: #FFDAB9;
+    color: #FF6F61;
+}
+
+.teacher-role {
+    background-color: #E6E6FA;
+    color: #5E2B91;
+}
+
+.student-role {
+    background-color: #FFFACD;
+    color: #556B2F;
+}

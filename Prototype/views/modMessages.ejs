@@ -63,11 +63,11 @@
                 <% }) %>
             <% } %>
         </div>
-    <div>
-        <form action="/sendMessage?convId=<%= convId %>" method="POST" class="messageContainer">
+    <div class="messageContainer">
+        <form action="/sendMessage?convId=<%= convId %>" method="POST">
             <input type="text" class="messageBox" name="message" placeholder="Write Message" required>
             <input type="hidden" name="userId" value="<%= userId %>">
-            <button type="submit" class="sendBtn">SEND</button>
+            <button type="submit" class="sendBtn">Send</button>
             <button type="button" class="sendBtn" data-bs-toggle="modal" data-bs-target="#postModal">Create Calendar</button>
         </form>
         <form action="/reviewPage" method="POST">

@@ -16,6 +16,11 @@ function getSubjectPosts(catId) {
     return db.all(sql, catId);
 }
 
+function getAllSubjects(){
+    const sql = 'SELECT * FROM category';
+    return db.all(sql);
+}
+
 function getUserPost(userId) {
     const sql = `
         SELECT p.*, c.catAbbr 
@@ -23,6 +28,12 @@ function getUserPost(userId) {
         JOIN category c ON p.catId = c.catId 
         WHERE p.userId = ?`;
     return db.all(sql, userId);
+}
+
+function searchUser(excludeUserId, user) {
+    const sql = "SELECT * FROM users WHERE userId != ? AND verified = 1 AND email = ?";
+    const params = [excludeUserId, user];
+    return db.get(sql, params); 
 }
 
 function getUser(userId) {
@@ -160,7 +171,9 @@ function postReview(reviewerId, revieweeId, title, description, rating, recommen
 module.exports = {
     getPosts,
     getSubjectPosts,
+    getAllSubjects,
     getUserPost,
+    searchUser,
     getUser,
     getAllUsers,
     likePost,

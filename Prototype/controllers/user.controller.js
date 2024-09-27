@@ -96,12 +96,24 @@ function messagePage(req, res) {
     try {
         const userId = req.session.userId;
         const users = model.getAllUsers(userId);
-        res.render("messages", { users: users });
+        const subjects = model.getAllSubjects();
+        res.render("message", { users: users, subjects: subjects});
     } catch (err) {
-        console.error("Error while rendering feed page: " + err.message);
+        console.error("Error while rendering message page: " + err.message);
     }
 }
 
+function searchUser(req, res){
+    try{
+        const userId = req.session.userId;
+        const user = req.body.user;
+        const users = model.searchUser(userId, user);
+        const subjects = model.getAllSubjects();
+        res.render("message", { users: users, subjects: subjects});
+    } catch(err){
+        console.error("Error while rendering message page: " + err.message);
+    }
+}
 
 function accountPage(req, res) {
     try {
@@ -231,6 +243,7 @@ module.exports = {
     reviewPage,
     makeReview,
     messagePage,
+    searchUser,
     accountPage,
     likePost,
     post,
