@@ -21,6 +21,11 @@ header {
     background-size: contain;
 }
 
+a:link, a:visited {
+    text-decoration: none;
+    color: rgb(119, 121, 125);
+}
+
 .subjects{
     list-style-type: none;
     padding: 0;

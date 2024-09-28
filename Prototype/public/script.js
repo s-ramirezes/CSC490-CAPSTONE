@@ -67,3 +67,15 @@ function toggleView(view) {
         document.getElementById('postButton').style.display = 'block';
     }
 }
+
+function toggleAccountView(view){
+    const accountPosts = document.getElementById('posts');
+    const accountReviews = document.getElementById('reviews');
+    if (view === 'posts'){
+        accountPosts.style.display = 'block';
+        accountReviews.style.display = 'none';
+    } else {
+        accountPosts.style.display = 'none';
+        accountReviews.style.display = 'block';
+    }
+}

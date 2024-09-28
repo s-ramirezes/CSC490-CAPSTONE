@@ -1,5 +1,6 @@
 "use strict";
 const db = require("../models/db-conn");
+const { get } = require("../routes/moderator.route");
 
 function getPosts() {
     const sql = "SELECT * FROM posts";
@@ -157,6 +158,19 @@ function postReview(reviewerId, revieweeId, title, description, rating, recommen
     return db.run(sql, params);
 }
 
+function getReviews(userId){
+    const sql = `
+    SELECT * FROM reviews 
+    JOIN users ON reviews.reviewerId = users.userId
+    WHERE revieweeId = ?`;
+    return db.all(sql, userId);
+}
+
+function getAverageRating(userId){
+    const sql = `
+    SELECT AVG(rating) FROM reviews WHERE revieweeId = ?`;
+    return db.get(sql, userId);
+}
 
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
@@ -187,5 +201,7 @@ module.exports = {
     getConversations,
     createConv,
     updateProfilePic,
-    postReview
+    postReview,
+    getReviews,
+    getAverageRating,
 };
