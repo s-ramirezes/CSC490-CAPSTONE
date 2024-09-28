@@ -112,8 +112,12 @@ function accountPage(req, res) {
             const liked = model.isPostLiked(req.session.userId, post.postId);
             return { ...post, liked };
         });
+        const reviews = model.getReviews(userId);
+        let averageRating = model.getAverageRating(userId);
+        averageRating = averageRating["AVG(rating)"];
 
-        res.render("account", { user: user, userPosts: likedPosts });
+
+        res.render("account", { user: user, userPosts: likedPosts, reviews: reviews, averageRating: averageRating });
     } catch (err) {
         console.error("Error while rendering feed page: " + err.message);
     }
