@@ -33,7 +33,7 @@ function getUserPost(userId) {
 function searchUser(excludeUserId, user) {
     const sql = "SELECT * FROM users WHERE userId != ? AND verified = 1 AND email = ?";
     const params = [excludeUserId, user];
-    return db.get(sql, params); 
+    return db.all(sql, ...params); 
 }
 
 function getUser(userId) {
