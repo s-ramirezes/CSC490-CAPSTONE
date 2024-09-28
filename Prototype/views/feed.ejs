@@ -32,13 +32,12 @@
                             Add Resource
                         </button>
                     </div>
-                    <% } %>
-                        <div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#postModal">
-                                Post
-                            </button>
-                        </div>
+                <% } %>
+                <div>
+                    <button type="button" id="postButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">
+                        Post
+                    </button>
+                </div>
             </div>
             <div id="feed-content">
                 <% if (!posts || posts.length===0) { %>

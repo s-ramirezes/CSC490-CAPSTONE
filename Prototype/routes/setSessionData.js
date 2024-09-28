@@ -13,4 +13,14 @@ function setSessionData(req, res, next) {
     next();
 }
 
-module.exports = setSessionData;
+function isLoggedIn(req, res, next) {
+    if (req.session && req.session.userId) {
+        next();
+    } else if (req.originalUrl !== "/") {
+        res.redirect("/");
+    } else {
+        next();
+    }
+}
+
+module.exports = { setSessionData, isLoggedIn };
