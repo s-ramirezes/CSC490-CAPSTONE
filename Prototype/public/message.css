@@ -9,21 +9,11 @@ h1{
 
 }
 
-h2{
-    text-align: center;
-    font-size: 20 px;
-}
-
 header {
     height: 120px; 
     margin-bottom: 20px;
     background-color: #07394b;
     background-size: contain;
-}
-
-a:link, a:visited {
-    text-decoration: none;
-    color: rgb(119, 121, 125);
 }
 
 .subjects{
@@ -133,15 +123,45 @@ a:link, a:visited {
     margin-inline-start: 12%;
 }
 
-.nav-buttons{
+.search {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
+    justify-content: center;
 }
 
-.delete-button{
-    display: flex;
-    justify-content: end;
-    margin-bottom: 8px;
+.user-card{
+    border: 2px solid black;
+    text-align: center;
+}
+
+.user-card h2{
+    text-align: center;
+}
+
+.role-box {
+    border-radius: 5px;
+    width: auto;
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.tutor-role {
+    background-color: #B2E8E0;
+    color: #005B5C;
+}
+
+.mod-role {
+    background-color: #FFDAB9;
+    color: #FF6F61;
+}
+
+.teacher-role {
+    background-color: #E6E6FA;
+    color: #5E2B91;
+}
+
+.student-role {
+    background-color: #FFFACD;
+    color: #556B2F;
 }

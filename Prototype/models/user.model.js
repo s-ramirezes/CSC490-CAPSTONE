@@ -1,5 +1,6 @@
 "use strict";
 const db = require("../models/db-conn");
+const { get } = require("../routes/moderator.route");
 
 function getPosts() {
     const sql = "SELECT * FROM posts";
@@ -16,6 +17,11 @@ function getSubjectPosts(catId) {
     return db.all(sql, catId);
 }
 
+function getAllSubjects(){
+    const sql = 'SELECT * FROM category';
+    return db.all(sql);
+}
+
 function getUserPost(userId) {
     const sql = `
         SELECT p.*, c.catAbbr 
@@ -23,6 +29,12 @@ function getUserPost(userId) {
         JOIN category c ON p.catId = c.catId 
         WHERE p.userId = ?`;
     return db.all(sql, userId);
+}
+
+function searchUser(excludeUserId, user) {
+    const sql = "SELECT * FROM users WHERE userId != ? AND verified = 1 AND email = ?";
+    const params = [excludeUserId, user];
+    return db.all(sql, ...params); 
 }
 
 function getUser(userId) {
@@ -146,6 +158,19 @@ function postReview(reviewerId, revieweeId, title, description, rating, recommen
     return db.run(sql, params);
 }
 
+function getReviews(userId){
+    const sql = `
+    SELECT * FROM reviews 
+    JOIN users ON reviews.reviewerId = users.userId
+    WHERE revieweeId = ?`;
+    return db.all(sql, userId);
+}
+
+function getAverageRating(userId){
+    const sql = `
+    SELECT AVG(rating) FROM reviews WHERE revieweeId = ?`;
+    return db.get(sql, userId);
+}
 
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
@@ -160,7 +185,9 @@ function postReview(reviewerId, revieweeId, title, description, rating, recommen
 module.exports = {
     getPosts,
     getSubjectPosts,
+    getAllSubjects,
     getUserPost,
+    searchUser,
     getUser,
     getAllUsers,
     likePost,
@@ -174,5 +201,7 @@ module.exports = {
     getConversations,
     createConv,
     updateProfilePic,
-    postReview
+    postReview,
+    getReviews,
+    getAverageRating,
 };
