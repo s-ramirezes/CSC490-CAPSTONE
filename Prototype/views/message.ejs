@@ -1,66 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/public/feed.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/public/message.css">
-    <script src="/public/script.js" defer></script>
-    <title>Messages</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+        <link rel="stylesheet" href="/public/message.css">
+        <script src="/public/script.js" defer></script>
+        <title>Messages</title>
+    </head>
 
-<body>
-    <header>
-        <%- include('partials/navbar') %>
-    </header>
-    <div class="search">
-    <nav class="navbar bg-body-tertiary search">
-        <div class="container-fluid">
-          <form class="d-flex" role="search" action="/searchUser" method="POST">
-            <input class="form-control me-2" name="user" type="text" placeholder="Search up user" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-    </div>
-    <h1>Users</h1>
-    <div>
-        <% users.forEach(user=> { %>
-            <div class="user-card">
-                <div>
-                    <h2>
-                        <%= user.fname %>
-                            <%= user.lname %>
-                                <%= user.email %>
-                    </h2>
-                    <div class="role-box 
-    <% if (user.role === 'teacher') { %>
-        teacher-role
-    <% } else if (user.role === 'moderator') { %>
-        mod-role
-    <% } else if (user.role === 'tutor') { %>
-        tutor-role
-    <% } else { %>
-        student-role
-    <% } %>
-">
-                        <h2>
-                            <%= user.role %>
-                        </h2>
-                    </div>
-                    <form action="/createConv" method="POST" class="ms-4">
-                        <input type="hidden" id="userId2" value="<%= user.userId %>" name="userId2">
-                        <button type="submit" class="btn btn-link p-0 border-0 me-2">Message</button>
+    <body>
+        <header>
+            <%- include('partials/navbar') %>
+        </header>
+
+        <div class="search">
+            <nav class="navbar bg-body-tertiary search">
+                <div class="container-fluid">
+                    <form class="d-flex" role="search" action="/searchUser"
+                        method="POST">
+                        <input class="form-control me-2" name="email"
+                            type="text" placeholder="Search by email"
+                            aria-label="Search">
+                        <button class="btn btn-outline-success"
+                            type="submit">Search</button>
                     </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="columns">
+        <div id="feed">
+            <h1>Users</h1>
+            <% users.forEach(user => { %>
+            <div class="user-card">
+                <div class="user-card-info">
+                    <div class="user-name">
+                        <a href="/account/<%= user.userId %>">
+                            <img src="/images/<%= user.profilePic %>"
+                                class="rounded-circle" alt="profile"
+                                height="40">
+                            <span>
+                                <%= user.fname + " " +
+                                user.lname %>
+                            </span>
+                        </a>
+                        <div class="role-box 
+                            <% if (user.role === 'teacher') { %>
+                                teacher-role
+                            <% } else if (user.role === 'moderator') { %>
+                                mod-role
+                            <% } else if (user.role === 'tutor') { %>
+                                tutor-role
+                            <% } else { %>
+                                student-role
+                            <% } %>
+                        ">
+                            <p>
+                                <%= user.role %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="user-email">
+                        <p><%= user.email %></p>
+                        <form action="/createConv" method="POST" class="ms-4">
+                            <input type="hidden" id="userId2" value="<%= user.userId %>" name="userId2">
+                            <button type="submit" class="btn btn-primary">Message</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <% }); %>
-    </div>
+        </div>
+            <!--  -->
+            <div id="private-messages">
+                <h1>Private Messages</h1>
+                <% if (convUsers) { %>
+                <ul class="users">
+                    <% convUsers.forEach(user=> { %>
+                    <li class="user-info">
+                        <a href="/account/<%= user.otherUser.userId %>">
+                            <img src="/images/<%= user.otherUser.profilePic %>"
+                                class="rounded-circle" alt="profile"
+                                height="40">
+                            <span>
+                                <%= user.otherUser.fname + " " +
+                                user.otherUser.lname %>
+                            </span>
+                        </a>
+                        <span>
+                            <%= user.unreadCount %> unread messages
+                        </span>
+                        <form action="/getMessagePage" method="GET">
+                            <input type="hidden" name="convId"
+                                value="<%= user.convId %>">
+                            <button type="submit"
+                                class="btn btn-primary">Message</button>
+                        </form>
+                    </li>
+                    <br>
+                    <% }) %>
+                </ul>
+                <% } %>
+            </div>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-</body>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    </body>
 
 </html>

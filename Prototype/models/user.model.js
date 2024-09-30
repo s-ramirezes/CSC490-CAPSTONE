@@ -31,9 +31,9 @@ function getUserPost(userId) {
     return db.all(sql, userId);
 }
 
-function searchUser(excludeUserId, user) {
-    const sql = "SELECT * FROM users WHERE userId != ? AND verified = 1 AND email = ?";
-    const params = [excludeUserId, user];
+function searchUser(excludeUserId, email) {
+    const sql = "SELECT * FROM users WHERE userId != ? AND verified = 1 AND email LIKE ?";
+    const params = [excludeUserId, `${email}%`];
     return db.all(sql, ...params); 
 }
 

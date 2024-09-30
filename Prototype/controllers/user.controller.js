@@ -97,7 +97,18 @@ function messagePage(req, res) {
         const userId = req.session.userId;
         const users = model.getAllUsers(userId);
         const subjects = model.getAllSubjects();
-        res.render("message", { users: users, subjects: subjects});
+
+        const ids = model.getConversations(userId);
+        const convUsers = ids.map(id => {
+            const otherUser = model.getUser(id.otherUserId);
+            return {
+                convId: id.convId,
+                otherUser,
+                unreadCount: id.unreadCount
+            };
+        });
+
+        res.render("message", { users: users, subjects: subjects, convUsers: convUsers});
     } catch (err) {
         console.error("Error while rendering message page: " + err.message);
     }
@@ -106,10 +117,19 @@ function messagePage(req, res) {
 function searchUser(req, res){
     try{
         const userId = req.session.userId;
-        const user = req.body.user;
-        const users = model.searchUser(userId, user);
+        const email = req.body.email;
+        const users = model.searchUser(userId, email);
         const subjects = model.getAllSubjects();
-        res.render("message", { users: users, subjects: subjects});
+        const ids = model.getConversations(userId);
+        const convUsers = ids.map(id => {
+            const otherUser = model.getUser(id.otherUserId);
+            return {
+                convId: id.convId,
+                otherUser,
+                unreadCount: id.unreadCount
+            };
+        });
+        res.render("message", { users: users, subjects: subjects, convUsers: convUsers});
     } catch(err){
         console.error("Error while rendering message page: " + err.message);
     }
