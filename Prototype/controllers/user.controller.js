@@ -10,6 +10,7 @@ const multer = require("multer");
 
 const model = require("../models/user.model");
 const { deserialize } = require("v8");
+const { get } = require("http");
 
 function homePage(req, res) {
     try {
@@ -37,11 +38,14 @@ function feedPage(req, res) {
     try {
         const userId = req.session.userId;
         const posts = model.getSubjectPosts(req.params.catId);
+        const category = model.getCategory(req.params.catId);
         const resources = model.getResourcesforCategory(req.params.catId);
         const likedPosts = posts.map(post => {
             const liked = model.isPostLiked(userId, post.postId);
             const replies = model.getRepliesforPost(post.postId);
-            return { ...post, liked, replies };
+            let commentCount = model.getCommentCount(post.postId);
+            commentCount = commentCount["COUNT(*)"];
+            return { ...post, liked, replies, commentCount};
         });
         const ids = model.getConversations(userId);
         const convUsers = ids.map(id => {
@@ -55,6 +59,7 @@ function feedPage(req, res) {
         res.render("feed", {
             posts: likedPosts,
             catId: req.params.catId,
+            category: category,
             resources: resources,
             convUsers: convUsers
         });
@@ -142,7 +147,9 @@ function accountPage(req, res) {
         const userPosts = model.getUserPost(userId);
         const likedPosts = userPosts.map(post => {
             const liked = model.isPostLiked(req.session.userId, post.postId);
-            return { ...post, liked };
+            let commentCount = model.getCommentCount(post.postId);
+            commentCount = commentCount["COUNT(*)"];
+            return { ...post, liked, commentCount };
         });
         const reviews = model.getReviews(userId);
         let averageRating = model.getAverageRating(userId);
