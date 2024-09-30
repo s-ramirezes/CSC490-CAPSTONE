@@ -1,7 +1,7 @@
 body {
     margin:0;
     padding:0;
-
+    border: 0;
 }
 
 h1{
@@ -163,12 +163,19 @@ p{
     position: fixed;
     bottom: 0;
     left: 10%;
-    width: 90%;
+    width: 96%;
     display: flex;
-    justify-content: space-between;
+    justify-content:baseline;
     padding: 10px;
     background-color: blue;
     z-index: 1;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.messageSection{
+    width: 80%;
+    flex-shrink: 1;
 }
 
 .formContainer{
@@ -176,19 +183,30 @@ p{
 }
 
 .messageBox{
-    width: 85%;
+    width: 87%;
     padding: 10px;
     font-size: 16px;
     border-radius: 20px;
 }
 
 .sendBtn{
-    width: 10%;
+    width: 12%;
     padding: 10px;
     background-color: white;
     border-radius: 20px;
     cursor: pointer;
+    flex-shrink: 0;
 }
+
+.calendarBtn, .reviewBtn{
+    padding: 10px;
+    background-color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 10pt;
+    flex-shrink: 0;
+}
+
 .calendarEvent {
     background-color: #f9f9f9;
     padding: 15px;

@@ -35,31 +35,49 @@
     <div class="pageContent">
         <div class="userName">
             <h1> <%=user.fname%> <%=user.lname %></h1>
-            <form action="/modFlag?userId=<%= user.userId %>" method="POST">
-                <button class="flagUser">
-                    Flag</button>
-            </form>
+            <% if (user.flagged == 1){ %>
+                <form action="/unflagUser?userId=<%= user.userId %>" method="POST">
+                    <button class="flagUser">
+                        Unflag</button>
+                </form>
+            <% } else { %>
+                <form action="/modFlag?userId=<%= user.userId %>" method="POST">
+                    <button class="flagUser">
+                        Flag</button>
+                </form>
+            <% } %>
         </div>
         
         <h1>Posts</h1>
         <div class="flaggedUserList">
-            <% userPosts.forEach(post => { %>
+            <% if (!userPosts || userPosts.length===0) { %>
                 <div class="flaggedUser">
-                    <p>Title= <%=post.title %></p>
-                    <p>Description= <%=post.description %> </p>
+                    <p>There are no posts.</p>
                 </div>
-                
-            <% }) %>
+            <% } else { %>
+                <% userPosts.forEach(post => { %>
+                    <div class="flaggedUser">
+                        <p>Title= <%=post.title %></p>
+                        <p>Description= <%=post.description %> </p>
+                    </div>
+                    
+                <% }) %>
+            <% } %>
         </div>
         <h1>Replies</h1>
         <div class="flaggedUserList">
-            <% userReplies.forEach(reply => { %>
+            <% if (!userReplies || userReplies.length===0) { %>
                 <div class="flaggedUser">
-                    <p>Description= <%=reply.description %></p>
-                    <p>replyTime= <%=reply.replyTime %> </p>
+                    <p>There are no replies.</p>
                 </div>
-                
-            <% }) %>
+            <% } else { %>
+                <% userReplies.forEach(reply => { %>
+                    <div class="flaggedUser">
+                        <p>Description= <%=reply.description %></p>
+                        <p>replyTime= <%=reply.replyTime %> </p>
+                    </div>
+                <% }) %>
+            <% } %>
         </div>
     </div>
 

@@ -64,18 +64,20 @@
             <% } %>
         </div>
     <div class="messageContainer">
-        <form action="/sendMessage?convId=<%= convId %>" method="POST">
+        <form action="/sendMessage?convId=<%= convId %>" method="POST" class="messageSection">
             <input type="text" class="messageBox" name="message" placeholder="Write Message" required>
             <input type="hidden" name="userId" value="<%= userId %>">
             <button type="submit" class="sendBtn">Send</button>
-            <button type="button" class="sendBtn" data-bs-toggle="modal" data-bs-target="#postModal">Create Calendar</button>
         </form>
+        <button type="button" class="calendarBtn" data-bs-toggle="modal" data-bs-target="#postModal">Calendar</button>
         <form action="/reviewPage" method="POST">
             <input type="hidden" name="convId" value="<%= convId %>">
             <input type="hidden" name="userId2" value="<%= receiver.userId %>"/>
-            <button type="submit" class="sendBtn">Review</button>
+            <button type="submit" class="reviewBtn">Review</button>
         </form>
+        
     </div>
+        
     <div class="formContainer">
         <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
         <div class="modal-dialog">
