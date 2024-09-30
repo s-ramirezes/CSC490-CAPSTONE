@@ -63,17 +63,17 @@
                 <% }) %>
             <% } %>
         </div>
-    <div class="messageContainer">
-        <form action="/sendMessage?convId=<%= convId %>" method="POST">
+    <div class="messageContainer d-flex flex-grow-1">
+        <form action="/sendMessage?convId=<%= convId %>" method="POST" class="d-flex flex-grow-1">
             <input type="text" class="messageBox" name="message" placeholder="Write Message" required>
             <input type="hidden" name="userId" value="<%= userId %>">
             <button type="submit" class="sendBtn">Send</button>
             <button type="button" class="sendBtn" data-bs-toggle="modal" data-bs-target="#postModal">Create Calendar</button>
         </form>
-        <form action="/reviewPage" method="POST">
+        <form action="/reviewPage" method="POST" class="d-flex">
             <input type="hidden" name="convId" value="<%= convId %>">
             <input type="hidden" name="userId2" value="<%= receiver.userId %>"/>
-            <button type="submit" class="sendBtn">Review</button>
+            <button type="submit" class="sendBtn flex-grow-1">Review</button>
         </form>
     </div>
     <div class="formContainer">
