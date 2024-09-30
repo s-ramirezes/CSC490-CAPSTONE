@@ -66,7 +66,7 @@
                     </div>
                     <div class="user-email">
                         <p><%= user.email %></p>
-                        <form action="/createConv" method="POST" class="ms-4"></form>
+                        <form action="/createConv" method="POST" class="ms-4">
                             <input type="hidden" id="userId2" value="<%= user.userId %>" name="userId2">
                             <button type="submit" class="btn btn-primary">Message</button>
                         </form>
