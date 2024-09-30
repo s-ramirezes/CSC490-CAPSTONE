@@ -17,13 +17,13 @@ h2{
 header {
     height: 120px; 
     margin-bottom: 20px;
-    background-color: #07394b;
+    background-color: #0c0c0c;
     background-size: contain;
 }
 
 a:link, a:visited {
     text-decoration: none;
-    color: rgb(119, 121, 125);
+    color: rgb(14, 14, 14);
 }
 
 .subjects{

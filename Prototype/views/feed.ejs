@@ -19,7 +19,7 @@
     <div class="columns">
         <div id="feed">
             <div id="feed-header">
-                <h1>Feed</h1>
+                <h1><%= category.catName %> Feed</h1>
             </div>
             <div class="nav-buttons">
                 <button id="viewPostsButton" class="btn btn-secondary" onclick="toggleView('posts')">View Posts</button>
@@ -51,12 +51,18 @@
                                         <h2>
                                             <%= post.title %>
                                         </h2>
-                                        <h4>By: <%= post.email %> Course:<%= post.courseId %>
+                                        <h4>By: <a href="/account/<%= post.userId %>">
+                                            <img src="/images/<%= post.profilePic %>" class="rounded-circle" alt="profile"
+                                                height="40">
+                                            <span>
+                                                <%= post.fname + " " + post.lname %>
+                                            </span>
+                                        </a>
                                         </h4>
 
                                         <div class="delete-button">
                                             <% if (userId===post.userId || role==='teacher' || role==='moderator' ) { %>
-                                                <form action="/deletePost" method="POST" class="ms-4">
+                                                <form action="/deleteUserPost" method="POST" class="ms-4">
                                                     <input type="hidden" id="catId" value="<%= catId %>" name="catId">
                                                     <input type="hidden" name="postId" value="<%= post.postId %>">
                                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -71,9 +77,9 @@
 
                                         <div class="d-flex justify-content-end align-items-center me-4">
                                             <div class="d-flex align-items-center me-4">
-                                                <button type="button" class="btn btn-link p-0 border-0 me-2"
+                                                <!-- <button type="button" class="btn btn-link p-0 border-0 me-2"
                                                     data-bs-toggle="modal" data-bs-target="#replyModal"
-                                                    onclick="setReplyModalValues('<%= post.postId %>')">Reply</button>
+                                                    onclick="setReplyModalValues('<%= post.postId %>')">Reply</button> -->
                                                 <% if (userId !==post.userId) { %>
                                                     <form action="/createConv" method="POST" class="ms-4">
                                                         <input type="hidden" id="userId2" value="<%= post.userId %>"
@@ -82,11 +88,13 @@
                                                             class="btn btn-link p-0 border-0 me-2">Message</button>
                                                     </form>
                                                     <% } %>
-                                                        <button type="button" class="btn btn-link p-0 border-0 me-2">
+                                                        <button type="button" class="btn btn-link p-0 border-0 me-2"
+                                                        data-bs-toggle="modal" data-bs-target="#replyModal"
+                                                        onclick="setReplyModalValues('<%= post.postId %>')">
                                                             <img src="/images/comment.png" alt="Comment" width="30"
                                                                 height="30">
                                                         </button>
-                                                        <div class="text-muted small">0 comments</div>
+                                                        <div class="text-muted small"><%= post.commentCount %> comments</div>
                                             </div>
                                             <div class="d-flex align-items-center me-4">
                                                 <button type="submit" id="likeButton"

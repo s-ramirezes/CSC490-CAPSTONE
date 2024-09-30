@@ -6,10 +6,10 @@ function getPosts() {
     const sql = "SELECT * FROM posts";
     return db.all(sql);
 }
-
+// edited
 function getSubjectPosts(catId) {
     const sql = `
-        SELECT posts.*, users.email
+        SELECT posts.*, users.email, users.profilePic, users.fname, users.lname 
         FROM posts
         JOIN users ON posts.userId = users.userId
         WHERE posts.catId = ?;
@@ -172,6 +172,18 @@ function getAverageRating(userId){
     return db.get(sql, userId);
 }
 
+function getCommentCount(postId){
+    const sql = `
+    SELECT COUNT(*) FROM replies WHERE postId = ?`;
+    return db.get(sql, postId);
+}
+
+function getCategory(catId){
+    const sql = `
+    SELECT * FROM category WHERE catId = ?`;
+    return db.get(sql, catId);
+}
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -204,4 +216,6 @@ module.exports = {
     postReview,
     getReviews,
     getAverageRating,
+    getCommentCount,
+    getCategory,
 };
