@@ -63,7 +63,7 @@
                 <% }) %>
             <% } %>
         </div>
-    <div class="messageContainer d-flex flex-grow-1">
+    <div class="messageContainer d-flex">
         <form action="/sendMessage?convId=<%= convId %>" method="POST" class="d-flex flex-grow-1">
             <input type="text" class="messageBox" name="message" placeholder="Write Message" required>
             <input type="hidden" name="userId" value="<%= userId %>">
