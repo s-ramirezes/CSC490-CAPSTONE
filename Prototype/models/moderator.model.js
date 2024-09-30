@@ -107,6 +107,47 @@ function getUserReplies(userId){
     WHERE userId=?;`;
     return db.all(sql, userId);
 }
+function getFlaggedPosts (){
+    const sql = `SELECT * FROM posts
+        WHERE flagged =1; `;
+    return db.all(sql);
+}
+function getAllPosts(){
+    const sql = `SELECT * FROM posts;`;
+    return db.all(sql);
+}
+function  unflagPost(postId) {
+    const sql = `UPDATE posts
+        SET flagged = 0
+        WHERE postId= ?;`;
+    return db.run(sql, [postId]);
+}
+function  deletePost(postId) {
+    const sql = `DELETE FROM posts
+        WHERE postId= ?;`;
+    return db.run(sql, [postId]);
+}
+function getTutors (){
+    const sql = `SELECT * FROM users
+        WHERE role ='tutor'; `;
+    return db.all(sql);
+}
+function getReviews (){
+    const sql = `SELECT * FROM reviews`;
+    return db.all(sql);
+}
+function  addTutor(userId) {
+    const sql = `UPDATE users
+        SET role = 'tutor'
+        WHERE userId= ?;`;
+    return db.run(sql, [userId]);
+}
+function  removeTutor(userId) {
+    const sql = `UPDATE users
+        SET role = 'student'
+        WHERE userId= ?;`;
+    return db.run(sql, [userId]);
+}
 
 module.exports = {
     getSubjects,
@@ -124,5 +165,12 @@ module.exports = {
     getUser,
     getUserPosts,
     getUserReplies,
-    
+    getFlaggedPosts,
+    getAllPosts,
+    unflagPost,
+    deletePost,
+    getTutors,
+    getReviews,
+    addTutor,
+    removeTutor,
 };

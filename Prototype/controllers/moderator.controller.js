@@ -130,6 +130,87 @@ function modUserPage (req, res){
         console.error("Failed to render modUserPage page "+ err.message);
     }
 }
+function postList (req,res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const flaggedPosts= model.getFlaggedPosts();
+        const allPosts=model.getAllPosts();
+        const role= req.session.role;
+        res.render ("modPosts", {subjects : subjects, role: role, 
+            flaggedPosts : flaggedPosts, allPosts: allPosts});
+    } catch (err) {
+        console.error("Failed to render modPosts page "+ err.message);
+    }
+}
+function unflagPost (req, res){
+    try{
+        const postId= req.query.postId;
+        model.unflagPost(postId);
+        res.redirect(`/modPosts`);
+    } catch (err) {
+        console.error ("Failed to unflag Post: " + err.message);
+        res.status(500).send("Failed to unflag Post");
+    }
+}
+function deletePost (req, res){
+    try{
+        const postId= req.query.postId;
+        model.deletePost(postId);
+        res.redirect(`/modPosts`);
+    } catch (err) {
+        console.error ("Failed to delete post: " + err.message);
+        res.status(500).send("Failed to delete post");
+    }
+}
+function tutorList (req,res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const tutors= model.getTutors();
+        const reviews=model.getReviews();
+        const role= req.session.role;
+        res.render ("modTutor", {subjects : subjects, role: role, 
+            tutors : tutors, reviews: reviews});
+    } catch (err) {
+        console.error("Failed to render modTutors page "+ err.message);
+    }
+}
+function tutorPage (req, res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const userId= req.query.userId;
+        const user= model.getUser(userId);
+        const userPosts= model.getUserPosts(userId);
+        const userReplies= model.getUserReplies(userId);
+        const role=req.session.role;
+        res.render ("tutorPage", {subjects : subjects, role: role, 
+            userId : userId, user: user, userPosts: userPosts, userReplies: userReplies});
+    } catch (err) {
+        console.error("Failed to render Tutor page "+ err.message);
+    }
+}
+function addTutor (req, res){
+    try{
+        const userId= req.query.userId;
+        model.addTutor(userId);
+        res.redirect(`/modTutors`);
+    } catch (err) {
+        console.error ("Failed to add Tutor: " + err.message);
+        res.status(500).send("Failed to add Tutor");
+    }
+}
+function removeTutor (req, res){
+    try{
+        const userId= req.query.userId;
+        model.removeTutor(userId);
+        res.redirect(`/modTutors`);
+    } catch (err) {
+        console.error ("Failed to remove tutor: " + err.message);
+        res.status(500).send("Failed to remove tutor");
+    }
+}
 module.exports = {
     homePage,
     messages,
@@ -140,4 +221,12 @@ module.exports = {
     banUser,
     modFlag,
     modUserPage,
+    postList,
+    unflagPost,
+    deletePost,
+    tutorList,
+    tutorPage,
+    addTutor,
+    removeTutor,
+
 };

@@ -13,5 +13,11 @@ router.post("/unflagUser", moderatorController.unflagUser);
 router.post("/banUser", moderatorController.banUser);
 router.post("/modFlag", moderatorController.modFlag);
 router.get("/modUserPage", moderatorController.modUserPage);
-
+router.get("/modPosts", moderatorController.postList);
+router.post("/unflagPost", moderatorController.unflagPost);
+router.post("/deletePost", moderatorController.deletePost);
+router.get("/modTutors", moderatorController.tutorList);
+router.get("/tutorPage", moderatorController.tutorPage);
+router.post("/addTutor", moderatorController.addTutor);
+router.post("/removeTutor", moderatorController.removeTutor);
 module.exports = router; 

@@ -11,67 +11,56 @@
     <header>
         <%- include('partials/navbar') %>
     </header>
-    <ul class="DMs">
-        <h2>Messages</h2>
-        <li class="notifications">
-            <img src="/images/blank-pf.png" alt="profile-pic">
-            <a href="#">UserName</a>
-            <p> # of new notifications</p>
-
-        </li>
-        <li class="notifications">
-            <img src="/images/blank-pf.png" alt="profile-pic">
-            <a href="#">UserName</a>
-            <p> # of new notifications</p>
-
-        </li>
-        <li class="notifications">
-            <img src="/images/blank-pf.png" alt="profile-pic">
-            <a href="#">UserName</a>
-            <p> # of new notifications</p>
-
-        </li>
-    </ul>
     <div class="pageContent">
-        <h1>Flagged Users</h1>
+        <h1>Flagged Posts</h1>
         <div class="flaggedUserList">
-            <% if (!flaggedUsers || flaggedUsers.length===0) { %>
-                <p>There are no flagged users.</p>
+            <% if (!flaggedPosts || flaggedPosts.length===0) { %>
+                <p>There are no flagged posts.</p>
             <% } else { %>
-                <% flaggedUsers.forEach(flaggedUser => { %>
-                    <a class="flaggedUser" href="/modUserPage?userId=<%= flaggedUser.userId %>">
-                        <p>UserId= <%=flaggedUser.userId %></p>
-                        <p>Name= <%=flaggedUser.fname %> <%=flaggedUser.lname %></p>
-                        <p>Role= <%=flaggedUser.role %></p>
-                        <form action="/unflagUser?userId=<%= flaggedUser.userId %>" method="POST">
+                <% flaggedPosts.forEach(flaggedPost => { %>
+                    <div class="flaggedUser">
+                        <p>PostId= <%=flaggedPost.postId %></p>
+                        <p>UserId= <%=flaggedPost.userId %></p>
+                        <p>Title= <%=flaggedPost.title %></p>
+                        <p>Description= <%=flaggedPost.description %></p>
+                        <form action="/unflagPost?postId=<%= flaggedPost.postId %>" method="POST">
                             <button class="flagUser">
-                                Unflag</button>
+                                Unflag Post</button>
                         </form>
-                        <form action="/banUser?userId=<%= flaggedUser.userId %>" method="POST">
+                        <form action="/modFlag?userId=<%= flaggedPost.userId %>" method="POST">
                             <button class="flagUser">
-                                Ban</button>
+                                Flag User</button>
                         </form>
-                    </a>
+                        <form action="/deletePost?postId=<%= flaggedPost.postId %>" method="POST">
+                            <button class="flagUser">
+                                Delete</button>
+                        </form>
+                    </div>
                 <% }) %>
             <%} %> 
         </div>
-        <h1>All Users</h1>
+        <h1>All Posts</h1>
         <div class="allUserList">
-            <% if (!allUsers || allUsers.length===0) { %>
-                <p>There are no users.</p>
+            <% if (!allPosts || allPosts.length===0) { %>
+                <p>There are no posts.</p>
             <% } else { %>
-                <% allUsers.forEach(user => { %>
-                    <a class="user" href="/modUserPage?userId=<%= user.userId %>">
-                        <p>UserId= <%=user.userId %></p>
-                        <p>Name= <%=user.fname %> <%=user.lname %></p>
-                        <p>Role= <%=user.role %></p>
-                        <form action="/modFlag?userId=<%= user.userId %>" method="POST">
+                <% allPosts.forEach(post => { %>
+                    <div class="flaggedUser">
+                        <p>PostId= <%=post.postId %></p>
+                        <p>UserId= <%=post.userId %></p>
+                        <p>Title= <%=post.title %></p>
+                        <p>Description= <%=post.description %></p>
+                        <form action="/modFlag?userId=<%= post.userId %>" method="POST">
                             <button class="flagUser">
-                                Flag</button>
+                                Flag User</button>
                         </form>
-                    </a>
+                        <form action="/deletePost?postId=<%= post.postId %>" method="POST">
+                            <button class="flagUser">
+                                Delete</button>
+                        </form>
+                    </div>
                 <% }) %>
-            <% } %>
+            <%} %> 
         </div>
     </div>
 

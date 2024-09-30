@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/modUsers.css">
+    <title>Home</title>
+</head>
+<body>
+    <header>
+        <%- include('partials/navbar') %>
+    </header>
+    <div class="pageContent">
+        <h1>Tutors</h1>
+        <div class="flaggedUserList">
+            <% if (!tutors || tutors.length===0) { %>
+                <p>There are no tutors.</p>
+            <% } else { %>
+                <% tutors.forEach(tutor => { %>
+                    <a class="flaggedUser" href="/tutorPage?userId=<%= tutor.userId %>">
+                        <p>UserId= <%=tutor.userId %></p>
+                        <p>Name= <%=tutor.fname %> <%=tutor.lname %></p>
+                        <form action="/removeTutor?userId=<%= tutor.userId %>" method="POST">
+                            <button class="flagUser">
+                                Remove Tutor</button>
+                        </form>
+                    </a>
+                <% }) %>
+            <%} %> 
+        </div>
+        <h1>Reviews</h1>
+        <div class="allUserList">
+            <% if (!reviews || reviews.length===0) { %>
+                <p>There are no reviews.</p>
+            <% } else { %>
+                <% reviews.forEach(review => { %>
+                    <a class="user" href="/tutorPage?userId=<%= review.revieweeId %>">
+                        <p>ReviewId= <%=review.reviewId %></p>
+                        <p>Title= <%=review.title %></p>
+                        <p>Description= <%=review.description %></p>
+                        <p>Rating= <%=review.rating %></p>
+                        <p>Recommended= <%=review.recommended %></p>
+                        <form action="/addTutor?userId=<%= review.revieweeId %>" method="POST">
+                            <button class="flagUser">
+                                Add Tutor</button>
+                        </form>
+                    </a>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+
+</body>
+
+
+</html>

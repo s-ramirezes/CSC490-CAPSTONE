@@ -14,15 +14,15 @@
     <div class="pageContent">
         <div class="userName">
             <h1> <%=user.fname%> <%=user.lname %></h1>
-            <% if (user.flagged == 1){ %>
-                <form action="/unflagUser?userId=<%= user.userId %>" method="POST">
+            <% if (user.role == 'tutor'){ %>
+                <form action="/removeTutor?userId=<%= user.userId %>" method="POST">
                     <button class="flagUser">
-                        Unflag</button>
+                        Remove Tutor</button>
                 </form>
             <% } else { %>
-                <form action="/modFlag?userId=<%= user.userId %>" method="POST">
+                <form action="/addTutor?userId=<%= user.userId %>" method="POST">
                     <button class="flagUser">
-                        Flag</button>
+                        Add Tutor</button>
                 </form>
             <% } %>
         </div>
