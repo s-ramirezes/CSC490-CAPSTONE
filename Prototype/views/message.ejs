@@ -35,6 +35,9 @@
     <div class="columns">
         <div id="feed">
             <h1>Users</h1>
+            <% if (users.length === 0) { %>
+                <h2>No users found</h2>
+            <% } %>
             <% users.forEach(user => { %>
             <div class="user-card">
                 <div class="user-card-info">

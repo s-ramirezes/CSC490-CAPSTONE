@@ -18,7 +18,7 @@ module.exports = function (imageUpload) {
     router.post("/updateProfilePic", imageUpload.single("file"), userController.updateProfilePic);
     router.post("/like", userController.likePost);
     router.post("/post", userController.post);
-    router.post("/deletePost", userController.deletePost);
+    router.post("/deleteUserPost", userController.deletePost);
     router.post("/reply", userController.reply);
     router.post("/deleteReply", userController.deleteReply);
     router.post("/createConv", userController.createConv);

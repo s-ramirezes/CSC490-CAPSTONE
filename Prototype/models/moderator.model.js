@@ -26,7 +26,7 @@ function getReceiver(userId, convId){
             WHEN c.userId1 = ? THEN c.userId2
             ELSE c.userId1
             END
-        WHERE c.userId1 = ? OR c.userId2 = ?
+        WHERE (c.userId1 = ? OR c.userId2 = ?)
         AND convId= ?;`;
     return db.get(sql, userId, userId, userId, convId);
 }
