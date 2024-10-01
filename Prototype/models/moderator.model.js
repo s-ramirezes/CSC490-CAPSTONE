@@ -65,6 +65,19 @@ function addMessageStatus(messageId, userId) {
     return db.run(sql, [messageId, userId]);
 }
 
+function markMessagesAsRead(convId, userId) {
+    const sql = `
+        UPDATE messageStatus
+        SET isRead = 1
+        WHERE messageId IN (
+            SELECT m.messageId
+            FROM messages m
+            WHERE m.convId = ?
+        ) AND userId = ? AND isRead = 0
+    `;
+    return db.run(sql, [convId, userId]);
+}
+
 function getLastRowId() {
     return db.get("SELECT last_insert_rowid() as id");
 }
@@ -158,6 +171,7 @@ module.exports = {
     getFlaggedUsers,
     getAllUsers,
     addMessageStatus,
+    markMessagesAsRead,
     getLastRowId,
     unflagUser,
     banUser,

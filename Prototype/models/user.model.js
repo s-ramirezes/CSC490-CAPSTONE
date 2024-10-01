@@ -184,6 +184,12 @@ function getCategory(catId){
     return db.get(sql, catId);
 }
 
+function flagPost(postId){
+    const sql = `
+    UPDATE posts SET flagged = 1 WHERE postId = ?`;
+    return db.run(sql, postId);
+}
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -218,4 +224,5 @@ module.exports = {
     getAverageRating,
     getCommentCount,
     getCategory,
+    flagPost
 };

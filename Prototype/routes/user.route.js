@@ -25,6 +25,7 @@ module.exports = function (imageUpload) {
     router.post("/reviewPage", userController.reviewPage);
     router.post("/makeReview", userController.makeReview);
     router.post("/searchUser", userController.searchUser);
+    router.post("/flagPost", userController.flagPost);
     
     return router; 
 }

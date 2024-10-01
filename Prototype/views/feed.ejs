@@ -115,10 +115,17 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center">
-                                                <button type="button" id="flagButton"
+                                                <% if (post.flagged) { %>
+                                                        <img src="/images/markedFlag.png" alt="Flag" width="40" height="40">
+                                                <% } else { %>
+                                                        <button type="button" id="flagButton" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#flagModal" onclick="setFlagModalValues('<%= post.postId %>')">
+                                                            <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
+                                                        </button>
+                                                <% } %>
+                                                <!-- <button type="button" id="flagButton"
                                                     class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
                                                     <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
-                                                </button>
+                                                </button> -->
                                             </div>
                                         </div>
                                         <div class="replies">
@@ -164,7 +171,7 @@
                 <h2>Resources</h2>
                 <% if (!resources || resources.length===0) { %>
                     <h2>No resources found, be the first to make one!</h2>
-                    <% } else { %>
+                <% } else { %>
                         <% resources.forEach(resource=> { %>
                             <div class="resource">
                                 <div class="card">
@@ -191,13 +198,13 @@
                                                 <input type="hidden" name="fileName" value="<%= resource.fileName %>">
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
-                                            <% } %>
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
                             <br>
-                            <% }) %>
-                                <% } %>
+                        <% }) %>
+                <% } %>
             </div>
         </div>
 
@@ -322,6 +329,29 @@
         </div>
     </div>
 
+    
+    <div class="modal fade" id="flagModal" tabindex="-1" aria-labelledby="flagModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="flagModalLabel">Confirm Flagging</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to flag this post?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="/flagPost" method="POST">
+                        <input type="hidden" id="catId" value="<%= catId %>" name="catId">
+                        <input type="hidden" id="flagPostId" name="postId">
+                        <button type="submit" class="btn btn-primary">Flag</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
@@ -330,6 +360,11 @@
         function setReplyModalValues(postId) {
             document.getElementById('postId').value = postId;
         }
+        
+        function setFlagModalValues(postId) {
+            document.getElementById('flagPostId').value = postId;
+        }
+
     </script>
 </body>
 

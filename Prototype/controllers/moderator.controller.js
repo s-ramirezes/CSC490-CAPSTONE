@@ -29,6 +29,7 @@ function messages (req, res){
         res.render ("modMessages", {subjects : subjects, role: role, 
             messages: messages, userId: userId, receiver: receiver, 
             convId: convId});
+        model.markMessagesAsRead(convId, userId);   
     } catch (err) {
         console.error("Failed to render modMessages page "+ err.message);
     }
