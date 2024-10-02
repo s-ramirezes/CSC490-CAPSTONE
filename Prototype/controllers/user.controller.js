@@ -265,6 +265,18 @@ function updateProfilePic(req, res) {
     }
 }
 
+function flagPost(req, res) {
+    try {
+        const postId = req.body.postId;
+        console.log(postId);
+        const catId = req.body.catId;
+        model.flagPost(postId);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while flagging post:  " + err.message)
+    }
+}
+
 
 
 
@@ -284,5 +296,6 @@ module.exports = {
     deleteReply,
     createConv,
     getMessagePage,
-    updateProfilePic
+    updateProfilePic,
+    flagPost
 };
