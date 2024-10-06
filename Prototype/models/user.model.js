@@ -190,6 +190,12 @@ function flagPost(postId){
     return db.run(sql, postId);
 }
 
+function editPost(postId, title, courseId, description){
+    const sql = 'UPDATE posts set title = ?, courseId = ?, description = ? WHERE postId = ?';
+    const params = [title, courseId, description, postId]; 
+    return db.run(sql, params);
+}
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -224,5 +230,6 @@ module.exports = {
     getAverageRating,
     getCommentCount,
     getCategory,
-    flagPost
+    flagPost,
+    editPost
 };

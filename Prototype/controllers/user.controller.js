@@ -277,6 +277,21 @@ function flagPost(req, res) {
     }
 }
 
+function editPost(req, res) {
+    try {
+        const postId = req.body.postId;
+        console.log(postId);
+        const title = req.body.editTitle;
+        const courseId = req.body.editCourseId;
+        const description = req.body.editDescription;
+        const catId = req.body.catId;
+        model.editPost(postId, title, courseId, description);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while flagging post:  " + err.message)
+    }
+}
+
 
 
 
@@ -297,5 +312,6 @@ module.exports = {
     createConv,
     getMessagePage,
     updateProfilePic,
-    flagPost
+    flagPost,
+    editPost,
 };
