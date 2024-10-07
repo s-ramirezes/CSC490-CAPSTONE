@@ -294,7 +294,7 @@ function editPost(req, res) {
 
 function editReply(req, res) {
     try {
-        const postId = req.body.replyId;
+        const replyId = req.body.replyId;
         const description = req.body.editDescription;
         const catId = req.body.catId;
         model.editReply(replyId, description);

@@ -97,7 +97,7 @@ function createReply(userId, catId, postId, description) {
 
 function getRepliesforPost(postId) {
     const sql = `
-        SELECT replies.*, users.email
+        SELECT replies.*, users.fname, users.lname, users.profilePic
         FROM replies
         JOIN users ON replies.userId = users.userId
         WHERE replies.postId = ?;
