@@ -288,7 +288,19 @@ function editPost(req, res) {
         model.editPost(postId, title, courseId, description);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while flagging post:  " + err.message)
+        console.error("Error while editing post:  " + err.message)
+    }
+}
+
+function editReply(req, res) {
+    try {
+        const postId = req.body.replyId;
+        const description = req.body.editDescription;
+        const catId = req.body.catId;
+        model.editReply(replyId, description);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while editing reply:  " + err.message)
     }
 }
 
@@ -314,4 +326,5 @@ module.exports = {
     updateProfilePic,
     flagPost,
     editPost,
+    editReply,
 };

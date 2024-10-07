@@ -160,13 +160,20 @@
                                                                         role==='moderator' ) { %>
                                                                         <form action="/deleteReply" method="POST"
                                                                             class="ms-4">
-                                                                            <input type="hidden" id="catId"
-                                                                                value="<%= catId %>" name="catId">
+                                                                            <input type="hidden" name="catId"
+                                                                                value="<%= catId %>">
                                                                             <input type="hidden" name="replyId"
                                                                                 value="<%= reply.replyId %>">
                                                                             <button type="submit"
                                                                                 class="btn btn-danger">Delete</button>
                                                                         </form>
+                                                                        <% } %>
+
+                                                                        <% if (userId===reply.userId) { %>
+                                                                            <button type="button" class="btn btn-primary p-2 me-2"
+                                                                            data-bs-toggle="modal" data-bs-target="#editModal" onclick="setEditReplyModalValues('<%= reply.replyId %>', '<%= reply.description %>')">
+                                                                            Edit
+                                                                        </button>
                                                                         <% } %>
                                                                 </div>
                                                             </div>
@@ -325,7 +332,7 @@
         </div>
     </div>
 
-    <!-- Edit modal -->
+    <!-- Edit post modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -349,6 +356,36 @@
                             <input type="number" class="form-control" id="editCourseId" name="editCourseId" min="100" max="999"
                                 required>
                         </div>
+                        <div class="mb-3">
+                            <label for="editDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editDescription" name="editDescription" rows="4"
+                                required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit reply modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit
+                        Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/editReply" method="POST">
+                    <input type="hidden" id="catId" value="<%= catId %>" name="catId">
+                    <input type="hidden" id="replyId" name="replyId">
+
+                    <div class="modal-body">
                         <div class="mb-3">
                             <label for="editDescription" class="form-label">Description</label>
                             <textarea class="form-control" id="editDescription" name="editDescription" rows="4"
@@ -428,6 +465,11 @@
             document.getElementById('postId').value = postId;
             document.getElementById('editTitle').value = title;
             document.getElementById('editCourseId').value = courseId;
+            document.getElementById('editDescription').value = description;
+        }
+
+        function setEditReplyModalValues(replyId, description) {
+            document.getElementById('replyId').value = replyId;
             document.getElementById('editDescription').value = description;
         }
 

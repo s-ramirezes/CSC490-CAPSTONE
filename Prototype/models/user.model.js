@@ -196,6 +196,12 @@ function editPost(postId, title, courseId, description){
     return db.run(sql, params);
 }
 
+function editReply(replyId, description){
+    const sql = 'UPDATE replies set description = ? WHERE replyId = ?';
+    const params = [description, replyId]; 
+    return db.run(sql, params);
+}
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -231,5 +237,6 @@ module.exports = {
     getCommentCount,
     getCategory,
     flagPost,
-    editPost
+    editPost,
+    editReply,
 };
