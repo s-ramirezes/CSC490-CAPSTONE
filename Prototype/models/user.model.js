@@ -97,7 +97,7 @@ function createReply(userId, catId, postId, description) {
 
 function getRepliesforPost(postId) {
     const sql = `
-        SELECT replies.*, users.email
+        SELECT replies.*, users.fname, users.lname, users.profilePic
         FROM replies
         JOIN users ON replies.userId = users.userId
         WHERE replies.postId = ?;
@@ -190,6 +190,18 @@ function flagPost(postId){
     return db.run(sql, postId);
 }
 
+function editPost(postId, title, courseId, description){
+    const sql = 'UPDATE posts set title = ?, courseId = ?, description = ? WHERE postId = ?';
+    const params = [title, courseId, description, postId]; 
+    return db.run(sql, params);
+}
+
+function editReply(replyId, description){
+    const sql = 'UPDATE replies set description = ? WHERE replyId = ?';
+    const params = [description, replyId]; 
+    return db.run(sql, params);
+}
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -224,5 +236,7 @@ module.exports = {
     getAverageRating,
     getCommentCount,
     getCategory,
-    flagPost
+    flagPost,
+    editPost,
+    editReply,
 };

@@ -277,6 +277,33 @@ function flagPost(req, res) {
     }
 }
 
+function editPost(req, res) {
+    try {
+        const postId = req.body.postId;
+        console.log(postId);
+        const title = req.body.editTitle;
+        const courseId = req.body.editCourseId;
+        const description = req.body.editDescription;
+        const catId = req.body.catId;
+        model.editPost(postId, title, courseId, description);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while editing post:  " + err.message)
+    }
+}
+
+function editReply(req, res) {
+    try {
+        const replyId = req.body.replyId;
+        const description = req.body.editDescription;
+        const catId = req.body.catId;
+        model.editReply(replyId, description);
+        res.redirect("/category/" + catId);
+    } catch (err) {
+        console.error("Error while editing reply:  " + err.message)
+    }
+}
+
 
 
 
@@ -297,5 +324,7 @@ module.exports = {
     createConv,
     getMessagePage,
     updateProfilePic,
-    flagPost
+    flagPost,
+    editPost,
+    editReply,
 };
