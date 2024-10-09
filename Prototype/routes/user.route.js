@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 
+const { setSessionData, isLoggedIn } = require("./setSessionData");
 
 const userController = require("../controllers/user.controller");
 
