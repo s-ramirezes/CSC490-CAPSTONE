@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const secretkey = "secretkey";
 
-function createUser(email, password, fname, lname, role) {
+function createUser(email, password, fname, lname, role, subject) {
     let sqlCheck = "SELECT * FROM Users WHERE email = ?";
     const paramsCheck = [email];
     const userExists = db.get(sqlCheck, ...paramsCheck);
@@ -18,8 +18,10 @@ function createUser(email, password, fname, lname, role) {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const sql = "INSERT INTO users (email, password, fname, lname, role) VALUES (?, ?, ?, ?, ?)";
-    const params = [email, hash, fname, lname, role];
+
+    const sql = "INSERT INTO users (email, password, fname, lname, role, subject) VALUES (?, ?, ?, ?, ?, ?)";
+
+    const params = [email, hash, fname, lname, role, subject];
     try {
         db.run(sql, params);
 
@@ -103,6 +105,11 @@ function getSubjects() {
     return db.all(sql);
 }
 
+function getSubjectNames(){
+    const sql = "SELECT catName FROM category";
+    return db.all(sql);
+}
+
 function sendForgot(email){
     let sqlCheck = "SELECT * FROM Users WHERE email = ?";
     const paramsCheck = [email];
@@ -162,6 +169,7 @@ module.exports = {
     getUserEmail,
     isVerified,
     getSubjects,
+    getSubjectNames,
     sendForgot,
     resetPassword,
 };
