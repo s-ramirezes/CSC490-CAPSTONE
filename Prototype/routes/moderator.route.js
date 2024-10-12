@@ -4,20 +4,27 @@ const router = express.Router();
 
 const moderatorController = require("../controllers/moderator.controller");
 
-router.get("/modHome", moderatorController.homePage);
+const isModRole = (req, res, next) => {
+    if (req.user && req.user.role === "mod") {
+        return next(); 
+    }
+    return res.redirect('back');
+};
+
+router.get("/modHome", isModRole, moderatorController.homePage);
 router.get("/modMessages", moderatorController.messages);
 router.post("/sendMessage", moderatorController.sendMessage);
-router.post("/createCalendar", moderatorController.createCalendar);
-router.get("/modUsers", moderatorController.userList);
-router.post("/unflagUser", moderatorController.unflagUser);
-router.post("/banUser", moderatorController.banUser);
-router.post("/modFlag", moderatorController.modFlag);
-router.get("/modUserPage", moderatorController.modUserPage);
-router.get("/modPosts", moderatorController.postList);
-router.post("/unflagPost", moderatorController.unflagPost);
-router.post("/deletePost", moderatorController.deletePost);
-router.get("/modTutors", moderatorController.tutorList);
-router.get("/tutorPage", moderatorController.tutorPage);
-router.post("/addTutor", moderatorController.addTutor);
-router.post("/removeTutor", moderatorController.removeTutor);
-module.exports = router; 
+router.post("/createCalendar", isModRole, moderatorController.createCalendar);
+router.get("/modUsers", isModRole, moderatorController.userList);
+router.post("/unflagUser", isModRole, moderatorController.unflagUser);
+router.post("/banUser", isModRole, moderatorController.banUser);
+router.post("/modFlag", isModRole, moderatorController.modFlag);
+router.get("/modUserPage", isModRole, moderatorController.modUserPage);
+router.get("/modPosts", isModRole, moderatorController.postList);
+router.post("/unflagPost", isModRole, moderatorController.unflagPost);
+router.post("/deletePost", isModRole, moderatorController.deletePost);
+router.get("/modTutors", isModRole, moderatorController.tutorList);
+router.get("/tutorPage", isModRole, moderatorController.tutorPage);
+router.post("/addTutor", isModRole, moderatorController.addTutor);
+router.post("/removeTutor", isModRole, moderatorController.removeTutor);
+module.exports = router;

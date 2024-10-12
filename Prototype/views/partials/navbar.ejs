@@ -1,4 +1,4 @@
-<nav>
+<!-- <nav>
     <ul class="subjects">
         <li> <h2> Subjects</h2></li>
     <% subjects.forEach(function(subject) { %>
@@ -6,10 +6,52 @@
             
     <% }); %>
     </ul>
-</nav>
+</nav> -->
 
-<nav style="position: fixed; top: 0; width: 100%; z-index: 1000;">
-    <ul class="topBar flex-container">
+<!-- Sidebar Structure -->
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <ul class="b">
+    <li style="text-align: left; margin-left: 0; margin-right: 20px; list-style-type: none;"><h2 style="color: #fac104; background-color: #0b1835;">Subjects</h2></li>
+    <div class="sidebar-columns">
+      <% subjects.forEach(function(subject) { %>
+        <li><a class="subjectLink" href="/category/<%= subject.catId %>" title="<%= subject.catName %>"><%= subject.catAbbr %></a></li>
+      <% }); %>
+    </div>
+  </ul>
+</div>
+
+
+
+<script>
+let isOpen = false; // Track the state of the sidebar
+
+function toggleNav() {
+  if (isOpen) {
+    closeNav();
+  } else {
+    openNav();
+  }
+}
+
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.querySelector(".openbtn").style.left = "250px"; // Move button to the right of the sidebar
+  isOpen = true; // Update the state
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+  document.querySelector(".openbtn").style.left = "0"; // Move button back to the original position
+  isOpen = false; // Update the state
+}
+</script>
+
+<!-- Existing Top Navigation -->
+<nav>
+    <ul class="navbar">
 
         <% if (role === 'moderator') { %>
             <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
@@ -43,6 +85,11 @@
     
     </ul>
 </nav>
+
+<div id="main">
+  <button class="openbtn" onclick="toggleNav()"></button>
+</div>
+
 <br>
 <br>
 <br>

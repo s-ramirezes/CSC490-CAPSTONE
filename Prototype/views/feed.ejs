@@ -60,232 +60,216 @@
             </button>
           </div>
         </div>
-        <div id="feed-content">
-          <% if (!posts || posts.length===0) { %>
-          <h2>No posts found, be the first to make one!</h2>
-          <% } else { %> <% posts.forEach(post=> { %>
-          <div class="post">
-            <div class="card">
-              <div
-                class="card-header"
-                style="<%= 'background-color: #' + Math.floor(Math.random() * 16777215).toString(16) %>;"
-              >
-                <h2><%= post.title %></h2>
-                <h4>
-                  By:
+       
+        <div id="feed-content" style="position: relative;">
+          <% if (!posts || posts.length === 0) { %>
+            <h2>No posts found, be the first to make one!</h2>
+          <% } else { %>
+            <% posts.forEach(post => { %>
+              <div class="grows" style="position: relative; margin-bottom: 320px; display: flex; flex-direction: column;"> <!-- Added margin for spacing, flex, and column direction -->
+                <div id="postBox" style="width: 700px; height: 300px; left: 76px; top: 107px; position: absolute; background: rgb(255, 251, 215);  border-radius: 19px; border: 3px rgb(0, 0, 0) solid; "></div>
+                <div class="grows" style="width: 40px; height: 40px; left: 94px; top: 320px; position: absolute; background: white; border-radius: 9999px; border: 1px black solid;">
                   <a href="/account/<%= post.userId %>">
                     <img
-                      src="/images/<%= post.profilePic %>"
-                      class="rounded-circle"
-                      alt="profile"
-                      height="40"
-                    />
-                    <span> <%= post.fname + " " + post.lname %> </span>
+                    src="/images/<%= post.profilePic %>"
+                    class="rounded-circle"
+                    alt="profile"
+                    style="width: 100%; height: 100%; object-fit: cover;">
                   </a>
-                </h4>
-
-                <div class="delete-button">
-                  <% if (userId===post.userId || role==='teacher' ||
-                  role==='moderator' ) { %>
-                  <form action="/deleteUserPost" method="POST" class="ms-4">
-                    <input
-                      type="hidden"
-                      id="catId"
-                      value="<%= catId %>"
-                      name="catId"
-                    />
-                    <input
-                      type="hidden"
-                      name="postId"
-                      value="<%= post.postId %>"
-                    />
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                  </form>
-                  <% } %> <% if (userId===post.userId ) { %>
-                  <button
-                    type="button"
-                    class="btn btn-primary p-2 me-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editModal"
-                    onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', 
-                                        '<%= post.courseId %>', '<%= post.description %>')"
-                  >
-                    Edit
-                  </button>
-
-                  <% } %>
                 </div>
-              </div>
-              <div class="card-body">
-                <p><%= post.description %></p>
-
-                <div class="d-flex justify-content-end align-items-center me-4">
-                  <div class="d-flex align-items-center me-4">
-                    <% if (userId !==post.userId) { %>
-                    <form action="/createConv" method="POST" class="ms-4">
-                      <input
-                        type="hidden"
-                        id="userId2"
-                        value="<%= post.userId %>"
-                        name="userId2"
-                      />
+                <div style="width: 500px; height: 27px; left: 146px; top: 325px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                  <a href="/account/<%= post.userId %>">
+                    <%= post.fname + " " + post.lname %>
+                  </a>
+                </div>
+                <div id="dots" class="grows" style="position: absolute; left: 690px; top: 320px;" onclick="toggleButtons('buttons-<%= post.postId %>')"> <!-- Pass the specific buttons ID -->
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+                <div class="buttons" id="buttons-<%= post.postId %>"> 
+                  <!-- Initially hidden -->
+                  <div class="d-flex justify-content-end align-items-center me-4">
+                    <div class="d-flex align-items-center me-4">
+                      <% if (userId !==post.userId) { %>
+                      <form action="/createConv" method="POST" class="ms-4">
+                        <input
+                          type="hidden"
+                          id="userId2"
+                          value="<%= post.userId %>"
+                          name="userId2"
+                        />
+                        <button
+                          type="submit"
+                          class="btn btn-link p-0 border-0 me-2"
+                        >
+                          Message
+                        </button>
+                      </form>
+                      <% } %>
+                      <button
+                        type="button"
+                        class="grows btn btn-link p-0 border-0 me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#replyModal"
+                        onclick="setReplyModalValues('<%= post.postId %>')"
+                      >
+                        <img
+                          src="/images/comment.png"
+                          alt="Comment"
+                          width="30"
+                          height="30"
+                        />
+                      </button>
+                      <div class="text-muted small">
+                        <%= post.commentCount %> comments
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center me-4">
                       <button
                         type="submit"
-                        class="btn btn-link p-0 border-0 me-2"
+                        id="likeButton"
+                        class="grows btn btn-link p-0 border-0 me-2"
+                        onclick="toggleLike(event)"
                       >
-                        Message
+                        <input
+                          type="hidden"
+                          name="postId"
+                          value="<%= post.postId %>"
+                        />
+                        <input
+                          type="hidden"
+                          name="liked"
+                          value="<%= post.liked %>"
+                        />
+                        <input
+                          type="hidden"
+                          name="likeCount"
+                          value="<%= post.likeCount %>"
+                        />
+                        <% if (post.liked) { %>
+                        <img
+                          src="/images/likeClicked.png"
+                          alt="Like"
+                          width="30"
+                          height="30"
+                        />
+                        <% } else { %>
+                        <img
+                          src="/images/likeUnclicked.png"
+                          alt="Like"
+                          width="30"
+                          height="30"
+                        />
+                        <% } %>
                       </button>
-                    </form>
-                    <% } %>
-                    <button
-                      type="button"
-                      class="btn btn-link p-0 border-0 me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#replyModal"
-                      onclick="setReplyModalValues('<%= post.postId %>')"
-                    >
-                      <img
-                        src="/images/comment.png"
-                        alt="Comment"
-                        width="30"
-                        height="30"
-                      />
-                    </button>
-                    <div class="text-muted small">
-                      <%= post.commentCount %> comments
+                      <div class="text-muted small">
+                        <%= post.likeCount %> likes
+                      </div>
                     </div>
-                  </div>
-                  <div class="d-flex align-items-center me-4">
-                    <button
-                      type="submit"
-                      id="likeButton"
-                      class="btn btn-link p-0 border-0 me-2"
-                      onclick="toggleLike(event)"
-                    >
-                      <input
-                        type="hidden"
-                        name="postId"
-                        value="<%= post.postId %>"
-                      />
-                      <input
-                        type="hidden"
-                        name="liked"
-                        value="<%= post.liked %>"
-                      />
-                      <input
-                        type="hidden"
-                        name="likeCount"
-                        value="<%= post.likeCount %>"
-                      />
-                      <% if (post.liked) { %>
+                    <div class="d-flex align-items-center">
+                      <% if (post.flagged) { %>
                       <img
-                        src="/images/likeClicked.png"
-                        alt="Like"
-                        width="30"
-                        height="30"
-                      />
-                      <% } else { %>
-                      <img
-                        src="/images/likeUnclicked.png"
-                        alt="Like"
-                        width="30"
-                        height="30"
-                      />
-                      <% } %>
-                    </button>
-                    <div class="text-muted small">
-                      <%= post.likeCount %> likes
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <% if (post.flagged) { %>
-                    <img
-                      src="/images/markedFlag.png"
-                      alt="Flag"
-                      width="40"
-                      height="40"
-                    />
-                    <% } else { %>
-                    <button
-                      type="button"
-                      id="flagButton"
-                      class="btn btn-link"
-                      data-bs-toggle="modal"
-                      data-bs-target="#flagModal"
-                      onclick="setFlagModalValues('<%= post.postId %>')"
-                    >
-                      <img
-                        src="/images/emptyFlag.png"
+                        src="/images/markedFlag.png"
                         alt="Flag"
                         width="40"
                         height="40"
                       />
-                    </button>
-                    <% } %>
-                    <!-- <button type="button" id="flagButton"
-                                                    class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
-                                                    <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
-                                                </button> -->
-                  </div>
-                </div>
-                <div class="replies">
-                  <% if (!post.replies || post.replies.length===0) { %>
-                  <p>No replies found, be the first to make one!</p>
-                  <% } else { %> <% post.replies.forEach(reply=> { %>
-                  <div class="reply card mb-2">
-                    <div class="card-body">
-                        <h3>
-                            <a href="/account/<%= reply.userId %>">
-                              <img
-                                src="/images/<%= reply.profilePic %>"
-                                class="rounded-circle"
-                                alt="profile"
-                                height="40"
-                              />
-                              <span> <%= reply.fname + " " + reply.lname %> </span>
-                            </a>
-                          </h3>
-                      <p><%= reply.description %></p>
-                      <div class="delete-button">
-                        <% if (userId===reply.userId || role==='teacher' ||
-                        role==='moderator' ) { %>
-                        <form action="/deleteReply" method="POST" class="ms-4">
-                          <input
-                            type="hidden"
-                            name="catId"
-                            value="<%= catId %>"
-                          />
-                          <input
-                            type="hidden"
-                            name="replyId"
-                            value="<%= reply.replyId %>"
-                          />
-                          <button type="submit" class="btn btn-danger">
-                            Delete
-                          </button>
-                        </form>
-                        <% } %> <% if (userId===reply.userId) { %>
-                        <button
-                          type="button"
-                          class="btn btn-primary p-2 me-2"
-                          data-bs-toggle="modal"
-                          data-bs-target="#editReplyModal"
-                          onclick="setEditReplyModalValues('<%= reply.replyId %>', '<%= reply.description %>')"
-                        >
-                          Edit
-                        </button>
-                        <% } %>
-                      </div>
+                      <% } else { %>
+                      <button
+                        type="button"
+                        id="flagButton"
+                        class="grows btn btn-link"
+                        data-bs-toggle="modal"
+                        data-bs-target="#flagModal"
+                        onclick="setFlagModalValues('<%= post.postId %>')"
+                      >
+                        <img
+                          src="/images/emptyFlag.png"
+                          alt="Flag"
+                          width="40"
+                          height="40"
+                        />
+                      </button>
+                      <% } %>
+                      <!-- <button type="button" id="flagButton"
+                                                      class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
+                                                      <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
+                                                  </button> -->
                     </div>
                   </div>
-                  <% }) %> <% } %>
+  
                 </div>
+                <div style="width: 600px; height: 62px; left: 150px; top: 150px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 700; word-wrap: break-word;"><%= post.title %></div>
+                <div style="width: 600px; height: 62px; left: 150px; top: 200px; position: absolute; color: black; font-size: 12px; font-family: Inter; font-weight: 400; word-wrap: break-word;"><%= post.description %></div>
               </div>
-            </div>
-          </div>
-          <br />
-          <% }) %> <% } %>
+            <% }) %>
+          <% } %>
         </div>
+      
+        <style>
+          
+
+          .grows {
+            display: inline-block; /* Ensure the element behaves like a block for scaling */
+           
+          }
+  
+          .grows:hover {
+            transform: scale(1.1); /* Increase size by 20% */
+            transform-origin: center; /* Center the scaling */
+            transition: transform 0.3s ease; /* Smooth transition */
+             z-index: 1;
+          }
+  
+          
+          #postBox:hover,
+          .grows:hover #postBox {
+            box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.25);
+          }
+
+
+          #dots {
+            display: flex;
+            flex-direction: column;
+            gap: 8px; /* Adjust spacing as needed */
+          }
+      
+          .dot {
+            width: 8px;
+            height: 8px;
+            background: #0D0D0D;
+            border-radius: 9999px;
+            z-index: 1;
+          }
+          
+          .buttons {
+            width: 350px;
+            height: 47px;
+            left: 353px; 
+            top: 317px;
+            position: absolute;
+            opacity: 0.8;
+            background: #D9D9D9;
+            border-radius: 11px;
+            transform: translateX(50%) scale(0); /* Start off screen to the right */
+            transition: transform 1s ease; /* Add transition for sliding */
+            opacity: 0; /* Make it transparent initially */
+            pointer-events: none; /* Prevent interaction when not visible */
+            /* transform: scale(0); */
+          }
+
+          .buttons.visible {
+              transform: translateX(0%) scale(1); /* Slide into position */
+              opacity: 1; /* Make it visible */
+              pointer-events: auto; /* Allow interaction when visible */
+              /* transform: scale(1); */
+          }
+
+          
+        </style>
+        
+        
 
         <!-- Resource feed -->
         <div id="resources-content" style="display: none">
@@ -754,6 +738,19 @@
       function setFlagModalValues(postId) {
         document.getElementById("flagPostId").value = postId;
       }
+
+      
+
+      function toggleButtons(buttonId) {
+        const buttonDiv = document.getElementById(buttonId); // Get the specific buttons div
+        const isVisible = buttonDiv.classList.contains("visible"); // Check current visibility
+        if (isVisible) {
+            buttonDiv.classList.remove("visible"); // Remove visible class
+        } else {
+            buttonDiv.classList.add("visible"); // Add visible class
+        }
+     }
+
     </script>
   </body>
 </html>
