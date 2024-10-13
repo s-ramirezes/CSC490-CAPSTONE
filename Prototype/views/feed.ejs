@@ -1,759 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Feed</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/public/feed.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/public/home.css" />
-    <script src="/public/script.js" defer></script>
-  </head>
 
-  <body>
-    <header><%- include('partials/navbar') %></header>
+<head>
+  <title>Feed</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/public/feed.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/public/home.css" />
+  <script src="/public/script.js" defer></script>
+</head>
 
-    <div class="columns">
-      <div id="feed">
-        <div id="feed-header">
-          <h1><%= category.catName %> Feed</h1>
-        </div>
-        <div class="nav-buttons">
-          <button
-            id="viewPostsButton"
-            class="btn btn-secondary"
-            onclick="toggleView('posts')"
-          >
-            View Posts
-          </button>
-          <button
-            id="viewResourcesButton"
-            class="btn btn-secondary"
-            onclick="toggleView('resources')"
-          >
-            View Resources
-          </button>
-          <% if (role==='teacher' ) { %>
+<body>
+  <header><%- include('partials/navbar') %></header>
+
+  <div class="columns">
+    <div id="feed">
+      <div id="feed-header">
+        <h1>
+          <%= category.catName %> Feed
+        </h1>
+      </div>
+      <div class="nav-buttons">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+          Filter
+        </button>
+        <button id="viewPostsButton" class="btn btn-secondary" onclick="toggleView('posts')">
+          View Posts
+        </button>
+        <button id="viewResourcesButton" class="btn btn-secondary" onclick="toggleView('resources')">
+          View Resources
+        </button>
+        <% if (role==='teacher' ) { %>
           <div>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#resourceModal"
-            >
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resourceModal">
               Add Resource
             </button>
           </div>
           <% } %>
-          <div>
-            <button
-              type="button"
-              id="postButton"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#postModal"
-            >
-              Post
-            </button>
-          </div>
-        </div>
-        <div id="feed-content">
-          <% if (!posts || posts.length===0) { %>
+            <div>
+              <button type="button" id="postButton" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#postModal">
+                Post
+              </button>
+            </div>
+      </div>
+      <div id="feed-content">
+        <% if (!posts || posts.length===0) { %>
           <h2>No posts found, be the first to make one!</h2>
-          <% } else { %> <% posts.forEach(post=> { %>
-          <div class="post">
-            <div class="card">
-              <div
-                class="card-header"
-                style="<%= 'background-color: #' + Math.floor(Math.random() * 16777215).toString(16) %>;"
-              >
-                <h2><%= post.title %></h2>
-                <h4>
-                  By:
-                  <a href="/account/<%= post.userId %>">
-                    <img
-                      src="/images/<%= post.profilePic %>"
-                      class="rounded-circle"
-                      alt="profile"
-                      height="40"
-                    />
-                    <span> <%= post.fname + " " + post.lname %> </span>
-                  </a>
-                </h4>
+          <% } else { %>
+            <% posts.forEach(post=> { %>
+              <div class="post">
+                <div class="card">
+                  <div class="card-header"
+                    style="<%= 'background-color: #' + Math.floor(Math.random() * 16777215).toString(16) %>;">
+                    <h2>
+                      <%= post.title %>
+                    </h2>
+                    <h4>
+                      By:
+                      <a href="/account/<%= post.userId %>">
+                        <img src="/images/<%= post.profilePic %>" class="rounded-circle" alt="profile" height="40" />
+                        <span>
+                          <%= post.fname + " " + post.lname %>
+                        </span>
+                      </a>
+                    </h4>
 
-                <div class="delete-button">
-                  <% if (userId===post.userId || role==='teacher' ||
-                  role==='moderator' ) { %>
-                  <form action="/deleteUserPost" method="POST" class="ms-4">
-                    <input
-                      type="hidden"
-                      id="catId"
-                      value="<%= catId %>"
-                      name="catId"
-                    />
-                    <input
-                      type="hidden"
-                      name="postId"
-                      value="<%= post.postId %>"
-                    />
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                  </form>
-                  <% } %> <% if (userId===post.userId ) { %>
-                  <button
-                    type="button"
-                    class="btn btn-primary p-2 me-2"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editModal"
-                    onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', 
-                                        '<%= post.courseId %>', '<%= post.description %>')"
-                  >
-                    Edit
-                  </button>
+                    <div class="delete-button">
+                      <% if (userId===post.userId || role==='teacher' || role==='moderator' ) { %>
+                        <form action="/deleteUserPost" method="POST" class="ms-4">
+                          <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+                          <input type="hidden" name="postId" value="<%= post.postId %>" />
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <% } %>
+                          <% if (userId===post.userId ) { %>
+                            <button type="button" class="btn btn-primary p-2 me-2" data-bs-toggle="modal"
+                              data-bs-target="#editModal" onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', 
+                                        '<%= post.courseId %>', '<%= post.description %>')">
+                              Edit
+                            </button>
 
-                  <% } %>
-                </div>
-              </div>
-              <div class="card-body">
-                <p><%= post.description %></p>
-
-                <div class="d-flex justify-content-end align-items-center me-4">
-                  <div class="d-flex align-items-center me-4">
-                    <% if (userId !==post.userId) { %>
-                    <form action="/createConv" method="POST" class="ms-4">
-                      <input
-                        type="hidden"
-                        id="userId2"
-                        value="<%= post.userId %>"
-                        name="userId2"
-                      />
-                      <button
-                        type="submit"
-                        class="btn btn-link p-0 border-0 me-2"
-                      >
-                        Message
-                      </button>
-                    </form>
-                    <% } %>
-                    <button
-                      type="button"
-                      class="btn btn-link p-0 border-0 me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#replyModal"
-                      onclick="setReplyModalValues('<%= post.postId %>')"
-                    >
-                      <img
-                        src="/images/comment.png"
-                        alt="Comment"
-                        width="30"
-                        height="30"
-                      />
-                    </button>
-                    <div class="text-muted small">
-                      <%= post.commentCount %> comments
+                            <% } %>
                     </div>
                   </div>
-                  <div class="d-flex align-items-center me-4">
-                    <button
-                      type="submit"
-                      id="likeButton"
-                      class="btn btn-link p-0 border-0 me-2"
-                      onclick="toggleLike(event)"
-                    >
-                      <input
-                        type="hidden"
-                        name="postId"
-                        value="<%= post.postId %>"
-                      />
-                      <input
-                        type="hidden"
-                        name="liked"
-                        value="<%= post.liked %>"
-                      />
-                      <input
-                        type="hidden"
-                        name="likeCount"
-                        value="<%= post.likeCount %>"
-                      />
-                      <% if (post.liked) { %>
-                      <img
-                        src="/images/likeClicked.png"
-                        alt="Like"
-                        width="30"
-                        height="30"
-                      />
-                      <% } else { %>
-                      <img
-                        src="/images/likeUnclicked.png"
-                        alt="Like"
-                        width="30"
-                        height="30"
-                      />
-                      <% } %>
-                    </button>
-                    <div class="text-muted small">
-                      <%= post.likeCount %> likes
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <% if (post.flagged) { %>
-                    <img
-                      src="/images/markedFlag.png"
-                      alt="Flag"
-                      width="40"
-                      height="40"
-                    />
-                    <% } else { %>
-                    <button
-                      type="button"
-                      id="flagButton"
-                      class="btn btn-link"
-                      data-bs-toggle="modal"
-                      data-bs-target="#flagModal"
-                      onclick="setFlagModalValues('<%= post.postId %>')"
-                    >
-                      <img
-                        src="/images/emptyFlag.png"
-                        alt="Flag"
-                        width="40"
-                        height="40"
-                      />
-                    </button>
-                    <% } %>
-                    <!-- <button type="button" id="flagButton"
+                  <div class="card-body">
+                    <p>
+                      <%= post.description %>
+                    </p>
+
+                    <div class="d-flex justify-content-end align-items-center me-4">
+                      <div class="d-flex align-items-center me-4">
+                        <% if (userId !==post.userId) { %>
+                          <form action="/createConv" method="POST" class="ms-4">
+                            <input type="hidden" id="userId2" value="<%= post.userId %>" name="userId2" />
+                            <button type="submit" class="btn btn-link p-0 border-0 me-2">
+                              Message
+                            </button>
+                          </form>
+                          <% } %>
+                            <button type="button" class="btn btn-link p-0 border-0 me-2" data-bs-toggle="modal"
+                              data-bs-target="#replyModal" onclick="setReplyModalValues('<%= post.postId %>')">
+                              <img src="/images/comment.png" alt="Comment" width="30" height="30" />
+                            </button>
+                            <div class="text-muted small">
+                              <%= post.commentCount %> comments
+                            </div>
+                      </div>
+                      <div class="d-flex align-items-center me-4">
+                        <button type="submit" id="likeButton" class="btn btn-link p-0 border-0 me-2"
+                          onclick="toggleLike(event)">
+                          <input type="hidden" name="postId" value="<%= post.postId %>" />
+                          <input type="hidden" name="liked" value="<%= post.liked %>" />
+                          <input type="hidden" name="likeCount" value="<%= post.likeCount %>" />
+                          <% if (post.liked) { %>
+                            <img src="/images/likeClicked.png" alt="Like" width="30" height="30" />
+                            <% } else { %>
+                              <img src="/images/likeUnclicked.png" alt="Like" width="30" height="30" />
+                              <% } %>
+                        </button>
+                        <div class="text-muted small">
+                          <%= post.likeCount %> likes
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <% if (post.flagged) { %>
+                          <img src="/images/markedFlag.png" alt="Flag" width="40" height="40" />
+                          <% } else { %>
+                            <button type="button" id="flagButton" class="btn btn-link" data-bs-toggle="modal"
+                              data-bs-target="#flagModal" onclick="setFlagModalValues('<%= post.postId %>')">
+                              <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40" />
+                            </button>
+                            <% } %>
+                              <!-- <button type="button" id="flagButton"
                                                     class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
                                                     <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
                                                 </button> -->
-                  </div>
-                </div>
-                <div class="replies">
-                  <% if (!post.replies || post.replies.length===0) { %>
-                  <p>No replies found, be the first to make one!</p>
-                  <% } else { %> <% post.replies.forEach(reply=> { %>
-                  <div class="reply card mb-2">
-                    <div class="card-body">
-                        <h3>
-                            <a href="/account/<%= reply.userId %>">
-                              <img
-                                src="/images/<%= reply.profilePic %>"
-                                class="rounded-circle"
-                                alt="profile"
-                                height="40"
-                              />
-                              <span> <%= reply.fname + " " + reply.lname %> </span>
-                            </a>
-                          </h3>
-                      <p><%= reply.description %></p>
-                      <div class="delete-button">
-                        <% if (userId===reply.userId || role==='teacher' ||
-                        role==='moderator' ) { %>
-                        <form action="/deleteReply" method="POST" class="ms-4">
-                          <input
-                            type="hidden"
-                            name="catId"
-                            value="<%= catId %>"
-                          />
-                          <input
-                            type="hidden"
-                            name="replyId"
-                            value="<%= reply.replyId %>"
-                          />
-                          <button type="submit" class="btn btn-danger">
-                            Delete
-                          </button>
-                        </form>
-                        <% } %> <% if (userId===reply.userId) { %>
-                        <button
-                          type="button"
-                          class="btn btn-primary p-2 me-2"
-                          data-bs-toggle="modal"
-                          data-bs-target="#editReplyModal"
-                          onclick="setEditReplyModalValues('<%= reply.replyId %>', '<%= reply.description %>')"
-                        >
-                          Edit
-                        </button>
-                        <% } %>
                       </div>
                     </div>
+                    <div class="replies">
+                      <% if (!post.replies || post.replies.length===0) { %>
+                        <p>No replies found, be the first to make one!</p>
+                        <% } else { %>
+                          <% post.replies.forEach(reply=> { %>
+                            <div class="reply card mb-2">
+                              <div class="card-body">
+                                <h3>
+                                  <a href="/account/<%= reply.userId %>">
+                                    <img src="/images/<%= reply.profilePic %>" class="rounded-circle" alt="profile"
+                                      height="40" />
+                                    <span>
+                                      <%= reply.fname + " " + reply.lname %>
+                                    </span>
+                                  </a>
+                                </h3>
+                                <p>
+                                  <%= reply.description %>
+                                </p>
+                                <div class="delete-button">
+                                  <% if (userId===reply.userId || role==='teacher' || role==='moderator' ) { %>
+                                    <form action="/deleteReply" method="POST" class="ms-4">
+                                      <input type="hidden" name="catId" value="<%= catId %>" />
+                                      <input type="hidden" name="replyId" value="<%= reply.replyId %>" />
+                                      <button type="submit" class="btn btn-danger">
+                                        Delete
+                                      </button>
+                                    </form>
+                                    <% } %>
+                                      <% if (userId===reply.userId) { %>
+                                        <button type="button" class="btn btn-primary p-2 me-2" data-bs-toggle="modal"
+                                          data-bs-target="#editReplyModal"
+                                          onclick="setEditReplyModalValues('<%= reply.replyId %>', '<%= reply.description %>')">
+                                          Edit
+                                        </button>
+                                        <% } %>
+                                </div>
+                              </div>
+                            </div>
+                            <% }) %>
+                              <% } %>
+                    </div>
                   </div>
-                  <% }) %> <% } %>
                 </div>
               </div>
-            </div>
-          </div>
-          <br />
-          <% }) %> <% } %>
-        </div>
-
-        <!-- Resource feed -->
-        <div id="resources-content" style="display: none">
-          <h2>Resources</h2>
-          <% if (!resources || resources.length===0) { %>
-          <h2>No resources found, be the first to make one!</h2>
-          <% } else { %> <% resources.forEach(resource=> { %>
-          <div class="resource">
-            <div class="card">
-              <div class="card-header">
-                <h2><%= resource.title %></h2>
-              </div>
-              <div
-                class="card-body d-flex justify-content-between align-items-center"
-              >
-                <div class="flex-grow-1 text-center">
-                  <a href="https://<%= resource.url %>" class="btn btn-link">
-                    <%= resource.url %>
-                  </a>
-                </div>
-                <form
-                  action="/download/<%= resource.fileName %>"
-                  method="get"
-                  class="d-inline"
-                >
-                  <input
-                    type="hidden"
-                    name="fileName"
-                    value="<%= resource.fileName %>"
-                  />
-                  <button type="submit" class="btn btn-primary">
-                    Download
-                  </button>
-                </form>
-                <% if (role==='teacher' ) { %>
-                <form action="/deleteResource" method="POST" class="d-inline">
-                  <input
-                    type="hidden"
-                    name="resourceId"
-                    value="<%= resource.resourceId %>"
-                  />
-                  <input type="hidden" name="catId" value="<%= catId %>" />
-                  <input
-                    type="hidden"
-                    name="fileName"
-                    value="<%= resource.fileName %>"
-                  />
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+              <br />
+              <% }) %>
                 <% } %>
-              </div>
-            </div>
-          </div>
-          <br />
-          <% }) %> <% } %>
-        </div>
       </div>
 
-      <!-- Message bar -->
-      <div id="private-messages">
-        <h1>Private Messages</h1>
-        <% if (convUsers) { %>
+      <!-- Resource feed -->
+      <div id="resources-content" style="display: none">
+        <h2>Resources</h2>
+        <% if (!resources || resources.length===0) { %>
+          <h2>No resources found, be the first to make one!</h2>
+          <% } else { %>
+            <% resources.forEach(resource=> { %>
+              <div class="resource">
+                <div class="card">
+                  <div class="card-header">
+                    <h2>
+                      <%= resource.title %>
+                    </h2>
+                  </div>
+                  <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="flex-grow-1 text-center">
+                      <a href="https://<%= resource.url %>" class="btn btn-link">
+                        <%= resource.url %>
+                      </a>
+                    </div>
+                    <form action="/download/<%= resource.fileName %>" method="get" class="d-inline">
+                      <input type="hidden" name="fileName" value="<%= resource.fileName %>" />
+                      <button type="submit" class="btn btn-primary">
+                        Download
+                      </button>
+                    </form>
+                    <% if (role==='teacher' ) { %>
+                      <form action="/deleteResource" method="POST" class="d-inline">
+                        <input type="hidden" name="resourceId" value="<%= resource.resourceId %>" />
+                        <input type="hidden" name="catId" value="<%= catId %>" />
+                        <input type="hidden" name="fileName" value="<%= resource.fileName %>" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <% }) %>
+                <% } %>
+      </div>
+    </div>
+
+    <!-- Message bar -->
+    <div id="private-messages">
+      <h1>Private Messages</h1>
+      <% if (convUsers) { %>
         <ul class="users">
           <% convUsers.forEach(user=> { %>
-          <li class="user-info">
-            <a href="/account/<%= user.otherUser.userId %>">
-              <img
-                src="/images/<%= user.otherUser.profilePic %>"
-                class="rounded-circle"
-                alt="profile"
-                height="40"
-              />
+            <li class="user-info">
+              <a href="/account/<%= user.otherUser.userId %>">
+                <img src="/images/<%= user.otherUser.profilePic %>" class="rounded-circle" alt="profile" height="40" />
+                <span>
+                  <%= user.otherUser.fname + " " + user.otherUser.lname %>
+                </span>
+              </a>
               <span>
-                <%= user.otherUser.fname + " " + user.otherUser.lname %>
+                <%= user.unreadCount %> unread messages
               </span>
-            </a>
-            <span> <%= user.unreadCount %> unread messages </span>
-            <form action="/getMessagePage" method="GET">
-              <input type="hidden" name="convId" value="<%= user.convId %>" />
-              <button type="submit" class="btn btn-primary">Message</button>
-            </form>
-          </li>
-          <br />
-          <% }) %>
+              <form action="/getMessagePage" method="GET">
+                <input type="hidden" name="convId" value="<%= user.convId %>" />
+                <button type="submit" class="btn btn-primary">Message</button>
+              </form>
+            </li>
+            <br />
+            <% }) %>
         </ul>
         <% } %>
-      </div>
     </div>
+  </div>
 
-    <!-- Resource modal -->
-    <div
-      class="modal fade"
-      id="resourceModal"
-      tabindex="-1"
-      aria-labelledby="resourceModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="postModalLabel">Add a resource</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  name="title"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">Link</label>
-                <textarea
-                  class="form-control"
-                  id="url"
-                  name="url"
-                  rows="1"
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="fileUpload" class="form-label">File upload?</label>
-                <input
-                  type="file"
-                  class="form-control"
-                  id="fileUpload"
-                  name="file"
-                />
-              </div>
-            </div>
-            <div class="modal-footer border-top">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
+  <!-- Resource modal -->
+  <div class="modal fade" id="resourceModal" tabindex="-1" aria-labelledby="resourceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="postModalLabel">Add a resource</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-      </div>
-    </div>
-
-    <!-- Post modal -->
-    <div
-      class="modal fade"
-      id="postModal"
-      tabindex="-1"
-      aria-labelledby="postModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="postModalLabel">Create a Post</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" name="title" required />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Link</label>
+              <textarea class="form-control" id="url" name="url" rows="1"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="fileUpload" class="form-label">File upload?</label>
+              <input type="file" class="form-control" id="fileUpload" name="file" />
+            </div>
           </div>
-          <form action="/post" method="POST">
-            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  name="title"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="courseId" class="form-label">Course ID</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="courseId"
-                  name="courseId"
-                  min="100"
-                  max="999"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Edit post modal -->
-    <div
-      class="modal fade"
-      id="editModal"
-      tabindex="-1"
-      aria-labelledby="editModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form action="/editPost" method="POST">
-            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
-            <input type="hidden" id="postId" name="postId" />
-
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="editTitle" class="form-label">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editTitle"
-                  name="editTitle"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editCourseId" class="form-label">Course ID</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="editCourseId"
-                  name="editCourseId"
-                  min="100"
-                  max="999"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editDescription" class="form-label"
-                  >Description</label
-                >
-                <textarea
-                  class="form-control"
-                  id="editDescription"
-                  name="editDescription"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Edit reply modal -->
-    <div
-      class="modal fade"
-      id="editReplyModal"
-      tabindex="-1"
-      aria-labelledby="editReplyModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editReplyModalLabel">Edit Reply</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form action="/editReply" method="POST">
-            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
-            <input type="hidden" id="replyId" name="replyId" />
-
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="editDescription" class="form-label"
-                  >Description</label
-                >
-                <textarea
-                  class="form-control"
-                  id="editDescription"
-                  name="editDescription"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Reply modal -->
-    <div
-      class="modal fade"
-      id="replyModal"
-      tabindex="-1"
-      aria-labelledby="replyModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="replyModalLabel">Reply</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form action="/reply" method="POST">
-            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
-            <input type="hidden" id="replyPostId" name="postId" />
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Flag modal -->
-    <div
-      class="modal fade"
-      id="flagModal"
-      tabindex="-1"
-      aria-labelledby="flagModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="flagModalLabel">Confirm Flagging</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">Are you sure you want to flag this post?</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cancel
+          <div class="modal-footer border-top">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
             </button>
-            <form action="/flagPost" method="POST">
-              <input
-                type="hidden"
-                id="catId"
-                value="<%= catId %>"
-                name="catId"
-              />
-              <input type="hidden" id="flagPostId" name="postId" />
-              <button type="submit" class="btn btn-primary">Flag</button>
-            </form>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post modal -->
+  <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="postModalLabel">Create a Post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/post" method="POST">
+          <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" name="title" required />
+            </div>
+            <div class="mb-3">
+              <label for="courseId" class="form-label">Course ID</label>
+              <input type="number" class="form-control" id="courseId" name="courseId" min="100" max="999" required />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit post modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/editPost" method="POST">
+          <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+          <input type="hidden" id="postId" name="postId" />
+
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="editTitle" class="form-label">Title</label>
+              <input type="text" class="form-control" id="editTitle" name="editTitle" required />
+            </div>
+            <div class="mb-3">
+              <label for="editCourseId" class="form-label">Course ID</label>
+              <input type="number" class="form-control" id="editCourseId" name="editCourseId" min="100" max="999"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="editDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="editDescription" name="editDescription" rows="4" required></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit reply modal -->
+  <div class="modal fade" id="editReplyModal" tabindex="-1" aria-labelledby="editReplyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editReplyModalLabel">Edit Reply</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/editReply" method="POST">
+          <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+          <input type="hidden" id="replyId" name="replyId" />
+
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="editDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="editDescription" name="editDescription" rows="4" required></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reply modal -->
+  <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="replyModalLabel">Reply</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/reply" method="POST">
+          <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+          <input type="hidden" id="replyPostId" name="postId" />
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flag modal -->
+  <div class="modal fade" id="flagModal" tabindex="-1" aria-labelledby="flagModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="flagModalLabel">Confirm Flagging</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">Are you sure you want to flag this post?</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <form action="/flagPost" method="POST">
+            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+            <input type="hidden" id="flagPostId" name="postId" />
+            <button type="submit" class="btn btn-primary">Flag</button>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <!-- Filter modal (date still needed) -->
+  <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filterModalLabel">Filter Posts</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/filterPosts" method="POST">
+          <div class="modal-body">
+            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+            <div class="mb-3">
+              <label for="filterUserSelect" class="form-label">Select User</label>
+              <select class="form-select" id="filterUserSelect" name="userId">
+                <option value="All" selected>All</option>
+                <% posts.forEach(post=> { %>
+                  <option value="<%= post.userId %>">
+                    <%= post.fname + " " + post.lname %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="filterCourseSelect" class="form-label">Select Course</label>
+              <select class="form-select" id="filterCourseSelect" name="courseId">
+                <option value="All" selected>All</option>
+                <% posts.forEach(post=> { %>
+                  <option value="<%= post.courseId %>">
+                    <%= post.courseId %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="filterTitleSelect" class="form-label">Select Title</label>
+              <select class="form-select" id="filterTitleSelect" name="title">
+                <option value="All" selected>All</option>
+                <% posts.forEach(post=> { %>
+                  <option value="<%= post.title %>">
+                    <%= post.title %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary" id="filterButton">Apply Filter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-    <script>
-      function setReplyModalValues(postId) {
-        document.getElementById("replyPostId").value = postId;
-      }
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-      function setEditModalValues(postId, title, courseId, description) {
-        document.getElementById("postId").value = postId;
-        document.getElementById("editTitle").value = title;
-        document.getElementById("editCourseId").value = courseId;
-        document.getElementById("editDescription").value = description;
-      }
+  <script>
+    function setReplyModalValues(postId) {
+      document.getElementById("replyPostId").value = postId;
+    }
 
-      function setEditReplyModalValues(replyId, description) {
-        document.getElementById("replyId").value = replyId;
-        document.getElementById("editDescription").value = description;
-      }
+    function setEditModalValues(postId, title, courseId, description) {
+      document.getElementById("postId").value = postId;
+      document.getElementById("editTitle").value = title;
+      document.getElementById("editCourseId").value = courseId;
+      document.getElementById("editDescription").value = description;
+    }
 
-      function setFlagModalValues(postId) {
-        document.getElementById("flagPostId").value = postId;
-      }
-    </script>
-  </body>
+    function setEditReplyModalValues(replyId, description) {
+      document.getElementById("replyId").value = replyId;
+      document.getElementById("editDescription").value = description;
+    }
+
+    function setFlagModalValues(postId) {
+      document.getElementById("flagPostId").value = postId;
+    }
+  </script>
+</body>
+
 </html>

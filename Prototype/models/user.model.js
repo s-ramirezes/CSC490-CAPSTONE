@@ -202,6 +202,11 @@ function editReply(replyId, description){
     return db.run(sql, params);
 }
 
+// check for 'all' in userId, courseId, and title (date still needed)
+function filterPosts(catId, userId, courseId, title){
+
+}
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -239,4 +244,5 @@ module.exports = {
     flagPost,
     editPost,
     editReply,
+    filterPosts,
 };

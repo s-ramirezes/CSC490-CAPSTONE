@@ -204,7 +204,7 @@ function deletePost(req, res) {
         model.deletePost(postId);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while deleting post" + err.message)
+        console.error("Error while deleting post" + err.message);
     }
 }
 
@@ -229,7 +229,7 @@ function deleteReply(req, res) {
         model.deleteReply(replyId);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while deleting post" + err.message)
+        console.error("Error while deleting post" + err.message);
     }
 }
 
@@ -240,7 +240,7 @@ function createConv(req, res) {
         const convId = model.createConv(userId1, userId2);
         res.redirect("/modMessages?convId=" + convId);
     } catch (err) {
-        console.error("Error while creating conversation" + err.message)
+        console.error("Error while creating conversation" + err.message);
     }
 }
 
@@ -249,7 +249,7 @@ function getMessagePage(req, res) {
         const convId = req.query.convId;
         res.redirect("/modMessages?convId=" + convId);
     } catch (err) {
-        console.error("Error while getting message page:  " + err.message)
+        console.error("Error while getting message page:  " + err.message);
     }
 }
 
@@ -261,7 +261,7 @@ function updateProfilePic(req, res) {
         res.redirect("/account/" + userId);
     }
     catch (err) {
-        console.error("Error while updating profile pic:  " + err.message)
+        console.error("Error while updating profile pic:  " + err.message);
     }
 }
 
@@ -273,7 +273,7 @@ function flagPost(req, res) {
         model.flagPost(postId);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while flagging post:  " + err.message)
+        console.error("Error while flagging post:  " + err.message);
     }
 }
 
@@ -288,7 +288,7 @@ function editPost(req, res) {
         model.editPost(postId, title, courseId, description);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while editing post:  " + err.message)
+        console.error("Error while editing post:  " + err.message);
     }
 }
 
@@ -300,12 +300,23 @@ function editReply(req, res) {
         model.editReply(replyId, description);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while editing reply:  " + err.message)
+        console.error("Error while editing reply:  " + err.message);
     }
 }
 
-
-
+// date still needed
+function filterPosts(req, res){
+    try{
+        const catId = req.body.catId;
+        const userId = req.body.userId;
+        const courseId = req.body.courseId;
+        const title = req.body.title;
+        const filteredPosts = model.filterPosts(catId, userId, courseId, title);
+        res.redirect("/category/" + catId, {filteredPosts});
+    } catch (err) {
+        console.error("Error while filtering posts:  " + err.message);
+    }
+}
 
 module.exports = {
     homePage,
@@ -327,4 +338,5 @@ module.exports = {
     flagPost,
     editPost,
     editReply,
+    filterPosts,
 };
