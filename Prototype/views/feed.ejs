@@ -89,7 +89,7 @@
                 </div>
                 <div class="buttons" id="buttons-<%= post.postId %>"> 
                   <!-- Initially hidden -->
-                  <div class="d-flex justify-content-end align-items-center me-4">
+                  <div class="d-flex justify-content-end align-items-center me-1">
                     <div class="d-flex align-items-center me-4">
                       <% if (userId !==post.userId) { %>
                       <form action="/createConv" method="POST" class="ms-4">
@@ -110,9 +110,8 @@
                       <button
                         type="button"
                         class="grows btn btn-link p-0 border-0 me-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#replyModal"
-                        onclick="setReplyModalValues('<%= post.postId %>')"
+                        
+                        onclick="toggleReplySection('<%= post.postId %>')"
                       >
                         <img
                           src="/images/comment.png"
@@ -167,13 +166,14 @@
                         <%= post.likeCount %> likes
                       </div>
                     </div>
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center me-4">
                       <% if (post.flagged) { %>
                       <img
                         src="/images/markedFlag.png"
                         alt="Flag"
                         width="40"
                         height="40"
+                        class="me-4"
                       />
                       <% } else { %>
                       <button
@@ -189,9 +189,48 @@
                           alt="Flag"
                           width="40"
                           height="40"
+                          class="grows me-4"
                         />
                       </button>
                       <% } %>
+                      <div class="d-flex align-items-center me-2">
+                        <% if (userId===post.userId ) { %>
+                          
+                          <img class="grows me-4" src="/images/editPost.png"
+                            style="cursor: pointer;"
+                            alt="editPost"
+                            width="40"
+                            height="40" 
+                            data-bs-toggle="modal"
+                            data-bs-target="#editModal"
+                            onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
+                        <% } %>
+                        <% if (userId===post.userId || role==='teacher' || role==='moderator' ) { %>
+                        <form action="/deleteUserPost" method="POST">
+                          <input
+                            type="hidden"
+                            id="catId"
+                            value="<%= catId %>"
+                            name="catId"
+                          />
+                          <input
+                            type="hidden"
+                            name="postId"
+                            value="<%= post.postId %>"
+                          />
+                          <img class="grows" src="/images/delete.png"
+                            style="cursor: pointer me-4;"
+                            alt="editPost"
+                            width="35"
+                            height="35" 
+                            data-bs-toggle="modal"
+                            data-bs-target="#editModal"
+                            onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
+                          
+                        </form>
+                        <% } %> 
+                        
+                    </div>
                       <!-- <button type="button" id="flagButton"
                                                       class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
                                                       <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
@@ -206,10 +245,12 @@
             
               <!-- <div class="replies"> -->
                  <!-- Dynamically calculate height -->
+              <div class="reply-section" id="reply-section-<%= post.postId %>" style="display: none;">
                 <% if (!post.replies || post.replies.length===0) { %>
                 <!-- <p>No replies found, be the first to make one!</p> -->
                 <% } else { %> <% post.replies.forEach(reply=> { %>
                   
+
                   <div style="width: 14px; height: 80px; left: 200px; top: 85px; position: relative; display: flex; flex-direction: column; background: black; pointer-events: none; "></div>
                   <div class="grows" style="position: relative; margin-bottom: -133px; display: flex; flex-direction: column; background: white; top: -80px">
                     <div class="grows" style="width: 40px; height: 40px; left: 170px; top: 140px; position: absolute; background: rgb(255, 255, 255); border-radius: 9999px; border: 1px black solid; z-index: 1;">
@@ -218,8 +259,9 @@
                           src="/images/<%= reply.profilePic %>"
                           class="rounded-circle"
                           alt="profile"
-                          height="40"
-                        >
+                          class="rounded-circle"
+                          alt="profile"
+                          style="width: 100%; height: 100%; object-fit: cover;"> 
                       </a>
                     </div>
                     <div style="width: 335px; height: 100px; left: 220px; top: 145px; position: absolute; z-index: 1;">
@@ -238,8 +280,8 @@
                     
                     
                     
-                  </div>     <div style="width: 17px; position: relative; background: black; left: 700px; top: 138px; height: 240px;"></div>
-                  
+                  </div>     
+                  <div style="width: 17px; position: relative; background: black; left: 700px; top: 138px; height: 240px;"></div>
                   
                   
                   <% }) %> 
@@ -253,6 +295,7 @@
                       <textarea style="width: 257px; height: 29px;"> text goes here</textarea>
                     </div>
                     <div id="postBox" style="width: 604px; height: 51px; left: 130px; top: 120px; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px; border: 2px black solid"></div>
+                  </div>
                   </div>
           <% } %>
         
@@ -302,9 +345,9 @@
           }
           
           .buttons {
-            width: 350px;
-            height: 47px;
-            left: 353px; 
+            width: 470px;
+            height: 50px;
+            left: 242px; 
             top: 317px;
             position: absolute;
             opacity: 0.8;
@@ -314,6 +357,10 @@
             transition: transform 1s ease; /* Add transition for sliding */
             opacity: 0; /* Make it transparent initially */
             pointer-events: none; /* Prevent interaction when not visible */
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
+            justify-content: center;
             /* transform: scale(0); */
           }
 
@@ -323,6 +370,8 @@
               pointer-events: auto; /* Allow interaction when visible */
               /* transform: scale(1); */
           }
+
+        
 
           
         </style>
@@ -808,6 +857,15 @@
             buttonDiv.classList.add("visible"); // Add visible class
         }
      }
+
+     function toggleReplySection(postId) {
+      const replySection = document.getElementById(`reply-section-${postId}`);
+      if (replySection.style.display === "none") {
+        replySection.style.display = "block"; // Show the reply section
+      } else {
+        replySection.style.display = "none"; // Hide the reply section
+      }
+    }
 
     </script>
   </body>
