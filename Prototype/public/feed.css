@@ -49,7 +49,7 @@
 }
 
 #private-messages {
-    height: 1000px; /* Set a fixed height for private messages */
+    height: 1500px; /* Set a fixed height for private messages */
     overflow-y: auto; /* Enable vertical scrolling */
 }
 

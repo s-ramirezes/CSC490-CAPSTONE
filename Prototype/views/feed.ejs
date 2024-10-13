@@ -245,7 +245,7 @@
             
               <!-- <div class="replies"> -->
                  <!-- Dynamically calculate height -->
-              <div class="reply-section" id="reply-section-<%= post.postId %>" style="display: none;">
+              <span class="reply-section" id="reply-section-<%= post.postId %>" style="display: none;">
                 <% if (!post.replies || post.replies.length===0) { %>
                 <!-- <p>No replies found, be the first to make one!</p> -->
                 <% } else { %> <% post.replies.forEach(reply=> { %>
@@ -296,7 +296,7 @@
                     </div>
                     <div id="postBox" style="width: 604px; height: 51px; left: 130px; top: 120px; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px; border: 2px black solid"></div>
                   </div>
-                  </div>
+                </span>
           <% } %>
         
         
@@ -345,10 +345,10 @@
           }
           
           .buttons {
-            width: 470px;
+            width: 475px;
             height: 50px;
-            left: 242px; 
-            top: 317px;
+            left: 232px; 
+            top: 316px;
             position: absolute;
             opacity: 0.8;
             background: #D9D9D9;
