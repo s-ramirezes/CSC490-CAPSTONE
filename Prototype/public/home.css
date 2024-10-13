@@ -278,3 +278,11 @@ body {
 body {
     background-color: #818181;
 }
+
+.spin {
+    transition: transform 0.5s ease; /* Smooth transition */
+  }
+  
+  .spin:hover {
+    transform: rotate(360deg); /* Rotate 360 degrees */
+  }

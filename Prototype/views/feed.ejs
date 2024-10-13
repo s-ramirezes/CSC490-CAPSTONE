@@ -203,12 +203,70 @@
                 <div style="width: 600px; height: 62px; left: 150px; top: 150px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 700; word-wrap: break-word;"><%= post.title %></div>
                 <div style="width: 600px; height: 62px; left: 150px; top: 200px; position: absolute; color: black; font-size: 12px; font-family: Inter; font-weight: 400; word-wrap: break-word;"><%= post.description %></div>
               </div>
-            <% }) %>
+            
+              <!-- <div class="replies"> -->
+                 <!-- Dynamically calculate height -->
+                <% if (!post.replies || post.replies.length===0) { %>
+                <!-- <p>No replies found, be the first to make one!</p> -->
+                <% } else { %> <% post.replies.forEach(reply=> { %>
+                  
+                  <div style="width: 14px; height: 80px; left: 200px; top: 85px; position: relative; display: flex; flex-direction: column; background: black; pointer-events: none; "></div>
+                  <div class="grows" style="position: relative; margin-bottom: -133px; display: flex; flex-direction: column; background: white; top: -80px">
+                    <div class="grows" style="width: 40px; height: 40px; left: 170px; top: 140px; position: absolute; background: rgb(255, 255, 255); border-radius: 9999px; border: 1px black solid; z-index: 1;">
+                      <a href="/account/<%= reply.userId %>">
+                        <img
+                          src="/images/<%= reply.profilePic %>"
+                          class="rounded-circle"
+                          alt="profile"
+                          height="40"
+                        >
+                      </a>
+                    </div>
+                    <div style="width: 335px; height: 100px; left: 220px; top: 145px; position: absolute; z-index: 1;">
+                      <span style="color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word"><%= reply.fname + " " + reply.lname %>- </span>
+                      <span style="color: black; font-size: 12px; font-family: Inter; font-weight: 400; word-wrap: break-word"><%= reply.description %></span>
+                    </div>
+                    <div id="postBox" style="width: 459px; height: 158px; left: 140px; top: 115px; position: absolute; background: rgb(115, 113, 124); border-radius: 19px; border: 1px rgba(13.75, 61.79, 253.94, 0.20) solid"></div>
+                    <!-- <div style="width: 8px; height: 8px; left: 431px; top: 165px; position: absolute; background: #0D0D0D; border-radius: 9999px"></div>
+                    <div style="width: 8px; height: 8px; left: 431px; top: 151px; position: absolute; background: #0D0D0D; border-radius: 9999px"></div>
+                    <div style="width: 8px; height: 8px; left: 431px; top: 135px; position: absolute; background: #0D0D0D; border-radius: 9999px"></div> -->
+                    <div id="dots" class="grows" style="position: absolute; left: 580px; top: 190px;"> 
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                    </div>
+                    
+                    
+                    
+                  </div>     <div style="width: 17px; position: relative; background: black; left: 700px; top: 138px; height: 240px;"></div>
+                  
+                  
+                  
+                  <% }) %> 
+                  <!-- <div style="width: 17px; height: 232px; left: 700px; top: -102px; position: relative; background: rgb(0, 0, 0)"></div> -->
+                  <div class="grows" style=" position: relative; margin-bottom: 100px; display: flex; flex-direction: column; ">
+                    
+                    <div style="width: 92px; height: 29px; left: 600px; top: 128px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+                      <button>Comment</button>
+                    </div>
+                    <div style="width: 257px; height: 29px; left: 200px; top: 128px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+                      <textarea style="width: 257px; height: 29px;"> text goes here</textarea>
+                    </div>
+                    <div id="postBox" style="width: 604px; height: 51px; left: 130px; top: 120px; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px; border: 2px black solid"></div>
+                  </div>
           <% } %>
-        </div>
-      
+        
+        
+        <% }) %> <% } %>
+      </div>
+
+              
+
+              
+        
         <style>
           
+      
 
           .grows {
             display: inline-block; /* Ensure the element behaves like a block for scaling */
@@ -219,7 +277,7 @@
             transform: scale(1.1); /* Increase size by 20% */
             transform-origin: center; /* Center the scaling */
             transition: transform 0.3s ease; /* Smooth transition */
-             z-index: 1;
+            z-index: 1;
           }
   
           
@@ -323,7 +381,7 @@
               </div>
             </div>
           </div>
-          <br />
+          <br>
           <% }) %> <% } %>
         </div>
       </div>

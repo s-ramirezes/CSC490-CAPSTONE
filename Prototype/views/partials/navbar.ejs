@@ -54,7 +54,7 @@ function closeNav() {
     <ul class="navbar">
 
         <% if (role === 'moderator') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
@@ -63,19 +63,19 @@ function closeNav() {
             <li><a href="/modTutors"><h2>Tutors</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'student') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'tutor') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'teacher') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/resources"><h2>Study Resources</h2></a></li>
