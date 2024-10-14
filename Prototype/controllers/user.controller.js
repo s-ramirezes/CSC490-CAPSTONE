@@ -305,16 +305,54 @@ function editReply(req, res) {
 }
 
 // date still needed
-function filterPosts(req, res){
-    try{
-        const catId = req.body.catId;
-        const userId = req.body.userId;
-        const courseId = req.body.courseId;
-        const title = req.body.title;
-        const filteredPosts = model.filterPosts(catId, userId, courseId, title);
-        res.redirect("/category/" + catId, {filteredPosts});
+// function filterPosts(req, res){
+//     try{
+//         const filteredcatId = req.body.catId;
+//         const filtereduserId = req.body.userId;
+//         const filteredcourseId = req.body.courseId;
+//         const filteredtitle = req.body.title;
+//         const Posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle);
+//         res.redirect("/category/" + catId, {filteredPosts});
+//     } catch (err) {
+//         console.error("Error while filtering posts:  " + err.message);
+//     }
+// }
+
+function filterPosts(req, res) {
+    try {
+        const userId = req.session.userId;
+        const filteredcatId = req.body.catId;
+        const filtereduserId = req.body.userId;
+        const filteredcourseId = req.body.courseId;
+        const filteredtitle = req.body.title;
+        const date = req.body.daterange;
+        const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, date);
+        const category = model.getCategory(filteredcatId);
+        const resources = model.getResourcesforCategory(filteredcatId);
+        const likedPosts = posts.map(post => {
+            const liked = model.isPostLiked(userId, post.postId);
+            const replies = model.getRepliesforPost(post.postId);
+            let commentCount = model.getCommentCount(post.postId);
+            commentCount = commentCount["COUNT(*)"];
+            return { ...post, liked, replies, commentCount};
+        });
+        const ids = model.getConversations(userId);
+        const convUsers = ids.map(id => {
+            const otherUser = model.getUser(id.otherUserId);
+            return {
+                convId: id.convId,
+                otherUser,
+                unreadCount: id.unreadCount
+            };
+        });
+        res.render("feed", {
+            posts: likedPosts,
+            category: category,
+            resources: resources,
+            convUsers: convUsers
+        });
     } catch (err) {
-        console.error("Error while filtering posts:  " + err.message);
+        console.error("Error while rendering filtered posts: " + err.message);
     }
 }
 
