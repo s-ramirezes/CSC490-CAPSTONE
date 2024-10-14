@@ -61,7 +61,8 @@ function feedPage(req, res) {
             catId: req.params.catId,
             category: category,
             resources: resources,
-            convUsers: convUsers
+            convUsers: convUsers,
+            catName: category.catName
         });
     } catch (err) {
         // console.error("Error while rendering feed page: " + err.message);
@@ -326,6 +327,16 @@ function filterPosts(req, res) {
         const filteredcourseId = req.query.courseId;
         const filteredtitle = req.query.title;
         const date = req.query.daterange;
+        console.log(date);
+
+        const dateRange = req.query.daterange;
+
+if (dateRange) {
+    const [startDate, endDate] = dateRange.split(" - ");
+    
+    console.log("Start Date:", startDate); // First part of the date range
+    console.log("End Date:", endDate); // Second part of the date range
+}
 
         const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, date);
 

@@ -67,6 +67,7 @@ function loginUser(req, res, next) {
             req.session.lname = user.lname;
             req.session.role = user.role;
             req.session.userId = user.userId;
+            req.session.subject = user.subject;
 
             res.redirect("/home");
         } else if (result === "notFound") {
