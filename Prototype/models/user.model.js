@@ -204,24 +204,29 @@ function editReply(replyId, description){
 
 // check for 'all' in userId, courseId, and title (date still needed)
 function filterPosts(catId, userId, courseId, title, date){
-    let sql = 'SELECT * From posts where catId = ?';
+    let sql = `
+        SELECT posts.*, users.email, users.profilePic, users.fname, users.lname 
+        FROM posts
+        JOIN users ON posts.userId = users.userId
+        WHERE posts.catId = ?
+    `;
     console.log(userId, courseId, title, date);
-    const params = [catId];
+    let params = [catId];
 
-    if(userId !== 'All'){
-        sql += ' AND userId = ?';
+    if (userId !== 'All') {
+        sql += ' AND posts.userId = ?'; 
         params.push(userId);
     }
-    if(courseId !== 'All'){
-        sql += ' AND courseId = ?';
+    if (courseId !== 'All') {
+        sql += ' AND posts.courseId = ?'; 
         params.push(courseId);
     }
-    if(title !== 'All'){
-        sql += ' AND title = ?';
+    if (title !== 'All') {
+        sql += ' AND posts.title = ?'; 
         params.push(title);
     }
 
-    return db.all(sql, params);
+    return db.all(sql, ...params);
 }
 
 // function getUnreadMessages(convId, userId) {

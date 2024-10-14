@@ -15,6 +15,7 @@ module.exports = function (imageUpload) {
     router.get("/download/:fileName", userController.downloadResource);
     router.get("/getMessagePage", userController.getMessagePage);
     router.get("/message", userController.messagePage);
+    router.get("/filterPosts", userController.filterPosts);
 
     router.post("/updateProfilePic", imageUpload.single("file"), userController.updateProfilePic);
     router.post("/like", userController.likePost);
@@ -29,7 +30,6 @@ module.exports = function (imageUpload) {
     router.post("/flagPost", userController.flagPost);
     router.post("/editPost", userController.editPost);
     router.post("/editReply", userController.editReply);
-    router.post("/filterPosts", userController.filterPosts);
 
     return router; 
 }

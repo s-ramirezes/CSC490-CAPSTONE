@@ -462,7 +462,7 @@
           <h5 class="modal-title" id="filterModalLabel">Filter Posts</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="/filterPosts" method="POST">
+        <form action="/filterPosts" method="GET">
           <div class="modal-body">
             <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
             <div class="mb-3">

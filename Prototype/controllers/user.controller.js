@@ -321,21 +321,25 @@ function editReply(req, res) {
 function filterPosts(req, res) {
     try {
         const userId = req.session.userId;
-        const filteredcatId = req.body.catId;
-        const filtereduserId = req.body.userId;
-        const filteredcourseId = req.body.courseId;
-        const filteredtitle = req.body.title;
-        const date = req.body.daterange;
+        const filteredcatId = req.query.catId;
+        const filtereduserId = req.query.userId;
+        const filteredcourseId = req.query.courseId;
+        const filteredtitle = req.query.title;
+        const date = req.query.daterange;
+
         const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, date);
+
         const category = model.getCategory(filteredcatId);
         const resources = model.getResourcesforCategory(filteredcatId);
+
         const likedPosts = posts.map(post => {
             const liked = model.isPostLiked(userId, post.postId);
             const replies = model.getRepliesforPost(post.postId);
             let commentCount = model.getCommentCount(post.postId);
-            commentCount = commentCount["COUNT(*)"];
-            return { ...post, liked, replies, commentCount};
+            commentCount = commentCount ? commentCount["COUNT(*)"] : 0;
+            return { ...post, liked, replies, commentCount };
         });
+
         const ids = model.getConversations(userId);
         const convUsers = ids.map(id => {
             const otherUser = model.getUser(id.otherUserId);
@@ -345,8 +349,10 @@ function filterPosts(req, res) {
                 unreadCount: id.unreadCount
             };
         });
+
         res.render("feed", {
             posts: likedPosts,
+            catId: filteredcatId,
             category: category,
             resources: resources,
             convUsers: convUsers
@@ -355,6 +361,7 @@ function filterPosts(req, res) {
         console.error("Error while rendering filtered posts: " + err.message);
     }
 }
+
 
 module.exports = {
     homePage,
