@@ -137,7 +137,7 @@ a:link, a:visited {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    /* margin-bottom: 0px; */
 }
 
 .delete-button{
@@ -286,3 +286,15 @@ body {
   .spin:hover {
     transform: rotate(360deg); /* Rotate 360 degrees */
   }
+
+  .pm-name {
+    color: white; /* Default text color */
+    font-family: Inter; 
+    font-weight: 400;
+    transition: color 0.3s ease; /* Smooth transition for color change */
+    cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+}
+
+.pm-name:hover {
+    color: #fac104; /* Change text color to yellow on hover */
+}
