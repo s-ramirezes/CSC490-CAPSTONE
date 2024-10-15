@@ -16,7 +16,7 @@
   <body>
     <header><%- include('partials/navbar') %></header>
 
-    <div class="columns">
+    <div class="mainPage">
       <div id="feed">
         <div id="feed-header">
           <h1><%= category.catName %> Feed</h1>
@@ -466,8 +466,8 @@
               <div  style="width: 17px; height: 16px; left: 264px; top: 21px; position: absolute; background: #dbd1d1; z-index: 1;"></div>
               <form action="/getMessagePage" method="GET">
                 <input type="hidden" name="convId" value="<%= user.convId %>" />
-                <button type="submit" style="left: 271px; top: 29px; position: absolute; border: none; background: none; padding: 0;">
-                  <img class="grows" src="/images/mail.png" alt="Message Icon" style="width: 40px; height: 40px;">
+                <button type="submit" style="left: 261px; top: 14px; position: absolute; border: none; background: none; padding: 0;">
+                  <img class="grows" src="/images/whiteMail.png" alt="Message Icon" style="width: 60px; height: 60px;">
                 </button>
               </form>
               

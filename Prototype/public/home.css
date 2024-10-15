@@ -298,3 +298,14 @@ body {
 .pm-name:hover {
     color: #fac104; /* Change text color to yellow on hover */
 }
+
+#overlay {
+    display: none; /* Hidden by default */
+    position: fixed; /* Cover the entire screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 1; /* Ensure it is above other content */
+}

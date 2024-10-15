@@ -17,11 +17,13 @@
     margin-top: 60px;
 } */
 
-/* .columns {
+.mainPage {
     display: flex;
     justify-content: space-between;
     margin-inline-start: 12%;
-} */
+    margin-left: 0px;
+    padding: 0;
+}
 .user-info{
     display: flex;
     align-items: center;
@@ -33,12 +35,13 @@
 
 #feed, #private-messages {
     flex: 1;
-    margin: 0 10px;
+    
     /* margin-inline-start: 12%; */
 }
 
 #feed {
     flex: 2;
+    margin-left: 200px;
     /* height: 1000px; Set a fixed height for the feed */
     
     overflow-y: auto; /* Enable vertical scrolling */
