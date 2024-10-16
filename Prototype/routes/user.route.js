@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 
+const { setSessionData, isLoggedIn } = require("./setSessionData");
 
 const userController = require("../controllers/user.controller");
 
@@ -14,6 +15,7 @@ module.exports = function (imageUpload) {
     router.get("/download/:fileName", userController.downloadResource);
     router.get("/getMessagePage", userController.getMessagePage);
     router.get("/message", userController.messagePage);
+    router.get("/filterPosts", userController.filterPosts);
 
     router.post("/updateProfilePic", imageUpload.single("file"), userController.updateProfilePic);
     router.post("/like", userController.likePost);

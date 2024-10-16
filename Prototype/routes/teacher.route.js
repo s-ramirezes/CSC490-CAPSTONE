@@ -5,6 +5,7 @@ const router = express.Router();
 
 const teacherController = require("../controllers/teacher.controller");
 
+const { setSessionData, isLoggedIn } = require("./setSessionData");
 
 module.exports = function (fileUpload) {
     
@@ -14,6 +15,7 @@ module.exports = function (fileUpload) {
     router.post("/promoteToTutor", teacherController.promoteToTutor);
 
     router.get("/resources", teacherController.teacherResourcePage);
+    router.get("/analytics", teacherController.getAnalytics);
 
 
 

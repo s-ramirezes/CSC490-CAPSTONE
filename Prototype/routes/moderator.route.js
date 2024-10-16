@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 
+const { setSessionData, isLoggedIn } = require("./setSessionData");
+
 const moderatorController = require("../controllers/moderator.controller");
 
 const isModRole = (req, res, next) => {
