@@ -27,9 +27,49 @@ function promoteToTutor(userId) {
     return db.run(sql, userId);
 }
 
+
+function getLeaderboard(catName) {
+    const sql = `
+    SELECT u.userId, u.profilePic, u.fname, u.lname, u.role, COUNT(p.postId) AS postCount
+    FROM users u
+    JOIN posts p ON u.userId = p.userId
+    JOIN category c ON p.catId = c.catId
+    WHERE c.catName = ?
+    ORDER BY postCount DESC
+    LIMIT 10`;
+    return db.all(sql, ...[catName]);
+}
+
+function getAmountofPosts(catName) {
+    const sql = `
+    SELECT 
+    p.courseId, 
+        COUNT(p.postId) AS postCount
+    FROM posts p
+    JOIN category c ON p.catId = c.catId
+    WHERE c.catName = ?
+    GROUP BY p.courseId`;
+    return db.all(sql, ...[catName]);
+}
+
+function getPosts(catName){
+    const sql = `
+    SELECT p.*, u.email, u.profilePic, u.fname, u.lname
+    FROM posts p
+    JOIN category c ON p.catId = c.catId
+    JOIN users u ON p.userId = u.userId
+    WHERE c.catName = ?
+    `;
+    return db.all(sql, ...[catName]);
+}
+
+
 module.exports = {
     uploadResource,
     deleteResource,
     getTeacherResources,
-    promoteToTutor  
+    promoteToTutor,
+    getLeaderboard,
+    getAmountofPosts,
+    getPosts,
 };

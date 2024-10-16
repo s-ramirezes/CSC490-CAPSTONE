@@ -45,7 +45,7 @@ function feedPage(req, res) {
             const replies = model.getRepliesforPost(post.postId);
             let commentCount = model.getCommentCount(post.postId);
             commentCount = commentCount["COUNT(*)"];
-            return { ...post, liked, replies, commentCount};
+            return { ...post, liked, replies, commentCount };
         });
         const ids = model.getConversations(userId);
         const convUsers = ids.map(id => {
@@ -114,14 +114,14 @@ function messagePage(req, res) {
             };
         });
 
-        res.render("message", { users: users, subjects: subjects, convUsers: convUsers});
+        res.render("message", { users: users, subjects: subjects, convUsers: convUsers });
     } catch (err) {
         console.error("Error while rendering message page: " + err.message);
     }
 }
 
-function searchUser(req, res){
-    try{
+function searchUser(req, res) {
+    try {
         const userId = req.session.userId;
         const email = req.body.email;
         const users = model.searchUser(userId, email);
@@ -135,8 +135,8 @@ function searchUser(req, res){
                 unreadCount: id.unreadCount
             };
         });
-        res.render("message", { users: users, subjects: subjects, convUsers: convUsers});
-    } catch(err){
+        res.render("message", { users: users, subjects: subjects, convUsers: convUsers });
+    } catch (err) {
         console.error("Error while rendering message page: " + err.message);
     }
 }
@@ -331,12 +331,12 @@ function filterPosts(req, res) {
 
         const dateRange = req.query.daterange;
 
-if (dateRange) {
-    const [startDate, endDate] = dateRange.split(" - ");
-    
-    console.log("Start Date:", startDate); // First part of the date range
-    console.log("End Date:", endDate); // Second part of the date range
-}
+        if (dateRange) {
+            const [startDate, endDate] = dateRange.split(" - ");
+
+            console.log("Start Date:", startDate); // First part of the date range
+            console.log("End Date:", endDate); // Second part of the date range
+        }
 
         const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, date);
 
@@ -366,7 +366,8 @@ if (dateRange) {
             catId: filteredcatId,
             category: category,
             resources: resources,
-            convUsers: convUsers
+            convUsers: convUsers,
+            catName: category.catName
         });
     } catch (err) {
         console.error("Error while rendering filtered posts: " + err.message);

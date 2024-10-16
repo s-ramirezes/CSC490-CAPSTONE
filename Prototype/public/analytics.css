@@ -1,0 +1,25 @@
+.chart{
+    width: 20%;
+    height: 20%;
+}
+
+.stats{
+    display: flex;
+    justify-content: center;
+    gap: 250px;
+}
+
+.analytics-title{
+
+}
+
+.analytics-posts {
+    width: 50%; 
+    position: relative; 
+    right: 25%;  
+    margin-left: auto; 
+}
+
+.leaderboard {
+
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/home.css">
+    <link rel="stylesheet" href="/public/account.css">
+    <link rel="stylesheet" href="/public/analytics.css">
+    <script src="/public/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Teacher Analytics</title>
+</head>
+
+<body>
+
+    <header>
+        <%- include('partials/navbar') %>
+    </header>
+    <h1 class="analytics-title"><%= subject %> Analytics</h1>
+
+    <div class="stats">
+        <!-- chart for posts per course -->
+        <div class="chart">
+            <canvas id="postPieChart"></canvas>
+        </div>
+
+        <!-- leaderboard section -->
+        <div class="leaderboard">
+            <h3 class="text-center mt-4">Top 10 Users by Post Count</h3>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr class="text-center">
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>Number of Posts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (leaderboard && leaderboard.length> 0) { %>
+                        <% leaderboard.forEach((user, index)=> { %>
+                            <tr class="text-center">
+                                <td>
+                                    <%= index + 1 %>
+                                </td>
+                                <td>
+                                    <a href="/account/<%= user.userId %>">
+                                        <img src="/images/<%= user.profilePic %>" class="rounded-circle" alt="profile" height="40" />
+                                        <span>
+                                          <%= user.fname + " " + user.lname %>
+                                        </span>
+                                      </a>
+                                </td>
+                                <td>
+                                    <%= user.postCount %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="4" class="text-center">No data available</td>
+                                    </tr>
+                                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Posts section -->
+    <div class="analytics-posts">
+        <h1>test</h1>
+        <div id="feed-content">
+            <% if (!posts || posts.length===0) { %>
+                <h2>No posts found, be the first to make one!</h2>
+                <% } else { %>
+                    <% posts.forEach(post=> { %>
+                        <div class="post">
+                            <div class="card">
+                                <div class="card-header"
+                                    style="<%= 'background-color: #' + Math.floor(Math.random() * 16777215).toString(16) %>;">
+                                    <h2>
+                                        <%= post.title %>
+                                    </h2>
+                                    <h4>
+                                        By:
+                                        <a href="/account/<%= post.userId %>">
+                                            <img src="/images/<%= post.profilePic %>" class="rounded-circle" alt="profile"
+                                                height="40" />
+                                            <span>
+                                                <%= post.fname + " " + post.lname %>
+                                            </span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        <%= post.description %>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                            </div>
+                        </div>
+        </div>
+    </div>
+
+    <script>
+        const courseLabels = <%- JSON.stringify(postCount.map(stat => stat.courseId)) %>;
+        const postCounts = <%- JSON.stringify(postCount.map(stat => stat.postCount)) %>;
+
+        if (courseLabels.length > 0 && postCounts.length > 0) {
+            const ctx = document.getElementById('postPieChart').getContext('2d');
+            const postPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: courseLabels,
+                    datasets: [{
+                        data: postCounts,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Post Distribution by Course'
+                        }
+                    }
+                }
+            });
+        } else {
+            console.log('No data available for the chart');
+        }
+    </script>
+
+</body>
+
+</html>

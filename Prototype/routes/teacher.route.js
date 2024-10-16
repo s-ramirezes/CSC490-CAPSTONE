@@ -14,7 +14,8 @@ module.exports = function (fileUpload) {
     router.post("/deleteResource", teacherController.deleteResource);
     router.post("/promoteToTutor", teacherController.promoteToTutor);
 
-    router.get("/resources", isLoggedIn, teacherController.teacherResourcePage);
+    router.get("/resources", teacherController.teacherResourcePage);
+    router.get("/analytics", teacherController.getAnalytics);
 
 
 
