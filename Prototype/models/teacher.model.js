@@ -34,7 +34,7 @@ function getLeaderboard(catName) {
     FROM users u
     JOIN posts p ON u.userId = p.userId
     JOIN category c ON p.catId = c.catId
-    WHERE c.catName = ?
+    WHERE c.catName = ? AND u.role != 'teacher'
     ORDER BY postCount DESC
     LIMIT 10`;
     return db.all(sql, ...[catName]);
@@ -52,15 +52,30 @@ function getAmountofPosts(catName) {
     return db.all(sql, ...[catName]);
 }
 
-function getPosts(catName){
-    const sql = `
+function getPosts(catName, filterDate, filterCourse, filterUser) {
+    let sql = `
     SELECT p.*, u.email, u.profilePic, u.fname, u.lname
     FROM posts p
     JOIN category c ON p.catId = c.catId
     JOIN users u ON p.userId = u.userId
-    WHERE c.catName = ?
-    `;
-    return db.all(sql, ...[catName]);
+    WHERE c.catName = ?`;
+    
+    const params = [catName];
+
+    if (filterDate) {
+        sql += ` AND p.date = ?`;
+        params.push(filterDate);
+    }
+    if (filterCourse) {
+        sql += ` AND p.courseId = ?`;
+        params.push(filterCourse);
+    }
+    if (filterUser) {
+        sql += ` AND p.userId = ?`;
+        params.push(filterUser);
+    }
+
+    return db.all(sql, ...params);
 }
 
 

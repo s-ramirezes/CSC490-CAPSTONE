@@ -76,9 +76,15 @@ function getAnalytics(req, res){
     try {
         const userId = req.session.userId;
         const catName = req.session.subject;
-        const leaderboard = model.getLeaderboard(catName);
-        const postCount = model.getAmountofPosts(catName);
-        const posts = model.getPosts(catName);
+
+        const filterDate = req.params.daterange;
+        const filterCourse = req.query.courseId;
+        const filterUser = req.params.userId;
+
+
+        const leaderboard = model.getLeaderboard(catName, filterDate);
+        const postCount = model.getAmountofPosts(catName, filterDate);
+        const posts = model.getPosts(catName, filterDate, filterCourse, filterUser);
         console.log(posts);
         res.render("teacherAnalytics", {leaderboard, postCount, posts});
     } catch (err) {

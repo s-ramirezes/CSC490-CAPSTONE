@@ -19,12 +19,23 @@
     <header>
         <%- include('partials/navbar') %>
     </header>
-    <h1 class="analytics-title"><%= subject %> Analytics</h1>
+    <div>
+        <h1 class="analytics-title">
+            <%= subject %> Analytics
+        </h1>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+            Filter
+        </button>
+    </div>
 
     <div class="stats">
         <!-- chart for posts per course -->
         <div class="chart">
             <canvas id="postPieChart"></canvas>
+            <form id="courseForm" action="/analytics" method="GET">
+                <input type="hidden" id="courseIdInput" name="courseId" value="">
+            </form>
         </div>
 
         <!-- leaderboard section -->
@@ -47,11 +58,12 @@
                                 </td>
                                 <td>
                                     <a href="/account/<%= user.userId %>">
-                                        <img src="/images/<%= user.profilePic %>" class="rounded-circle" alt="profile" height="40" />
+                                        <img src="/images/<%= user.profilePic %>" class="rounded-circle" alt="profile"
+                                            height="40" />
                                         <span>
-                                          <%= user.fname + " " + user.lname %>
+                                            <%= user.fname + " " + user.lname %>
                                         </span>
-                                      </a>
+                                    </a>
                                 </td>
                                 <td>
                                     <%= user.postCount %>
@@ -70,7 +82,7 @@
 
     <!-- Posts section -->
     <div class="analytics-posts">
-        <h1>test</h1>
+        <h1>Posts</h1>
         <div id="feed-content">
             <% if (!posts || posts.length===0) { %>
                 <h2>No posts found, be the first to make one!</h2>
@@ -79,15 +91,14 @@
                         <div class="post">
                             <div class="card">
                                 <div class="card-header"
-                                    style="<%= 'background-color: #' + Math.floor(Math.random() * 16777215).toString(16) %>;">
+                                    style="background-color: #<%= Math.floor(Math.random() * 16777215).toString(16) %>;">
                                     <h2>
                                         <%= post.title %>
                                     </h2>
-                                    <h4>
-                                        By:
+                                    <h4>By:
                                         <a href="/account/<%= post.userId %>">
-                                            <img src="/images/<%= post.profilePic %>" class="rounded-circle" alt="profile"
-                                                height="40" />
+                                            <img src="/images/<%= post.profilePic %>" class="rounded-circle"
+                                                alt="profile" height="40" />
                                             <span>
                                                 <%= post.fname + " " + post.lname %>
                                             </span>
@@ -99,12 +110,95 @@
                                         <%= post.description %>
                                     </p>
                                 </div>
-                                <% }) %>
-                                    <% } %>
                             </div>
                         </div>
+                        <% }) %>
+                            <% } %>
         </div>
     </div>
+
+    <!-- Filter modal -->
+    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Filter Posts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/analytics" method="GET">
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="filterUserSelect" class="form-label">Select User</label>
+                            <select class="form-select" id="filterUserSelect" name="userId">
+                                <option value="All" selected>All</option>
+                                <% const uniqueUsers=new Set(); posts.forEach(post=> {
+                                    const userFullName = post.fname + " " + post.lname;
+                                    if (!uniqueUsers.has(userFullName)) {
+                                    uniqueUsers.add(userFullName);
+                                    %>
+                                    <option value="<%= post.userId %>">
+                                        <%= userFullName %>
+                                    </option>
+                                    <% } }); %>
+                            </select>
+                        </div>
+                        <hr>
+
+                        <div class="mb-3">
+              <label for="filterCourseSelect" class="form-label">Select Course</label>
+              <select class="form-select" id="filterCourseSelect" name="courseId">
+                <option value="All" selected>All</option>
+                <% 
+                  const uniqueCourses = new Set();
+                  posts.forEach(post => {
+                    if (!uniqueCourses.has(post.courseId)) {
+                      uniqueCourses.add(post.courseId);
+                %>
+                  <option value="<%= post.courseId %>">
+                    <%= post.courseId %>
+                  </option>
+                <% 
+                    }
+                  }); 
+                %>
+              </select>
+            </div>
+            <hr>
+
+                        <!-- <div class="mb-3">
+                            <label for="filterTitleSelect" class="form-label">Select Title</label>
+                            <select class="form-select" id="filterTitleSelect" name="title">
+                                <option value="All" selected>All</option>
+                                <% const uniqueTitles=new Set(); posts.forEach(post=> {
+                                    if (!uniqueTitles.has(post.title)) {
+                                    uniqueTitles.add(post.title);
+                                    %>
+                                    <option value="<%= post.title %>">
+                                        <%= post.title %>
+                                    </option>
+                                    <% } }); %>
+                            </select>
+                        </div>
+                        <hr> -->
+
+                        <div class="mb-3">
+                            <label for="filterDateRange" class="form-label">Select Date </label><br>
+                            <input type="text" name="daterange" value="" />
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary" id="filterButton">Apply Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 
     <script>
         const courseLabels = <%- JSON.stringify(postCount.map(stat => stat.courseId)) %>;
@@ -147,6 +241,19 @@
                             display: true,
                             text: 'Post Distribution by Course'
                         }
+                    },
+
+                    onClick: (event) => {
+                        const activePoints = postPieChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
+                        if (activePoints.length) {
+                            const clickedIndex = activePoints[0].index;
+                            const courseId = courseLabels[clickedIndex];
+
+                            document.getElementById('courseIdInput').value = courseId; 
+                            document.getElementById('courseForm').submit(); 
+                        } else {
+                            window.location.href = '/analytics';
+                        }
                     }
                 }
             });
@@ -154,6 +261,7 @@
             console.log('No data available for the chart');
         }
     </script>
+
 
 </body>
 
