@@ -18,9 +18,9 @@
 
     <div class="mainPage">
       <div id="feed">
-        <div id="feed-header">
-          <h1><%= category.catName %> Feed</h1>
-        </div>
+        <!-- <div id="feed-header"> -->
+          <h1 id="feed-header"><%= category.catName %> Feed</h1>
+        <!-- </div> -->
         <div class="nav-buttons">
           <button
             id="viewPostsButton"
@@ -445,13 +445,14 @@
 
       <!-- Message bar -->
       <div id="private-messages">
-        <h1>Private Messages</h1>
+        
+        <h1 id="pm-header">Private Messages</h1>
         <% if (convUsers) { %>
         <ul class="users">
           <% convUsers.forEach(user=> { %>
             
             <div style=" position: relative; margin-bottom: 80px; display: flex; flex-direction: column;">
-              <div style="width: 351px; height: 75px; left: 7px; top: 7px; position: absolute; background: #16316b; box-shadow: 0px 0px 0px 7px rgba(0, 0, 0, 0.25); border-radius: 138px; border: 3px #E1E118 solid"></div>
+              <div style="width: 351px; height: 75px; left: 7px; top: 7px; position: absolute; background: #16316b; box-shadow: 0px 0px 0px 7px rgba(0, 0, 0, 0.25); border-radius: 138px; border: 3px #fac104 solid"></div>
               <div class="grows" style="width: 40px; height: 40px; left: 29px; top: 24px; position: absolute; background: #D9D9D9; border-radius: 9999px">
                 <a href="/account/<%= user.otherUser.userId %>">
                   <img

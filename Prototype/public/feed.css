@@ -42,6 +42,7 @@
 #feed {
     flex: 2;
     margin-left: 200px;
+    margin-right: 100px; /* editted this last */
     /* height: 1000px; Set a fixed height for the feed */
     
     overflow-y: auto; /* Enable vertical scrolling */
@@ -66,18 +67,21 @@
     align-items: center;
 }
 
-/* #feed-header, #private-messages-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-} */
+#feed-header, #pm-header {
+   /* display: inline-flex; */
+   align-items: center;
+   background: #16316b;
+   border: 3px solid #fac104;
+   border-radius: 30px;
+   color: white;
+   padding: 10px 20px;
+}
 
 .users {
     border-left: 12px solid #0f2044; 
     border-bottom: 12px solid #0f2044; 
     border-radius: 10px;
     box-shadow: 
-        inset 2px 0 0 yellow, 
-        0 2px 0 yellow;   
+        inset 2px 0 0 #fac104, 
+        0 2px 0 #fac104;   
 }
