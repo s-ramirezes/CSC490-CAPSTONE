@@ -174,7 +174,7 @@ p{
 }
 
 .messageSection{
-    width: 80%;
+    width: 77%;
     flex-shrink: 1;
 }
 
@@ -198,7 +198,7 @@ p{
     flex-shrink: 0;
 }
 
-.calendarBtn, .reviewBtn{
+.calendarBtn, .reviewBtn, .callBtn{
     padding: 10px;
     background-color: white;
     border-radius: 20px;

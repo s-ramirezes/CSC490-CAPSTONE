@@ -17,21 +17,34 @@
             <% if (!flaggedUsers || flaggedUsers.length===0) { %>
                 <p>There are no flagged users.</p>
             <% } else { %>
-                <% flaggedUsers.forEach(flaggedUser => { %>
-                    <a class="flaggedUser" href="/modUserPage?userId=<%= flaggedUser.userId %>">
-                        <p>UserId= <%=flaggedUser.userId %></p>
-                        <p>Name= <%=flaggedUser.fname %> <%=flaggedUser.lname %></p>
-                        <p>Role= <%=flaggedUser.role %></p>
-                        <form action="/unflagUser?userId=<%= flaggedUser.userId %>" method="POST">
-                            <button class="flagUser">
-                                Unflag</button>
-                        </form>
-                        <form action="/banUser?userId=<%= flaggedUser.userId %>" method="POST">
-                            <button class="flagUser">
-                                Ban</button>
-                        </form>
-                    </a>
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% flaggedUsers.forEach(flaggedUser => { %>
+                        <tr>
+                            <td><%=flaggedUser.userId %></td>
+                            <td><%=flaggedUser.fname %> <%=flaggedUser.lname %></td>
+                            <td><%=flaggedUser.role %></td>
+                            <td class="flaggedUser">
+                                <form action="/unflagUser?userId=<%= flaggedUser.userId %>" method="POST">
+                                    <button class="flagUser">
+                                        Unflag</button>
+                                </form>
+                                <form action="/banUser?userId=<%= flaggedUser.userId %>" method="POST">
+                                    <button class="flagUser">
+                                        Ban</button>
+                                </form>
+                                <a href="/modUserPage?userId=<%= flaggedUser.userId %>">
+                                    <button class="flagUser">View Profile</button>
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
             <%} %> 
         </div>
         <h1>All Users</h1>
@@ -39,17 +52,30 @@
             <% if (!allUsers || allUsers.length===0) { %>
                 <p>There are no users.</p>
             <% } else { %>
-                <% allUsers.forEach(user => { %>
-                    <a class="user" href="/modUserPage?userId=<%= user.userId %>">
-                        <p>UserId= <%=user.userId %></p>
-                        <p>Name= <%=user.fname %> <%=user.lname %></p>
-                        <p>Role= <%=user.role %></p>
-                        <form action="/modFlag?userId=<%= user.userId %>" method="POST">
-                            <button class="flagUser">
-                                Flag</button>
-                        </form>
-                    </a>
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% allUsers.forEach(user => { %>
+                        <tr>
+                            <td><%=user.userId %></td>
+                            <td><%=user.fname %> <%=user.lname %></td>    
+                            <td><%=user.role %></td> 
+                            <td class="flaggedUser">
+                                <form action="/modFlag?userId=<%= user.userId %>" method="POST">
+                                    <button class="flagUser">
+                                        Flag</button>
+                                </form>
+                                <a href="/modUserPage?userId=<%= user.userId %>">
+                                    <button class="flagUser">View Profile</button>
+                                </a>
+                            </td>  
+                        </tr>
+                    <% }) %>
+                </table>
             <% } %>
         </div>
     </div>

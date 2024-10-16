@@ -17,26 +17,38 @@
             <% if (!flaggedPosts || flaggedPosts.length===0) { %>
                 <p>There are no flagged posts.</p>
             <% } else { %>
-                <% flaggedPosts.forEach(flaggedPost => { %>
-                    <div class="flaggedUser">
-                        <p>PostId= <%=flaggedPost.postId %></p>
-                        <p>UserId= <%=flaggedPost.userId %></p>
-                        <p>Title= <%=flaggedPost.title %></p>
-                        <p>Description= <%=flaggedPost.description %></p>
-                        <form action="/unflagPost?postId=<%= flaggedPost.postId %>" method="POST">
-                            <button class="flagUser">
-                                Unflag Post</button>
-                        </form>
-                        <form action="/modFlag?userId=<%= flaggedPost.userId %>" method="POST">
-                            <button class="flagUser">
-                                Flag User</button>
-                        </form>
-                        <form action="/deletePost?postId=<%= flaggedPost.postId %>" method="POST">
-                            <button class="flagUser">
-                                Delete</button>
-                        </form>
-                    </div>
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>PostId</th>
+                        <th>UserId</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                
+                    <% flaggedPosts.forEach(flaggedPost => { %>
+                        <tr>
+                            <td><%=flaggedPost.postId %></td>
+                            <td><%=flaggedPost.userId %></td>
+                            <td><%=flaggedPost.title %></td>
+                            <td><%=flaggedPost.description %></td>
+                            <td class="flaggedUser">
+                                <form action="/unflagPost?postId=<%= flaggedPost.postId %>" method="POST">
+                                    <button class="flagUser">
+                                        Unflag Post</button>
+                                </form>
+                                <form action="/modFlag?userId=<%= flaggedPost.userId %>" method="POST">
+                                    <button class="flagUser">
+                                        Flag User</button>
+                                </form>
+                                <form action="/deletePost?postId=<%= flaggedPost.postId %>" method="POST">
+                                    <button class="flagUser">
+                                        Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
             <%} %> 
         </div>
         <h1>All Posts</h1>
@@ -44,22 +56,34 @@
             <% if (!allPosts || allPosts.length===0) { %>
                 <p>There are no posts.</p>
             <% } else { %>
-                <% allPosts.forEach(post => { %>
-                    <div class="flaggedUser">
-                        <p>PostId= <%=post.postId %></p>
-                        <p>UserId= <%=post.userId %></p>
-                        <p>Title= <%=post.title %></p>
-                        <p>Description= <%=post.description %></p>
-                        <form action="/modFlag?userId=<%= post.userId %>" method="POST">
-                            <button class="flagUser">
-                                Flag User</button>
-                        </form>
-                        <form action="/deletePost?postId=<%= post.postId %>" method="POST">
-                            <button class="flagUser">
-                                Delete</button>
-                        </form>
-                    </div>
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>PostId</th>
+                        <th>UserId</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    <% allPosts.forEach(post => { %>
+                        <tr>
+                            <td><%=post.postId %></td>
+                            <td><%=post.userId %></td>
+                            <td><%=post.title %></td>
+                            <td><%=post.description %></td>
+                            <td class="flaggedUser">
+                                <form action="/modFlag?userId=<%= post.userId %>" method="POST">
+                                    <button class="flagUser">
+                                        Flag User</button>
+                                </form>
+                                <form action="/deletePost?postId=<%= post.postId %>" method="POST">
+                                    <button class="flagUser">
+                                        Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
             <%} %> 
         </div>
     </div>

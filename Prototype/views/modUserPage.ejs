@@ -34,13 +34,18 @@
                     <p>There are no posts.</p>
                 </div>
             <% } else { %>
-                <% userPosts.forEach(post => { %>
-                    <div class="flaggedUser">
-                        <p>Title= <%=post.title %></p>
-                        <p>Description= <%=post.description %> </p>
-                    </div>
-                    
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
+                    <% userPosts.forEach(post => { %>
+                        <tr>
+                            <td><%=post.title %></td>
+                            <td><%=post.description %></td>
+                        </tr>
+                    <% }) %>
+                </table>
             <% } %>
         </div>
         <h1>Replies</h1>
@@ -50,12 +55,18 @@
                     <p>There are no replies.</p>
                 </div>
             <% } else { %>
-                <% userReplies.forEach(reply => { %>
-                    <div class="flaggedUser">
-                        <p>Description= <%=reply.description %></p>
-                        <p>replyTime= <%=reply.replyTime %> </p>
-                    </div>
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>Description</th>
+                        <th>replyTime</th>
+                    </tr>
+                    <% userReplies.forEach(reply => { %>
+                        <tr>
+                            <td><%=reply.description %></td>
+                            <td><%=reply.replyTime %></td>
+                        </tr>
+                    <% }) %>
+                </table>
             <% } %>
         </div>
     </div>

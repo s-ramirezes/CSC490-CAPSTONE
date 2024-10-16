@@ -16,9 +16,9 @@
     <div class="pageContent">
         <h1> Voice Call</h1>
         <p id="status">Waiting for Call...</p>
-        <button id="callBtn">Call</button>
-        <button id="muteBtn" disabled>Mute</button>
-        <button id="camBtn" disabled>Disable Camera</button>
+        <button id="callBtn" class="voiceButton">Call</button>
+        <button id="muteBtn" disabled class="voiceButton">Mute</button>
+        <button id="camBtn" disabled class="voiceButton">Disable Camera</button>
         <div id="video-grid"></div>
         <audio id="localAudio" autoplay muted></audio>
         <audio id="remoteAudio" autoplay></audio>
@@ -103,6 +103,9 @@
                     camButton.disabled= false;
                     callConnected = true;
                 });
+                peer.on('close', () => {
+                        window.location.reload();
+                });
             }
             
             socket.on('signal', data => {
@@ -134,7 +137,7 @@
 
                     peer.on('close', () => {
                         window.location.reload();
-                    })
+                    });
             
                     peer.signal(data.signal);
                 } else {

@@ -17,16 +17,28 @@
             <% if (!tutors || tutors.length===0) { %>
                 <p>There are no tutors.</p>
             <% } else { %>
-                <% tutors.forEach(tutor => { %>
-                    <a class="flaggedUser" href="/tutorPage?userId=<%= tutor.userId %>">
-                        <p>UserId= <%=tutor.userId %></p>
-                        <p>Name= <%=tutor.fname %> <%=tutor.lname %></p>
-                        <form action="/removeTutor?userId=<%= tutor.userId %>" method="POST">
-                            <button class="flagUser">
-                                Remove Tutor</button>
-                        </form>
-                    </a>
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% tutors.forEach(tutor => { %>
+                        <tr>
+                            <td><%=tutor.userId %></td>
+                            <td><%=tutor.fname %> <%=tutor.lname %></td>
+                            <td class="flaggedUser">
+                                <form action="/removeTutor?userId=<%= tutor.userId %>" method="POST">
+                                    <button class="flagUser">
+                                        Remove Tutor</button>
+                                </form>
+                                <a href="/tutorPage?userId=<%= tutor.userId %>">
+                                    <button class="flagUser">View Profile</button>
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
             <%} %> 
         </div>
         <h1>Reviews</h1>
@@ -34,19 +46,34 @@
             <% if (!reviews || reviews.length===0) { %>
                 <p>There are no reviews.</p>
             <% } else { %>
-                <% reviews.forEach(review => { %>
-                    <a class="user" href="/tutorPage?userId=<%= review.revieweeId %>">
-                        <p>ReviewId= <%=review.reviewId %></p>
-                        <p>Title= <%=review.title %></p>
-                        <p>Description= <%=review.description %></p>
-                        <p>Rating= <%=review.rating %></p>
-                        <p>Recommended= <%=review.recommended %></p>
-                        <form action="/addTutor?userId=<%= review.revieweeId %>" method="POST">
-                            <button class="flagUser">
-                                Add Tutor</button>
-                        </form>
-                    </a>
-                <% }) %>
+                <table>
+                    <tr>
+                        <th>ReviewId</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Rating</th>
+                        <th>Recommended</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% reviews.forEach(review => { %>
+                        <tr>
+                            <td><%=review.reviewId %></td>
+                            <td><%=review.title %></td>
+                            <td><%=review.description %></td>
+                            <td><%=review.rating %></td>
+                            <td><%=review.recommended %></td>
+                            <td class="flaggedUser">
+                                <form action="/addTutor?userId=<%= review.revieweeId %>" method="POST">
+                                    <button class="flagUser">
+                                        Add Tutor</button>
+                                </form>
+                                <a href="/tutorPage?userId=<%= review.revieweeId %>">
+                                    <button class="flagUser">View Profile</button>
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
             <% } %>
         </div>
     </div>

@@ -62,7 +62,7 @@ const userSocketMap = {};
 io.on('connection', (socket) => {
 
   socket.on('registerUser', (userId) => {
-    userSocketMap[userId] = socket.id; // Map userId to socket id
+    userSocketMap[userId] = socket.id;
     console.log(`User ${userId} registered with socket ID: ${socket.id}`);
   });
 
@@ -81,7 +81,6 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log('Client disconnected:', socket.id);
-        // Remove user from map
         for (const userId in userSocketMap) {
             if (userSocketMap[userId] === socket.id) {
                 delete userSocketMap[userId];
