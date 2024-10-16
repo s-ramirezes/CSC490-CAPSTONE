@@ -288,11 +288,19 @@
                   <!-- <div style="width: 17px; height: 232px; left: 700px; top: -102px; position: relative; background: rgb(0, 0, 0)"></div> -->
                   <div class="grows" style=" position: relative; margin-bottom: 100px; display: flex; flex-direction: column; ">
                     
-                    <div style="width: 92px; height: 29px; left: 600px; top: 128px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+                    <!-- <div style="width: 92px; height: 29px; left: 600px; top: 128px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
                       <button>Comment</button>
-                    </div>
+                    </div> -->
                     <div style="width: 257px; height: 29px; left: 140px; top: 128px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
-                      <textarea style="width: 404px; height: 35px; border-radius: 80px; border: 2px black solid; resize: none; overflow: hidden; padding-left: 10px;" placeholder="Comment here"></textarea>
+                      <form action="/reply" method="POST">
+                        <input type="hidden" id="userId" value="<%= userId %>" name="userId" />
+                        <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+                        <input type="hidden" id="replyPostId" value="<%= post.postId %>" name="postId" />
+                        <textarea style="width: 404px; height: 35px; border-radius: 80px; border: 2px black solid; resize: none; overflow: hidden; padding-left: 10px;" placeholder="Comment here" name="description"></textarea>
+                        <div style="width: 92px; height: 29px; left: 450px; top: 0px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+                          <button type="submit">Comment</button>
+                        </div>
+                      </form>
                     </div>
                     <div id="postBox" style="width: 604px; height: 51px; left: 130px; top: 120px; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px; border: 2px black solid"></div>
                   </div>
