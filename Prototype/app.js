@@ -1,11 +1,15 @@
 "use strict";
 
 const express = require("express");
+const http = require('http');
+const { Server } = require("socket.io");
 const app = express();
 const multer = require("multer");
 const session = require("express-session");
 const path = require("path");
 const {setSessionData, isLoggedIn} = require("./routes/setSessionData");
+const server =http.createServer(app);
+const io = new Server(server);
 
 app.use(session({
   secret: 'secret_key',
@@ -53,6 +57,40 @@ const teacherRouter = require("./routes/teacher.route")(upload);
 const tutorRouter = require("./routes/tutor.route");
 const loginRouter = require("./routes/login.route");
 
+const userSocketMap = {};
+
+io.on('connection', (socket) => {
+
+  socket.on('registerUser', (userId) => {
+    userSocketMap[userId] = socket.id; // Map userId to socket id
+    console.log(`User ${userId} registered with socket ID: ${socket.id}`);
+  });
+
+  socket.on('signal', (data) => {
+   const targetSocketId = userSocketMap[data.toUserId];
+       if (targetSocketId) {
+        io.to(targetSocketId).emit('signal', {
+          signal: data.signal,
+          fromUserId: data.fromUserId
+        });
+          console.log('Signal relayed from:', data.fromUserId, 'to:', data.toUserId);
+        } else {
+          console.error('Target user not connected:', data.toUserId);
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected:', socket.id);
+        // Remove user from map
+        for (const userId in userSocketMap) {
+            if (userSocketMap[userId] === socket.id) {
+                delete userSocketMap[userId];
+                break;
+            }
+        }
+    });
+});
+
 app.use("/public", express.static('public'));
 app.use("/images", express.static('images'));
 
@@ -66,8 +104,9 @@ app.use("/", userRouter);
 app.use("/", teacherRouter);
 app.use("/", tutorRouter);
 
+app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("App listening at http://localhost:" + PORT);
 });

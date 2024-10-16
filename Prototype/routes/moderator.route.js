@@ -20,4 +20,5 @@ router.get("/modTutors", moderatorController.tutorList);
 router.get("/tutorPage", moderatorController.tutorPage);
 router.post("/addTutor", moderatorController.addTutor);
 router.post("/removeTutor", moderatorController.removeTutor);
+router.get("/voiceCall", moderatorController.voiceCall);
 module.exports = router; 

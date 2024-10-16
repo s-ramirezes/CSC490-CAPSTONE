@@ -161,3 +161,18 @@ header {
     display: flex;
     justify-content: space-evenly;
 }
+
+#video-grid {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr;
+    width: 60vw;
+    height: 60vh;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}

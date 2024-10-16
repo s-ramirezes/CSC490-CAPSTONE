@@ -212,6 +212,20 @@ function removeTutor (req, res){
         res.status(500).send("Failed to remove tutor");
     }
 }
+function voiceCall (req, res){
+    try{
+        const subjects= model.getSubjects();
+        req.session.subjects = subjects;
+        const toUserId= req.query.userId;
+        const toUser= model.getUser(toUserId);
+        const userId= req.session.userId;
+        const role=req.session.role;
+        res.render ("voiceCall", {subjects : subjects, role: role, 
+            userId : userId, toUserId: toUserId, toUser: toUser});
+    } catch (err) {
+        console.error("Failed to render voice call "+ err.message);
+    }
+}
 module.exports = {
     homePage,
     messages,
@@ -229,5 +243,6 @@ module.exports = {
     tutorPage,
     addTutor,
     removeTutor,
+    voiceCall,
 
 };
