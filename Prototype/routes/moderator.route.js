@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 
+const { setSessionData, isLoggedIn } = require("./setSessionData");
+
 const moderatorController = require("../controllers/moderator.controller");
 
 router.get("/modHome", moderatorController.homePage);
@@ -21,4 +23,5 @@ router.get("/tutorPage", moderatorController.tutorPage);
 router.post("/addTutor", moderatorController.addTutor);
 router.post("/removeTutor", moderatorController.removeTutor);
 router.get("/voiceCall", moderatorController.voiceCall);
+
 module.exports = router; 

@@ -45,7 +45,7 @@ function feedPage(req, res) {
             const replies = model.getRepliesforPost(post.postId);
             let commentCount = model.getCommentCount(post.postId);
             commentCount = commentCount["COUNT(*)"];
-            return { ...post, liked, replies, commentCount};
+            return { ...post, liked, replies, commentCount };
         });
         const ids = model.getConversations(userId);
         const convUsers = ids.map(id => {
@@ -61,7 +61,8 @@ function feedPage(req, res) {
             catId: req.params.catId,
             category: category,
             resources: resources,
-            convUsers: convUsers
+            convUsers: convUsers,
+            catName: category.catName
         });
     } catch (err) {
         // console.error("Error while rendering feed page: " + err.message);
@@ -113,14 +114,14 @@ function messagePage(req, res) {
             };
         });
 
-        res.render("message", { users: users, subjects: subjects, convUsers: convUsers});
+        res.render("message", { users: users, subjects: subjects, convUsers: convUsers });
     } catch (err) {
         console.error("Error while rendering message page: " + err.message);
     }
 }
 
-function searchUser(req, res){
-    try{
+function searchUser(req, res) {
+    try {
         const userId = req.session.userId;
         const email = req.body.email;
         const users = model.searchUser(userId, email);
@@ -134,8 +135,8 @@ function searchUser(req, res){
                 unreadCount: id.unreadCount
             };
         });
-        res.render("message", { users: users, subjects: subjects, convUsers: convUsers});
-    } catch(err){
+        res.render("message", { users: users, subjects: subjects, convUsers: convUsers });
+    } catch (err) {
         console.error("Error while rendering message page: " + err.message);
     }
 }
@@ -204,7 +205,7 @@ function deletePost(req, res) {
         model.deletePost(postId);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while deleting post" + err.message)
+        console.error("Error while deleting post" + err.message);
     }
 }
 
@@ -229,7 +230,7 @@ function deleteReply(req, res) {
         model.deleteReply(replyId);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while deleting post" + err.message)
+        console.error("Error while deleting post" + err.message);
     }
 }
 
@@ -240,7 +241,7 @@ function createConv(req, res) {
         const convId = model.createConv(userId1, userId2);
         res.redirect("/modMessages?convId=" + convId);
     } catch (err) {
-        console.error("Error while creating conversation" + err.message)
+        console.error("Error while creating conversation" + err.message);
     }
 }
 
@@ -249,7 +250,7 @@ function getMessagePage(req, res) {
         const convId = req.query.convId;
         res.redirect("/modMessages?convId=" + convId);
     } catch (err) {
-        console.error("Error while getting message page:  " + err.message)
+        console.error("Error while getting message page:  " + err.message);
     }
 }
 
@@ -261,7 +262,7 @@ function updateProfilePic(req, res) {
         res.redirect("/account/" + userId);
     }
     catch (err) {
-        console.error("Error while updating profile pic:  " + err.message)
+        console.error("Error while updating profile pic:  " + err.message);
     }
 }
 
@@ -273,7 +274,7 @@ function flagPost(req, res) {
         model.flagPost(postId);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while flagging post:  " + err.message)
+        console.error("Error while flagging post:  " + err.message);
     }
 }
 
@@ -288,7 +289,7 @@ function editPost(req, res) {
         model.editPost(postId, title, courseId, description);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while editing post:  " + err.message)
+        console.error("Error while editing post:  " + err.message);
     }
 }
 
@@ -300,11 +301,78 @@ function editReply(req, res) {
         model.editReply(replyId, description);
         res.redirect("/category/" + catId);
     } catch (err) {
-        console.error("Error while editing reply:  " + err.message)
+        console.error("Error while editing reply:  " + err.message);
     }
 }
 
+// date still needed
+// function filterPosts(req, res){
+//     try{
+//         const filteredcatId = req.body.catId;
+//         const filtereduserId = req.body.userId;
+//         const filteredcourseId = req.body.courseId;
+//         const filteredtitle = req.body.title;
+//         const Posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle);
+//         res.redirect("/category/" + catId, {filteredPosts});
+//     } catch (err) {
+//         console.error("Error while filtering posts:  " + err.message);
+//     }
+// }
 
+function filterPosts(req, res) {
+    try {
+        const userId = req.session.userId;
+        const filteredcatId = req.query.catId;
+        const filtereduserId = req.query.userId;
+        const filteredcourseId = req.query.courseId;
+        const filteredtitle = req.query.title;
+        const date = req.query.daterange;
+        console.log(date);
+
+        const dateRange = req.query.daterange;
+
+        if (dateRange) {
+            const [startDate, endDate] = dateRange.split(" - ");
+
+            console.log("Start Date:", startDate); // First part of the date range
+            console.log("End Date:", endDate); // Second part of the date range
+        }
+
+        const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, date);
+
+        const category = model.getCategory(filteredcatId);
+        const resources = model.getResourcesforCategory(filteredcatId);
+
+        const likedPosts = posts.map(post => {
+            const liked = model.isPostLiked(userId, post.postId);
+            const replies = model.getRepliesforPost(post.postId);
+            let commentCount = model.getCommentCount(post.postId);
+            commentCount = commentCount ? commentCount["COUNT(*)"] : 0;
+            return { ...post, liked, replies, commentCount };
+        });
+
+        const ids = model.getConversations(userId);
+        const convUsers = ids.map(id => {
+            const otherUser = model.getUser(id.otherUserId);
+            return {
+                convId: id.convId,
+                otherUser,
+                unreadCount: id.unreadCount
+            };
+        });
+
+        res.render("feed", {
+            posts: likedPosts,
+            catId: filteredcatId,
+            category: category,
+            resources: resources,
+            convUsers: convUsers,
+            catName: category.catName
+        });
+    } catch (err) {
+        console.error("Error while rendering filtered posts: " + err.message);
+    }
+}
 
 
 module.exports = {
@@ -327,4 +395,5 @@ module.exports = {
     flagPost,
     editPost,
     editReply,
+    filterPosts,
 };

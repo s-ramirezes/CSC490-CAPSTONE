@@ -72,9 +72,24 @@ function promoteToTutor(req, res) {
     }
 }
 
+function getAnalytics(req, res){
+    try {
+        const userId = req.session.userId;
+        const catName = req.session.subject;
+        const leaderboard = model.getLeaderboard(catName);
+        const postCount = model.getAmountofPosts(catName);
+        const posts = model.getPosts(catName);
+        console.log(posts);
+        res.render("teacherAnalytics", {leaderboard, postCount, posts});
+    } catch (err) {
+        console.error("Error while rendering teacher analytics page: " + err.message);
+    }
+}
+
 module.exports = {
     upload,
     deleteResource,
     teacherResourcePage,
-    promoteToTutor
+    promoteToTutor,
+    getAnalytics,
 };

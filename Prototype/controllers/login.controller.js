@@ -29,7 +29,8 @@ function logout(req, res) {
 function Signup(req, res) {
     try {
         // const error = null;
-        res.render("signup");
+        const subjects = model.getSubjectNames();
+        res.render("signup", {subjects});
     } catch (err) {
         console.error("Error while rendering signup page: " + err.message);
     }
@@ -37,7 +38,7 @@ function Signup(req, res) {
 
 function createUser(req, res, next) {
     try {
-        const result = model.createUser(req.body.email, req.body.password, req.body.fname, req.body.lname, req.body.role);
+        const result = model.createUser(req.body.email, req.body.password, req.body.fname, req.body.lname, req.body.role, req.body.subject);
         if (result === "success") {
             res.redirect("/");
         } else if (result === "exists") {
@@ -66,6 +67,7 @@ function loginUser(req, res, next) {
             req.session.lname = user.lname;
             req.session.role = user.role;
             req.session.userId = user.userId;
+            req.session.subject = user.subject;
 
             res.redirect("/home");
         } else if (result === "notFound") {
