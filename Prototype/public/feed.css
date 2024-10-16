@@ -54,6 +54,7 @@
 }
 
 #private-messages {
+    margin-right: 20px;
     height: 1500px; /* Set a fixed height for private messages */
     overflow-y: auto; /* Enable vertical scrolling */
     /* border-left: 12px solid #0f2044; 
@@ -75,6 +76,7 @@
    border-radius: 30px;
    color: white;
    padding: 10px 20px;
+   margin-bottom: 40px;
 }
 
 .users {
