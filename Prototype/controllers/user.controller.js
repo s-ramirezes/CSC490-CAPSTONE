@@ -141,6 +141,17 @@ function searchUser(req, res) {
     }
 }
 
+function searchSubject (req, res){
+    try{
+        const subject = req.body.subject;
+        const subjects = model.searchSubject(subject);
+        return subjects;
+    } catch(err){
+        console.error("Error while searching for subject: " + err.message);
+    }
+}
+        
+
 function accountPage(req, res) {
     try {
         const userId = req.params.userId;
@@ -382,6 +393,7 @@ module.exports = {
     makeReview,
     messagePage,
     searchUser,
+    searchSubject,
     accountPage,
     likePost,
     post,

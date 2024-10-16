@@ -2,17 +2,17 @@ img {
    cursor: pointer; 
 }
 
-.columns {
+/* .columns {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-inline-start: 12%;
-}
+} */
 
 #account {
     align-items: center;
     text-align: center;
-    margin: 0 auto; 
+     
 }
 
 #header {
@@ -30,4 +30,12 @@ img {
     padding: 5px;
     border: 2px solid rgb(121, 118, 118);
     border-radius: 10px;
+}
+
+#posts, #reviews {
+    align-items: center;
+    /* text-align: center; */
+    /* margin: 0 auto;  */
+    margin-right: 215px;
+    margin-left: 215px;
 }

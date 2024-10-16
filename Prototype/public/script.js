@@ -79,3 +79,9 @@ function toggleAccountView(view){
         accountReviews.style.display = 'block';
     }
 }
+
+
+
+
+
+// Add this script at the end of your <body> section

@@ -22,6 +22,12 @@ function getAllSubjects(){
     return db.all(sql);
 }
 
+function searchSubject(subject) {
+    const sql = `SELECT * FROM category WHERE catName LIKE ?`;
+    const params = [`${subject}%`];
+    return db.all(sql, params);
+}
+
 function getUserPost(userId) {
     const sql = `
         SELECT p.*, c.catAbbr 
@@ -243,6 +249,7 @@ module.exports = {
     getPosts,
     getSubjectPosts,
     getAllSubjects,
+    searchSubject,
     getUserPost,
     searchUser,
     getUser,

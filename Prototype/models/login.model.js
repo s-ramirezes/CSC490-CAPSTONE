@@ -109,8 +109,8 @@ function getUserEmail(email) {
 }
 
 function getSubjects() {
-  const sql = "SELECT * FROM category";
-  return db.all(sql);
+    const sql = "SELECT * FROM category ORDER BY catAbbr ASC";
+    return db.all(sql);
 }
 
 function getSubjectNames() {

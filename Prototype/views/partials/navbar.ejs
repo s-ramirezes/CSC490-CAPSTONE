@@ -1,4 +1,4 @@
-<nav>
+<!-- <nav>
     <ul class="subjects">
         <li> <h2> Subjects</h2></li>
     <% subjects.forEach(function(subject) { %>
@@ -6,13 +6,58 @@
             
     <% }); %>
     </ul>
-</nav>
+</nav> -->
 
-<nav style="position: fixed; top: 0; width: 100%; z-index: 1000;">
-    <ul class="topBar flex-container">
+<!-- Sidebar Structure -->
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <ul class="b">
+    <li style="text-align: left; margin-left: 0; margin-right: 20px; list-style-type: none;"><h2 style="color: #fac104; background-color: #0b1835;">Subjects</h2></li>
+    <div class="sidebar-columns">
+      <% subjects.forEach(function(subject) { %>
+        <li><a class="subjectLink" href="/category/<%= subject.catId %>" title="<%= subject.catName %>"><%= subject.catAbbr %></a></li>
+      <% }); %>
+    </div>
+  </ul>
+</div>
+
+<!-- Overlay for dimming effect -->
+<div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
+
+<script>
+let isOpen = false; // Track the state of the sidebar
+
+function toggleNav() {
+  if (isOpen) {
+    closeNav();
+  } else {
+    openNav();
+  }
+}
+
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("overlay").style.display = "block"; // Show the overlay
+  document.querySelector(".openbtn").style.left = "250px"; // Move button to the right of the sidebar
+  isOpen = true; // Update the state
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+  document.getElementById("overlay").style.display = "none"; // Hide the overlay
+  document.querySelector(".openbtn").style.left = "0"; // Move button back to the original position
+  isOpen = false; // Update the state
+}
+</script>
+
+<!-- Existing Top Navigation -->
+<nav>
+    <ul class="navbar">
 
         <% if (role === 'moderator') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
@@ -21,19 +66,19 @@
             <li><a href="/modTutors"><h2>Tutors</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'student') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'tutor') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/account/<%= userId %>"><h2>Account</h2></a></li>
             <li><a href="/logout"><h2>Logout</h2></a></li>
         <% } else if (role === 'teacher') { %>
-            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image" width="150"></li>
+            <li><img src="/images/Spartan.png" alt="spartan" class="spartan-image spin" width="150"></li>
             <li><a href="/home"><h2>Spartan Aid</h2></a></li>
             <li><a href="/message"><h2>Messages</h2></a></li>
             <li><a href="/analytics"><h2>Analytics</h2></a></li>
@@ -44,7 +89,13 @@
     
     </ul>
 </nav>
+
+<div id="main">
+  <button class="openbtn" onclick="toggleNav()"></button>
+</div>
+
 <br>
 <br>
 <br>
 <br>
+

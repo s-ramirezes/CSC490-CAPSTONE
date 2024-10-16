@@ -17,11 +17,13 @@
     margin-top: 60px;
 } */
 
-/* .columns {
+.mainPage {
     display: flex;
     justify-content: space-between;
     margin-inline-start: 12%;
-} */
+    margin-left: 0px;
+    padding: 0;
+}
 .user-info{
     display: flex;
     align-items: center;
@@ -33,12 +35,31 @@
 
 #feed, #private-messages {
     flex: 1;
-    margin: 0 10px;
+    
     /* margin-inline-start: 12%; */
 }
 
 #feed {
     flex: 2;
+    margin-left: 200px;
+    margin-right: 100px; /* editted this last */
+    /* height: 1000px; Set a fixed height for the feed */
+    
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+#feed::-webkit-scrollbar,
+#private-messages::-webkit-scrollbar{
+    display: none;
+}
+
+#private-messages {
+    margin-right: 20px;
+    height: 1500px; /* Set a fixed height for private messages */
+    overflow-y: auto; /* Enable vertical scrolling */
+    /* border-left: 12px solid #0f2044; 
+    border-radius: 10px; */
+    /* box-shadow: inset 0 0 0 2px yellow; */
 }
 
 #comments {
@@ -47,3 +68,22 @@
     align-items: center;
 }
 
+#feed-header, #pm-header {
+   /* display: inline-flex; */
+   align-items: center;
+   background: #16316b;
+   border: 3px solid #fac104;
+   border-radius: 30px;
+   color: white;
+   padding: 10px 20px;
+   margin-bottom: 40px;
+}
+
+.users {
+    border-left: 12px solid #0f2044; 
+    border-bottom: 12px solid #0f2044; 
+    border-radius: 10px;
+    box-shadow: 
+        inset 2px 0 0 #fac104, 
+        0 2px 0 #fac104;   
+}

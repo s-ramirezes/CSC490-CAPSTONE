@@ -15,7 +15,7 @@
     <header>
         <%- include('partials/navbar') %>
     </header>
-    <div class="columns">
+    <!-- <div class="columns"> -->
         <div id="account">
             <h1>Account Info</h1><br>
             <% if (userId === user.userId) { %>
@@ -37,8 +37,8 @@
                 <h4>Rating: <%= averageRating %> / 10</h3>
             <% } %>
             <% if (user.bio) { %>
-                <h4 style="border-bottom: 1px solid black;">About Me</h4>
-                <p><%= user.bio %></p>
+                <h4>About Me</h4>
+                <p style="border-top: 1px solid black; display: inline-block;"><%= user.bio %></p>
             <% } %>
             <% if (role === 'teacher' && user.role === 'student') { %>
                 <form action="/promoteToTutor" method="POST" class="ms-4">
@@ -131,7 +131,7 @@
         </div>
 
 
-    </div>
+    <!-- </div> -->
 
     
 
