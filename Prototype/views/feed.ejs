@@ -11,8 +11,6 @@
   <script src="/public/script.js" defer></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 
 <body>
@@ -713,9 +711,13 @@
           <hr>
 
           <div class="mb-3">
-            <label for="filterDateRange" class="form-label">Select Date </label><br>
-            <input type="text" name="daterange" value=""/>
-          </div>
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate">
+        </div>
+        <div class="mb-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate">
+        </div>
 
           <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-primary" id="filterButton">Apply Filter</button>
@@ -749,14 +751,6 @@
     function setFlagModalValues(postId) {
       document.getElementById("flagPostId").value = postId;
     }
-
-    $(function () {
-      $('input[name="daterange"]').daterangepicker({
-        opens: 'left'
-      }, function (start, end, label) {
-        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-      });
-    });
 
     function toggleButtons(buttonId) {
       const buttonDiv = document.getElementById(buttonId); // Get the specific buttons div

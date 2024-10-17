@@ -337,19 +337,10 @@ function filterPosts(req, res) {
         const filtereduserId = req.query.userId;
         const filteredcourseId = req.query.courseId;
         const filteredtitle = req.query.title;
-        const date = req.query.daterange;
-        console.log(date);
+        const filterStartDate = req.query.startDate;
+        const filterEndDate = req.query.endDate;
 
-        const dateRange = req.query.daterange;
-
-        if (dateRange) {
-            const [startDate, endDate] = dateRange.split(" - ");
-
-            console.log("Start Date:", startDate); // First part of the date range
-            console.log("End Date:", endDate); // Second part of the date range
-        }
-
-        const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, date);
+        const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, filterStartDate, filterEndDate);
 
         const category = model.getCategory(filteredcatId);
         const resources = model.getResourcesforCategory(filteredcatId);

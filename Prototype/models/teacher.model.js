@@ -51,7 +51,7 @@ function getAmountofPosts(catName, filterStartDate, filterEndDate) {
 
     const params = [catName];
 
-    if (filterStartDate || filterEndDate) {
+    if (filterStartDate && filterEndDate) {
         sql += ` AND p.postTime BETWEEN ? AND ?`;
         params.push(filterStartDate, filterEndDate);
     }
@@ -71,15 +71,15 @@ function getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterU
     
     const params = [catName];
 
-    if (filterStartDate || filterEndDate) {
+    if (filterStartDate && filterEndDate) {
         sql += ` AND p.postTime BETWEEN ? AND ?`;
         params.push(filterStartDate, filterEndDate);
     }
-    if (filterCourse !== 'All') {
+    if (filterCourse && filterCourse !== 'All' ) {
         sql += ` AND p.courseId = ?`;
         params.push(filterCourse);
     }
-    if (filterUser !== 'All') {
+    if (filterUser && filterUser !== 'All') {
         sql += ` AND p.userId = ?`;
         params.push(filterUser);
     }
