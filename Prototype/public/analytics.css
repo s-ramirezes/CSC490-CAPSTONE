@@ -10,7 +10,7 @@
 }
 
 .analytics-title{
-
+  
 }
 
 .analytics-posts {
@@ -22,4 +22,11 @@
 
 .leaderboard {
 
+}
+
+.filterBtns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    color: white;
 }

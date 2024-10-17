@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/public/home.css">
     <link rel="stylesheet" href="/public/account.css">
     <link rel="stylesheet" href="/public/analytics.css">
+    <link rel="stylesheet" href="/public/feed.css">
     <script src="/public/script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -19,19 +20,22 @@
     <header>
         <%- include('partials/navbar') %>
     </header>
-    <div>
-        <h1 class="analytics-title">
+    <div class="analytics-title">
+        <h1 id="feed-header">
             <%= subject %> Analytics
         </h1>
-
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
-            Filter
-        </button>
+        <div class="filterBtns">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+                Filter
+            </button>
+            <a href="/analytics" class="btn btn-secondary">Reset</a>
+        </div>
     </div>
 
     <div class="stats">
         <!-- chart for posts per course -->
         <div class="chart">
+            <h3 class="text-center mt-4">Posts Distribution by Course</h3>
             <canvas id="postPieChart"></canvas>
             <form id="courseForm" action="/analytics" method="GET">
                 <input type="hidden" id="courseIdInput" name="courseId" value="">
@@ -82,7 +86,7 @@
 
     <!-- Posts section -->
     <div class="analytics-posts">
-        <h1>Posts</h1>
+        <h2 class="text-center mt-4">Posts</h2>
         <div id="feed-content">
             <% if (!posts || posts.length===0) { %>
                 <h2>No posts found, be the first to make one!</h2>
@@ -182,9 +186,14 @@
                         </div>
                         <hr> -->
 
+                        <!-- mm/dd/yyyy -->
                         <div class="mb-3">
-                            <label for="filterDateRange" class="form-label">Select Date </label><br>
-                            <input type="text" name="daterange" value="" />
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate">
                         </div>
 
                         <div class="d-flex justify-content-end">
@@ -236,10 +245,6 @@
                     plugins: {
                         legend: {
                             position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Post Distribution by Course'
                         }
                     },
 

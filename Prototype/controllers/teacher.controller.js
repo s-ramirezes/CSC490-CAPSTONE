@@ -77,15 +77,19 @@ function getAnalytics(req, res){
         const userId = req.session.userId;
         const catName = req.session.subject;
 
-        const filterDate = req.params.daterange;
+        const filterStartDate = req.query.startDate;
+        const filterEndDate = req.query.endDate;
         const filterCourse = req.query.courseId;
-        const filterUser = req.params.userId;
+        const filterUser = req.query.userId;
+
+        console.log(filterCourse);
+        console.log(filterUser);
+        console.log(filterStartDate + ' ' + filterEndDate );
 
 
-        const leaderboard = model.getLeaderboard(catName, filterDate);
-        const postCount = model.getAmountofPosts(catName, filterDate);
-        const posts = model.getPosts(catName, filterDate, filterCourse, filterUser);
-        console.log(posts);
+        const leaderboard = model.getLeaderboard(catName, filterStartDate, filterEndDate);
+        const postCount = model.getAmountofPosts(catName, filterStartDate, filterEndDate);
+        const posts = model.getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser);
         res.render("teacherAnalytics", {leaderboard, postCount, posts});
     } catch (err) {
         console.error("Error while rendering teacher analytics page: " + err.message);

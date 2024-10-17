@@ -40,21 +40,30 @@ function getLeaderboard(catName) {
     return db.all(sql, ...[catName]);
 }
 
-function getAmountofPosts(catName) {
-    const sql = `
+function getAmountofPosts(catName, filterStartDate, filterEndDate) {
+    let sql = `
     SELECT 
     p.courseId, 
         COUNT(p.postId) AS postCount
     FROM posts p
     JOIN category c ON p.catId = c.catId
-    WHERE c.catName = ?
-    GROUP BY p.courseId`;
-    return db.all(sql, ...[catName]);
+    WHERE c.catName = ?`;
+
+    const params = [catName];
+
+    if (filterStartDate || filterEndDate) {
+        sql += ` AND p.postTime BETWEEN ? AND ?`;
+        params.push(filterStartDate, filterEndDate);
+    }
+
+    sql += ` GROUP BY p.courseId`;
+
+    return db.all(sql, ...params);
 }
 
-function getPosts(catName, filterDate, filterCourse, filterUser) {
+function getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser) {
     let sql = `
-    SELECT p.*, u.email, u.profilePic, u.fname, u.lname
+    SELECT p.*, u.email, u.profilePic, u.fname, u.lname, u.userId
     FROM posts p
     JOIN category c ON p.catId = c.catId
     JOIN users u ON p.userId = u.userId
@@ -62,15 +71,15 @@ function getPosts(catName, filterDate, filterCourse, filterUser) {
     
     const params = [catName];
 
-    if (filterDate) {
-        sql += ` AND p.date = ?`;
-        params.push(filterDate);
+    if (filterStartDate || filterEndDate) {
+        sql += ` AND p.postTime BETWEEN ? AND ?`;
+        params.push(filterStartDate, filterEndDate);
     }
-    if (filterCourse) {
+    if (filterCourse !== 'All') {
         sql += ` AND p.courseId = ?`;
         params.push(filterCourse);
     }
-    if (filterUser) {
+    if (filterUser !== 'All') {
         sql += ` AND p.userId = ?`;
         params.push(filterUser);
     }
