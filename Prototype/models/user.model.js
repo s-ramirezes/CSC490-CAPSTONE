@@ -18,7 +18,7 @@ function getSubjectPosts(catId) {
 }
 
 function getAllSubjects(){
-    const sql = 'SELECT * FROM category';
+    const sql = 'SELECT * FROM category ORDER BY catAbbr';
     return db.all(sql);
 }
 

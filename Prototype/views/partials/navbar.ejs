@@ -41,6 +41,7 @@ function openNav() {
   document.getElementById("overlay").style.display = "block"; // Show the overlay
   document.querySelector(".openbtn").style.left = "250px"; // Move button to the right of the sidebar
   isOpen = true; // Update the state
+  document.getElementById("overlay").onclick = closeNav;
 }
 
 function closeNav() {
