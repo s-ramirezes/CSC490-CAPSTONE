@@ -109,8 +109,8 @@ header {
     color:black;
 }
 
-.pageContent{
-    margin-left: 10%;
+.modPageContent{
+    margin-left: 1%;
     padding: 16px;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
@@ -118,7 +118,6 @@ header {
 .columns {
     display: flex;
     justify-content: space-between;
-    margin-inline-start: 12%;
 }
 
 .flaggedUserList, .allUserList{

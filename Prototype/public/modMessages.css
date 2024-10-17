@@ -31,8 +31,6 @@ p{
     padding: 0;
     margin:0;
     height:100%;
-    width: 10%;
-    position: fixed;
     overflow: auto;
     text-align: center;
     background-color: purple;
@@ -54,7 +52,6 @@ p{
     align-items: baseline;
     text-align: center;
     right: 0;
-    left:10%;
     background-color:purple;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
@@ -114,8 +111,7 @@ p{
     color:black;
 }
 
-.pageContent{
-    margin-left: 10%;
+.modPageContent{
     padding: 16px;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
@@ -162,8 +158,8 @@ p{
 .messageContainer{
     position: fixed;
     bottom: 0;
-    left: 10%;
-    width: 96%;
+    left: 0%;
+    width: 100%;
     display: flex;
     justify-content:baseline;
     padding: 10px;
@@ -174,7 +170,7 @@ p{
 }
 
 .messageSection{
-    width: 77%;
+    width: 92%;
     flex-shrink: 1;
 }
 
@@ -187,6 +183,7 @@ p{
     padding: 10px;
     font-size: 16px;
     border-radius: 20px;
+    flex-shrink: 1;
 }
 
 .sendBtn{

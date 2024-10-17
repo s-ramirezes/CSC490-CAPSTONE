@@ -161,6 +161,13 @@ function  removeTutor(userId) {
         WHERE userId= ?;`;
     return db.run(sql, [userId]);
 }
+function isModRole(role){
+    if (role === 'moderator'){
+        return true;
+    } else {
+        return false;
+    }
+}
 
 module.exports = {
     getSubjects,
@@ -187,4 +194,5 @@ module.exports = {
     getReviews,
     addTutor,
     removeTutor,
+    isModRole,
 };

@@ -11,7 +11,7 @@ function homePage (req,res) {
     try {
         const subjects = model.getSubjects();
         req.session.subjects = subjects;
-        const role= 'moderator';
+        const role=req.session.role;
         res.render ("modHome", {subjects : subjects, role: role});
     } catch (err) {
         console.error("Failed to render modHome page: "+ err.message);
@@ -79,9 +79,14 @@ function userList (req,res){
         req.session.subjects = subjects;
         const flaggedUsers= model.getFlaggedUsers();
         const allUsers=model.getAllUsers();
-        const role= 'moderator';
-        res.render ("modUsers", {subjects : subjects, role: role, 
-            flaggedUsers : flaggedUsers, allUsers: allUsers});
+        const role=req.session.role;
+        if (model.isModRole(role)){
+            res.render ("modUsers", {subjects : subjects, role: role, 
+                flaggedUsers : flaggedUsers, allUsers: allUsers});
+        } else{
+            res.redirect(req.get('Referrer') || '/');
+        }
+        
     } catch (err) {
         console.error("Failed to render modUsers page "+ err.message);
     }
@@ -124,9 +129,14 @@ function modUserPage (req, res){
         const user= model.getUser(userId);
         const userPosts= model.getUserPosts(userId);
         const userReplies= model.getUserReplies(userId);
-        const role= 'moderator';
-        res.render ("modUserPage", {subjects : subjects, role: role, 
-            userId : userId, user: user, userPosts: userPosts, userReplies: userReplies});
+        const role=req.session.role;
+        if (model.isModRole(role)){
+            res.render ("modUserPage", {subjects : subjects, role: role, 
+                userId : userId, user: user, userPosts: userPosts, userReplies: userReplies});
+        } else{
+            res.redirect(req.get('Referrer') || '/');
+        }
+        
     } catch (err) {
         console.error("Failed to render modUserPage page "+ err.message);
     }
@@ -138,8 +148,13 @@ function postList (req,res){
         const flaggedPosts= model.getFlaggedPosts();
         const allPosts=model.getAllPosts();
         const role= req.session.role;
-        res.render ("modPosts", {subjects : subjects, role: role, 
-            flaggedPosts : flaggedPosts, allPosts: allPosts});
+        if (model.isModRole(role)){
+            res.render ("modPosts", {subjects : subjects, role: role, 
+                flaggedPosts : flaggedPosts, allPosts: allPosts});
+        } else{
+            res.redirect(req.get('Referrer') || '/');
+        }
+        
     } catch (err) {
         console.error("Failed to render modPosts page "+ err.message);
     }
@@ -171,8 +186,13 @@ function tutorList (req,res){
         const tutors= model.getTutors();
         const reviews=model.getReviews();
         const role= req.session.role;
-        res.render ("modTutor", {subjects : subjects, role: role, 
-            tutors : tutors, reviews: reviews});
+        if(model.isModRole(role)){
+            res.render ("modTutor", {subjects : subjects, role: role, 
+                tutors : tutors, reviews: reviews});
+        } else {
+            res.redirect(req.get('Referrer') || '/');
+        }
+        
     } catch (err) {
         console.error("Failed to render modTutors page "+ err.message);
     }
@@ -186,8 +206,13 @@ function tutorPage (req, res){
         const userPosts= model.getUserPosts(userId);
         const userReplies= model.getUserReplies(userId);
         const role=req.session.role;
-        res.render ("tutorPage", {subjects : subjects, role: role, 
-            userId : userId, user: user, userPosts: userPosts, userReplies: userReplies});
+        if (model.isModRole(role)){
+            res.render ("tutorPage", {subjects : subjects, role: role, 
+                userId : userId, user: user, userPosts: userPosts, userReplies: userReplies});
+        } else {
+            res.redirect(req.get('Referrer') || '/');
+        }
+        
     } catch (err) {
         console.error("Failed to render Tutor page "+ err.message);
     }

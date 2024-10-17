@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/public/modUsers.css">
+    <link rel="stylesheet" href="/public/home.css">
     <title>Home</title>
 </head>
 <body>
     <header>
         <%- include('partials/navbar') %>
     </header>
-    <div class="pageContent">
+    <div class="modPageContent">
         <div class="userName">
             <h1> <%=user.fname%> <%=user.lname %></h1>
             <% if (user.role == 'tutor'){ %>
