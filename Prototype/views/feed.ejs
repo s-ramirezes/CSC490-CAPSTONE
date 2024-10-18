@@ -132,13 +132,13 @@
 
                 </div>
                 <div
-                  style="width: 600px; height: 62px; left: 150px; top: 150px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 700; word-wrap: break-word;">
-                  <%= post.title %>
-                </div>
-                <div
-                  style="width: 600px; height: 62px; left: 150px; top: 200px; position: absolute; color: black; font-size: 12px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
-                  <%= post.description %>
-                </div>
+                style="width: 60vw; height: 6.2vh; left: 25vw; top: 15vh; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 700; word-wrap: break-word;">
+                <%= post.title %>
+              </div>
+              <div
+                style="width: 60vw; height: 6.2vh; left: 15vw; top: 20vh; position: absolute; color: black; font-size: 1.2vw; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                <%= post.description %>
+              </div>
               </div>
 
               <!-- <div class="replies"> -->
@@ -316,10 +316,10 @@
         <ul class="users">
           <% convUsers.forEach(user=> { %>
 
-            <div style="position: relative; margin-bottom: 4vh; display: flex; flex-direction: column;">
-              <div style="width: 90%; height: 10vh; background: #16316b; box-shadow: 0px 0px 0px 1vw rgba(0, 0, 0, 0.25); border-radius: 15vw; border: 0.3vw #fac104 solid; display: flex; align-items: center; justify-content: space-between; padding: 1vw;">
+            <div style="position: relative; margin-bottom: 2vh; display: flex; flex-direction: column;">
+              <div style="width: 90%; height: 7vh; background: #16316b; box-shadow: 0px 0px 0px .3vw rgba(0, 0, 0, 0.25); border-radius: 15vw; border: 0.15vw #fac104 solid; display: flex; align-items: center; justify-content: space-between; padding: 1vw;">
                 <div style="display: flex; align-items: center;">
-                  <div class="grows" style="width: 4vw; height: 4vw; background: #D9D9D9; border-radius: 50%; overflow: hidden;">
+                  <div class="grows" style="width: 60px; height: 60px; background: #D9D9D9; border-radius: 50%; overflow: hidden;">
                     <a href="/account/<%= user.otherUser.userId %>">
                       <img src="/images/<%= user.otherUser.profilePic %>" class="rounded-circle" alt="profile" style="width: 100%; height: 100%; object-fit: cover;">
                     </a>
@@ -336,8 +336,8 @@
                     <input type="hidden" name="convId" value="<%= user.convId %>" />
                     <button type="submit" style="border: none; background: none; padding: 0;">
                       <div style="position: relative;">
-                      <img class="grows" src="/images/whiteMail.png" alt="Message Icon" style="width: 4vw; height: 6vh;">
-                      <div style="position: absolute; top: 0; left: -0.4vw; width: 2vw; height: 2vh; font-size: 1.2vw; font-family: Inter; font-weight: bold; word-wrap: break-word; text-align: center;">
+                      <img class="grows" src="/images/whiteMail.png" alt="Message Icon" style="width: 60px; height: 70px;">
+                      <div style="position: absolute; top: 0; width: 15px; height: 15px; font-size: 20px; font-family: Inter; font-weight: bold; word-wrap: break-word; text-align: center;">
                         <% if (user.unreadCount > 0) { %>
                           <p style="color: rgb(255, 196, 0);"><%= user.unreadCount %></p>
                           <% } else { %>

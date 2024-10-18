@@ -291,6 +291,7 @@ body {
     color: white; /* Default text color */
     font-family: Inter; 
     font-weight: 400;
+    font-size: 25px;
     transition: color 0.3s ease; /* Smooth transition for color change */
     cursor: pointer; /* Change cursor to pointer to indicate interactivity */
 }
