@@ -109,7 +109,10 @@
                         <% if (userId === post.userId) { %>
                           <img class="grows me-4" src="/images/editPost.png" style="cursor: pointer;" alt="editPost" width="40vw" height="40vw" data-bs-toggle="modal" data-bs-target="#editModal" onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')" />
                         <% } %>
+                      </div>
+                      <div class="d-flex align-items-center me-2">
                         <% if (userId === post.userId || role === 'teacher' || role === 'moderator') { %>
+
                           <form action="/deleteUserPost" method="POST">
               
                                       <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
@@ -132,11 +135,11 @@
 
                 </div>
                 <div
-                style="width: 60vw; height: 6.2vh; left: 25vw; top: 15vh; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 700; word-wrap: break-word;">
+                style="width: 60vw; height: 6.2vh; left: 25vw; top: 12vh; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 700; word-wrap: break-word;">
                 <%= post.title %>
               </div>
               <div
-                style="width: 60vw; height: 6.2vh; left: 15vw; top: 20vh; position: absolute; color: black; font-size: 1.2vw; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                style="width: 60vw; height: 6.2vh; left: 15vw; top: 15vh; position: absolute; color: black; font-size: 1.2vw; font-family: Inter; font-weight: 400; word-wrap: break-word;">
                 <%= post.description %>
               </div>
               </div>
@@ -233,11 +236,11 @@
       }
 
       .buttons {
-        width: 35.5vw;
+        width: 35vw;
         height: 5vh;
         left: 11vw;
         top: 21.6vh;
-        position: absolute;
+        position: relative;
         opacity: 0.8;
         background: #D9D9D9;
         border-radius: 1.1vw;
@@ -247,7 +250,7 @@
         pointer-events: none; /* Prevent interaction when not visible */
         display: flex; /* Use flexbox */
         flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center items horizontally */
+        align-items: right; /* Center items horizontally */
         justify-content: center; /* Center items vertically */
       }
 
