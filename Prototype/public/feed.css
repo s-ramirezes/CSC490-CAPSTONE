@@ -41,8 +41,9 @@
 
 #feed {
     flex: 2;
-    margin-left: 200px;
+    margin-left: 100px;
     margin-right: 100px; /* editted this last */
+    padding: 20px;
     /* height: 1000px; Set a fixed height for the feed */
     
     overflow-y: auto; /* Enable vertical scrolling */
@@ -53,14 +54,69 @@
     display: none;
 }
 
+
+
 #private-messages {
-    margin-right: 20px;
+    aspect-ratio: 16/9;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+     margin-right: 20px;
     height: 1500px; /* Set a fixed height for private messages */
-    overflow-y: auto; /* Enable vertical scrolling */
-    /* border-left: 12px solid #0f2044; 
-    border-radius: 10px; */
-    /* box-shadow: inset 0 0 0 2px yellow; */
+    overflow-y: auto;
+    padding: 20px;
 }
+
+.users div {
+    aspect-ratio: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 80px;
+}
+
+#feed-content {
+    aspect-ratio: 16/9;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* .grows {
+    aspect-ratio: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 320px;
+} */
+
+#postBox {
+    aspect-ratio: 7/3;
+    width: 100%;
+    height: auto;
+    background: rgb(255, 251, 215);
+    border-radius: 19px;
+    border: 3px rgb(0, 0, 0) solid;
+}
+
+/* .users div, #feed-content div {
+    aspect-ratio: auto;
+    width: 100%;
+    height: auto;
+} */
+
+/* @media screen and (max-width: 1500px) {
+   body {
+    scale: 0.5;
+    margin: 0;
+   }
+    
+} */
+
 
 #comments {
     display: flex;

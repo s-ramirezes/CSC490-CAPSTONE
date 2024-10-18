@@ -55,29 +55,23 @@
           <h2>No posts found, be the first to make one!</h2>
           <% } else { %>
             <% posts.forEach(post=> { %>
-              <div class="grows" style="position: relative; margin-bottom: 40%; display: flex; flex-direction: column;">
-                <!-- Added margin for spacing, flex, and column direction -->
-                <div id="postBox" style="width: 80%; height: 15em; left: 5%; top: 10%; position: absolute; background: rgb(255, 251, 215); border-radius: 19px; border: 0.15em rgb(0, 0, 0) solid;">
-                </div>
-                <div class="grows" style="width: 2.7em; height: 2.7em; left: 9%; top: 10em; position: absolute; background: white; border-radius: 9999px; border: 1px black solid;">
+              <div class="grows" style="position: relative; margin-bottom: 32vh; display: flex; flex-direction: column;">
+                <div id="postBox" style="width: 42vw; height: 20vh; left: 7.6vw; top: 10.7vh; position: absolute; background: rgb(255, 251, 215); border-radius: 1.9vw; border: 0.3vw rgb(0, 0, 0) solid;"> </div>
+                <div class="grows" style="width: 4vw; height: 4vw; left: 9.4vw; top: 22vh; position: absolute; background: white; border-radius: 50%; border: 0.1vw black solid;">
                   <a href="/account/<%= post.userId %>">
-                    <img src="/images/<%= post.profilePic %>" class="rounded-circle w-100 h-100" style="object-fit: cover;" alt="profile">
+                    <img src="/images/<%= post.profilePic %>" class="rounded-circle" alt="profile" style="width: 100%; height: 100%; object-fit: cover;">
                   </a>
                 </div>
-                <div style="width: 70%; height: 1.7em; left: 19%; top: 8.5em; position: absolute; color: black; font-size: 1.25em; font-family: Inter; font-weight: 400; word-wrap: break-word;">
-                  <a href="/account/<%= post.userId %>">
-                    <%= post.fname + " " + post.lname %>
-                  </a>
+                <div style="width: 50vw; height: 2.7vh; left: 14.6vw; top: 22.5vh; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                  <a href="/account/<%= post.userId %>"><%= post.fname + " " + post.lname %></a>
                 </div>
-                <div id="dots" class="grows" style="position: absolute; left: 77%; top: 10em;" onclick="toggleButtons('buttons-<%= post.postId %>')">
-                  <!-- Pass the specific buttons ID -->
+                <div id="dots" class="grows" style="position: absolute; left: 45vw; top: 22vh;" onclick="toggleButtons('buttons-<%= post.postId %>')"> <!-- Pass the specific buttons ID -->
                   <div class="dot"></div>
                   <div class="dot"></div>
                   <div class="dot"></div>
                 </div>
-                <div class="buttons" id="buttons-<%= post.postId %>">
-                  <!-- Initially hidden -->
-                  <div class="d-flex justify-content-end align-items-right">
+                <div class="buttons" id="buttons-<%= post.postId %>"> <!-- Initially hidden -->
+                  <div class="d-flex justify-content-end align-items-center me-1">
                     <div class="d-flex align-items-center me-4">
                       <% if (userId !== post.userId) { %>
                         <form action="/createConv" method="POST" class="ms-4">
@@ -86,11 +80,9 @@
                         </form>
                       <% } %>
                       <button type="button" class="grows btn btn-link p-0 border-0 me-2" onclick="toggleReplySection('<%= post.postId %>')">
-                        <img src="/images/comment.png" alt="Comment" width="32em" height="32em" />
+                        <img src="/images/comment.png" alt="Comment" width="40vw" height="40vw" />
                       </button>
-                      <div class="text-muted small">
-                        <%= post.commentCount %> comments
-                      </div>
+                      <div class="text-muted small"><%= post.commentCount %> comments</div>
                     </div>
                     <div class="d-flex align-items-center me-4">
                       <button type="submit" id="likeButton" class="grows btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
@@ -98,104 +90,102 @@
                         <input type="hidden" name="liked" value="<%= post.liked %>" />
                         <input type="hidden" name="likeCount" value="<%= post.likeCount %>" />
                         <% if (post.liked) { %>
-                          <img src="/images/likeClicked.png" alt="Like" width="35em" height="35em" />
+                          <img src="/images/likeClicked.png" alt="Like" width="40vw" height="40vw" />
                         <% } else { %>
-                          <img src="/images/likeUnclicked.png" alt="Like" width="35em" height="35em" />
+                          <img src="/images/likeUnclicked.png" alt="Like" width="40vw" height="40vw" />
                         <% } %>
                       </button>
-                      <div class="text-muted small">
-                        <%= post.likeCount %> likes
-                      </div>
+                      <div class="text-muted small"><%= post.likeCount %> likes</div>
                     </div>
                     <div class="d-flex align-items-center me-4">
                       <% if (post.flagged) { %>
-                        <img src="/images/markedFlag.png" alt="Flag" width="35em" height="35em" class="me-4" />
+                        <img src="/images/markedFlag.png" alt="Flag" width="40vw" height="40vw" class="me-4" />
                       <% } else { %>
                         <button type="button" id="flagButton" class="grows btn btn-link" data-bs-toggle="modal" data-bs-target="#flagModal" onclick="setFlagModalValues('<%= post.postId %>')">
-                          <img src="/images/emptyFlag.png" alt="Flag" width="35em" height="35em" class="grows me-4" />
+                          <img src="/images/emptyFlag.png" alt="Flag" width="40vw" height="40vw" class="grows me-4" />
                         </button>
                       <% } %>
                       <div class="d-flex align-items-center me-2">
                         <% if (userId === post.userId) { %>
-                          <img class="grows me-4" src="/images/editPost.png" style="cursor: pointer;" alt="editPost" width="37em" height="37em" data-bs-toggle="modal" data-bs-target="#editModal" onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
+                          <img class="grows me-4" src="/images/editPost.png" style="cursor: pointer;" alt="editPost" width="40vw" height="40vw" data-bs-toggle="modal" data-bs-target="#editModal" onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')" />
                         <% } %>
-                      </div>
-                        <div class="d-flex align-items-center me-2">
                         <% if (userId === post.userId || role === 'teacher' || role === 'moderator') { %>
                           <form action="/deleteUserPost" method="POST">
-                            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
-                            <input type="hidden" name="postId" value="<%= post.postId %>" />
-                            <img class="grows" src="/images/delete.png" style="cursor: pointer me-4;" alt="editPost" width="35em" height="35em" data-bs-toggle="modal" data-bs-target="#editModal" onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
-                          </form>
-                        </div>
-                        <% } %>
-                      </div>
-                    
-                  </div>
-                </div>
-                <div style="width: 60%; height: 3em; left: 10%; top: 2em; position: absolute; color: black; font-size: 1.25em; font-family: Inter; font-weight: 700; word-wrap: break-word;">
-                  <%= post.title %>
-                </div>
-                <div style="width: 60%; height: 3em; left: 15%; top: 7em; position: absolute; color: black; font-size: 0.75em; font-family: Inter; font-weight: 400; word-wrap: break-word;">
-                  <%= post.description %>
-                </div>
-              </div>
               
+                                      <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+                                      <input type="hidden" name="postId" value="<%= post.postId %>" />
+                                      <img class="grows" src="/images/delete.png" style="cursor: pointer me-4;"
+                                        alt="editPost" width="35" height="35" data-bs-toggle="modal"
+                                        data-bs-target="#editModal"
+                                        onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
+
+                                    </form>
+                                    <% } %>
+
+                            </div>
+                            <!-- <button type="button" id="flagButton"
+                                                      class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
+                                                      <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
+                                                  </button> -->
+                    </div>
+                  </div>
+
+                </div>
+                <div
+                style="width: 60vw; height: 6.2vh; left: 25vw; top: 15vh; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 700; word-wrap: break-word;">
+                <%= post.title %>
+              </div>
+              <div
+                style="width: 60vw; height: 6.2vh; left: 15vw; top: 20vh; position: absolute; color: black; font-size: 1.2vw; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                <%= post.description %>
+              </div>
+              </div>
 
               <!-- <div class="replies"> -->
               <!-- Dynamically calculate height -->
               <span class="reply-section" id="reply-section-<%= post.postId %>" style="display: none;">
-                <% if (!post.replies || post.replies.length === 0) { %>
+                <% if (!post.replies || post.replies.length===0) { %>
                   <!-- <p>No replies found, be the first to make one!</p> -->
                 <% } else { %>
-                  <% post.replies.forEach(reply => { %>
-                    <div style="width: 1%; height: 5em; left: 10%; top: -5em; position: relative; display: flex; flex-direction: column; background: black; pointer-events: none;">
-                    </div>
-                    <div class="grows" style="position: relative; margin-bottom: -8em; display: flex; flex-direction: column; background: white; top: -5em;">
-                      <div class="grows" style="width: 2.5em; height: 2.5em; left: 10%; top: -2em; position: absolute; background: rgb(255, 255, 255); border-radius: 50%; border: 1px black solid; z-index: 1;">
+                  <% post.replies.forEach(reply=> { %>
+                    <div style="width: 1vw; height: 8vh; left: 10vw; top: -1.5vh; position: relative; display: flex; flex-direction: column; background: black; pointer-events: none;"> </div>
+                    <div class="grows" style="position: relative; margin-bottom: -13.3vh; display: flex; flex-direction: column; background: white; top: -8vh;">
+                      <div class="grows" style="width: 4vw; height: 4vh; left: 12vw; top: 4vh; position: absolute; background: rgb(255, 255, 255); border-radius: 50%; border: 0.1vw black solid; z-index: 1;">
                         <a href="/account/<%= reply.userId %>">
-                          <img src="/images/<%= reply.profilePic %>" class="rounded-circle w-100 h-100" style="object-fit: cover;" alt="profile">
+                          <img src="/images/<%= reply.profilePic %>" class="rounded-circle" alt="profile" style="width: 100%; height: 100%; object-fit: cover;">
                         </a>
                       </div>
-                      <div style="width: 17em; height: 6.25em; left: 17%; top: -1.7em; position: absolute; z-index: 1;">
-                        <span style="color: black; font-size: 1.25em; font-family: Inter; font-weight: 400; word-wrap: break-word">
-                          <%= reply.fname + " " + reply.lname %>-
-                        </span>
-                        <span style="color: black; font-size: 0.75em; font-family: Inter; font-weight: 400; word-wrap: break-word">
-                          <%= reply.description %>
-                        </span>
+                      <div style="width: 13.5vw; height: 10vh; left: 17vw; top: 4.5vh; position: absolute; z-index: 1;">
+                        <span style="color: black; font-size: 2vw; font-family: Inter; font-weight: 400; word-wrap: break-word"><%= reply.fname + " " + reply.lname %>-</span>
+                        <span style="color: black; font-size: 1.2vw; font-family: Inter; font-weight: 400; word-wrap: break-word"><%= reply.description %></span>
                       </div>
-                      <div id="postBox" style="width: 30em; height: 10em; left: 4em; top: -3em; position: absolute; background: rgb(115, 113, 124); border-radius: 19px; border: 1px rgba(13.75, 61.79, 253.94, 0.20) solid;">
-                      </div>
-                      <div id="dots" class="grows" style="position: absolute; left: 60%; top: 2em;">
+                      <div id="postBox" style="width: 32vw; height: 20vh; left: 10vw; top: 1.5vh; position: absolute; background: rgb(115, 113, 124); border-radius: 1.9vw; border: 0.1vw rgba(13.75, 61.79, 253.94, 0.20) solid;"> </div>
+                      <div id="dots" class="grows" style="position: absolute; left: 38vw; top: 9vh;">
                         <div class="dot"></div>
                         <div class="dot"></div>
                         <div class="dot"></div>
                       </div>
                     </div>
-                    <div style="width: 1em; position: relative; background: black; left: 77%; top: -2em; height: 14em;">
-                    </div>
-                    <div style="margin-bottom: 1rem;"></div>
+                    <div style="width: 1.2vw; position: relative; background: black; left: 45vw; top: 4vh; height: 24vh;"> </div>
                   <% }) %>
-                  <div class="grows" style="position: relative; margin-bottom: 6.25em; display: flex; flex-direction: column;">
-                    <div style="width: 13em; height: 1.8em; left: 8%; top: -2.3em; z-index: 2; position: absolute; color: black; font-size: 1.25em; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                  <div class="grows" style="position: relative; margin-bottom: 10vh; display: flex; flex-direction: column;">
+                    <div style="width: 15.7vw; height: 2.9vh; left: 4vw; top: 2.8vh; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
                       <form action="/reply" method="POST">
                         <input type="hidden" id="userId" value="<%= userId %>" name="userId" />
                         <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
                         <input type="hidden" id="replyPostId" value="<%= post.postId %>" name="postId" />
-                        <textarea style="width: 26em; height: 2em; border-radius: 5em; border: 2px black solid; resize: none; overflow: hidden; padding-left: 10px;" placeholder="Comment here" name="description"></textarea>
-                        <div style="width: 4.5em; height: 1.8em; left: 21em; top: 0em; z-index: 2; position: absolute; color: black; font-size: 1.25em; font-family: Inter; font-weight: 400; word-wrap: break-word;">
-                          <button type="submit">=></button>
+                        <textarea style="width: 40.4vw; height: 3.5vh; border-radius: 8vh; border: 0.2vw black solid; resize: none; overflow: hidden; padding-left: 1vw; padding-bottom: 2vw;" placeholder="Comment here" name="description"></textarea>
+                        <div style="width: 1vw; height: 1vh; left: 35vw; top: 0; z-index: 2; position: absolute; color: black; font-size: 2vw; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                          <!-- <button type="submit">Comment</button> -->
                         </div>
                       </form>
                     </div>
-                    <div id="postBox" style="width: 37em; height: 3.2em; left: 6.5%; top: -3.2em; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 3.5em; border: 2px black solid;">
-                    </div>
+                    <div id="postBox" style="width: 45vw; height: 5.1vh; left: 3vw; top: 12.2vh; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 6.5vw; border: 0.2vw black solid;"> </div>
                   </div>
-                  <!-- <div style="margin-bottom: 20rem;"></div> -->
-                <% } %>
-              </span>
               
+              <% } %>
+            </span>
+
                 <% }) %>
                   <% } %>
       </div>
@@ -229,37 +219,37 @@
 
 
         #dots {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5em; /* Adjust spacing as needed */
-        }
+        display: flex;
+        flex-direction: column;
+        gap: 0.8vh; /* Adjust spacing as needed */
+      }
 
-        .dot {
-          width: 0.5em;
-          height: 0.5em;
-          background: #0D0D0D;
-          border-radius: 50%;
-          z-index: 1;
-        }
+      .dot {
+        width: .7vh;
+        height: .7vh;
+        background: #0D0D0D;
+        border-radius: 50%;
+        z-index: 1;
+      }
 
-        .buttons {
-          width: 72%;
-          height: 3.125em;
-          left: 7%;
-          top: 9.7em;
-          position: absolute;
-          opacity: 0.8;
-          background: #D9D9D9;
-          border-radius: 0.7em;
-          transform: translateX(50%) scale(0);
-          transition: transform 1s ease;
-          opacity: 0;
-          pointer-events: none;
-          display: flex;
-          flex-direction: column;
-          align-items: right;
-          justify-content: center;
-        }
+      .buttons {
+        width: 35.5vw;
+        height: 5vh;
+        left: 11vw;
+        top: 21.6vh;
+        position: absolute;
+        opacity: 0.8;
+        background: #D9D9D9;
+        border-radius: 1.1vw;
+        transform: translateX(50%) scale(0); /* Start off screen to the right */
+        transition: transform 1s ease; /* Add transition for sliding */
+        opacity: 0; /* Make it transparent initially */
+        pointer-events: none; /* Prevent interaction when not visible */
+        display: flex; /* Use flexbox */
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center items horizontally */
+        justify-content: center; /* Center items vertically */
+      }
 
 
         .buttons.visible {
@@ -320,47 +310,75 @@
 
     <!-- Message bar -->
     <div id="private-messages">
+
       <h1 id="pm-header">Private Messages</h1>
       <% if (convUsers) { %>
-        <ul class="users list-unstyled">
-          <% convUsers.forEach(user => { %>
-            <div class="position-relative mb-4 d-flex flex-column" style="margin-left: 20px;">
-              <div class="position-absolute" style="width: 90%; height: 3.5em; left: 1%; top: 1%; background: #16316b; box-shadow: 0 0 0 0.5em rgba(0, 0, 0, 0.25); border-radius: 40px; border: 0.15em #fac104 solid;">
-              </div>
-              <div class="grows position-absolute" style="width: 2.5em; height: 2.5em; left: 5%; top: .4em; background: #D9D9D9; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center;">
-                <a href="/account/<%= user.otherUser.userId %>">
-                  <img src="/images/<%= user.otherUser.profilePic %>" class="rounded-circle" style="object-fit: cover; width: 100%; height: 100%;" alt="profile">
-                </a>
-              </div>
-              <div class="position-absolute" style="width: 60%; height: 1.5em; left: 20%; top: .7em;">
-                <a href="/account/<%= user.otherUser.userId %>">
-                  <span class="pm-name" style="font-size: medium;">
-                    <%= user.otherUser.fname + " " + user.otherUser.lname %>
-                  </span>
-                </a>
-              </div>
-              
-              <form action="/getMessagePage" method="GET">
-                <input type="hidden" name="convId" value="<%= user.convId %>" />
-                <button type="submit" class="position-absolute border-0 bg-transparent p-0" style="left: 72%; top: .4em;">
-                  <img src="/images/whiteMail.png" class="grows" alt="Message Icon" style="width: 3em; height: 3em;">
-                </button>
-              </form>
-              <div class="position-absolute fw-bold" style="width: 1em; height: 1em; left: 72%; top: .3em; font-size: 1em; font-family: Inter;">
-                <% if (user.unreadCount > 0) { %>
-                  <p style="color: rgb(255, 196, 0);"><%= user.unreadCount %></p>
-                  <% } else { %>
-                    <p style="color: rgb(255, 255, 255);"><%= user.unreadCount %></p>
-                    <% } %>
+        <ul class="users">
+          <% convUsers.forEach(user=> { %>
+
+            <div style="position: relative; margin-bottom: 2vh; display: flex; flex-direction: column;">
+              <div style="width: 90%; height: 9vh; background: #16316b; box-shadow: 0px 0px 0px .3vw rgba(0, 0, 0, 0.25); border-radius: 15vw; border: 0.15vw #fac104 solid; display: flex; align-items: center; justify-content: space-between; padding: 1vw;">
+                <div style="display: flex; align-items: center;">
+                  <div class="grows" style="width: 3vw; height: 3vw; background: #D9D9D9; border-radius: 50%; overflow: hidden;">
+                    <a href="/account/<%= user.otherUser.userId %>">
+                      <img src="/images/<%= user.otherUser.profilePic %>" class="rounded-circle" alt="profile" style="width: 100%; height: 100%; object-fit: cover;">
+                    </a>
+                  </div>
+                  <div style="margin-left: 1vw;">
+                    <a href="/account/<%= user.otherUser.userId %>">
+                      <span class="pm-name"><%= user.otherUser.fname + " " + user.otherUser.lname %></span>
+                    </a>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center;">
+                  <!-- <div style="width: 2vw; height: 2vh; background: #dbd1d1; z-index: 1;"></div> -->
+                  <form action="/getMessagePage" method="GET" style="margin-left: 1vw;">
+                    <input type="hidden" name="convId" value="<%= user.convId %>" />
+                    <button type="submit" style="border: none; background: none; padding: 0;">
+                      <div style="position: relative;">
+                      <img class="grows" src="/images/whiteMail.png" alt="Message Icon" style="width: 60px; height: 70px;">
+                      <div style="position: absolute; top: 0; width: 15px; height: 15px; font-size: 20px; font-family: Inter; font-weight: bold; word-wrap: break-word; text-align: center;">
+                        <% if (user.unreadCount > 0) { %>
+                          <p style="color: rgb(255, 196, 0);"><%= user.unreadCount %></p>
+                          <% } else { %>
+                            <p style="color: rgb(255, 255, 255);"><%= user.unreadCount %></p>
+                            <% } %>
+                        
+                      </div>
+                    </div>
+                    </button>
+                  </form>
+                  <!-- <div style="width: 2vw; height: 2vh; left: vw; color: black; font-size: 1.2vw; font-family: Inter; font-weight: bold; word-wrap: break-word; text-align: center;">
+                    <%= user.unreadCount %>
+                  </div> -->
+                </div>
               </div>
             </div>
-            <br />
-            <div style="margin-bottom: 2rem;"></div> <!-- Added margin between each user -->
-          <% }) %>
+            
+            
+            <!-- <li class="user-info"> -->
+            <!-- <a href="/account/<%= user.otherUser.userId %>">
+              <img
+                src="/images/<%= user.otherUser.profilePic %>"
+                class="rounded-circle"
+                alt="profile"
+                height="40"
+              />
+              <span>
+                <%= user.otherUser.fname + " " + user.otherUser.lname %>
+              </span>
+            </a>
+            <span> <%= user.unreadCount %> unread messages </span>
+            <form action="/getMessagePage" method="GET">
+              <input type="hidden" name="convId" value="<%= user.convId %>" />
+              <button type="submit" class="btn btn-primary">Message</button>
+            </form> -->
+            <!-- </li> -->
+            <!-- <br /> -->
+            <% }) %>
         </ul>
-      <% } %>
+        <% } %>
     </div>
-    
   </div>
 
   <!-- Resource modal -->
