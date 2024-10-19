@@ -25,7 +25,7 @@
             <%= subject %> Analytics
         </h1>
         <div class="analyticsBtns">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filterModal">
                 <img src="/images/filter.png" alt="Filter" width="40" height="40" />
               </button>
             <a href="/analytics" class="btn btn-secondary">Reset</a>
@@ -85,41 +85,92 @@
     </div>
 
     <!-- Posts section -->
-    <div class="analytics-posts">
-        <h2 class="text-center mt-4">Posts</h2>
-        <div id="feed-content">
-            <% if (!posts || posts.length===0) { %>
-                <h2>No posts found, be the first to make one!</h2>
-                <% } else { %>
-                    <% posts.forEach(post=> { %>
-                        <div class="post">
-                            <div class="card">
-                                <div class="card-header"
-                                    style="background-color: #<%= Math.floor(Math.random() * 16777215).toString(16) %>;">
-                                    <h2>
-                                        <%= post.title %>
-                                    </h2>
-                                    <h4>By:
-                                        <a href="/account/<%= post.userId %>">
-                                            <img src="/images/<%= post.profilePic %>" class="rounded-circle"
-                                                alt="profile" height="40" />
-                                            <span>
-                                                <%= post.fname + " " + post.lname %>
-                                            </span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div class="card-body">
-                                    <p>
-                                        <%= post.description %>
-                                    </p>
-                                </div>
-                            </div>
+    <div id="posts">
+        <div id="header" class="d-flex justify-content-center align-items-center">
+            <% if (posts.length > 0) { %>
+                <img src="/images/leftArrow.png" alt="Account" width="50" onclick="toggleAccountView('resources')">
+                <h1 class="mb-0 ms-5 me-5">Posts</h1>
+                <img src="/images/rightArrow.png" alt="Resources" width="45" onclick="toggleAccountView('resources')">
+            <% } else { %>
+                <img src="/images/leftArrow.png" alt="Account" width="50" onclick="toggleAccountView('resources')">
+                <h1 class="mb-0 ms-5 me-5">No Posts</h1>
+                <img src="/images/rightArrow.png" alt="Resources" width="45" onclick="toggleAccountView('resources')">
+            <% } %>
+        </div>
+        <div id="userPosts">
+            <% posts.forEach(post => { %>
+            <div class="card">
+                <h2 class="ms-3" style="text-align: left;"><%= post.catAbbr + "- " + post.title %></h2>
+                <div class="card-body">
+                    <p><%= post.description %></p>
+                    <div class="d-flex justify-content-end align-items-center me-4">
+                        <div class="d-flex justify-content-end align-items-center me-4">
+                            <a href="/account/<%= post.userId %>" id="userProfile">
+                                <img src="/images/<%= post.profilePic %>" class="rounded-circle" alt="profile" height="40" style="margin-right: 15px;">
+                                <h3 style="display: inline;"><%= post.fname + " " + post.lname %></h3>
+                            </a>
                         </div>
-                        <% }) %>
-                            <% } %>
+                        <div class="d-flex align-items-center me-4">
+                            <button type="button" class="btn btn-link p-0 border-0 me-2">
+                                <img src="/images/comment.png" alt="Comment" width="30" height="30">
+                            </button>
+                            <div class="text-muted small"><%= post.commentCount %> comments</div>
+                        </div>
+                        <div class="d-flex align-items-center me-4">
+                            <button type="submit" id="likeButton" class="btn btn-link p-0 border-0 me-2" onclick="toggleLike(event)">
+                                <input type="hidden" name="postId" value="<%= post.postId %>">
+                                <input type="hidden" name="liked" value="<%= post.liked %>">
+                                <input type="hidden" name="likeCount" value="<%= post.likeCount %>">
+                                <% if (post.liked) { %>
+                                    <img src="/images/likeClicked.png" alt="Like" width="30" height="30">
+                                <% } else { %>
+                                    <img src="/images/likeUnclicked.png" alt="Like" width="30" height="30">
+                                <% } %>
+                            </button>
+                            <div class="text-muted small"><%= post.likeCount %> likes</div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            
+            <% }); %>
         </div>
     </div>
+    <!-- Reviews section -->
+    <div id="reviews" style="display: none;">
+        <div id="header" class="d-flex justify-content-center align-items-center">
+            <% if (posts.length > 0) { %>
+            <img src="/images/leftArrow.png" alt="Account" width="50" onclick="toggleAccountView('posts')">
+            <h1 class="mb-0 ms-5 me-5">Reviews</h1>
+            <img src="/images/rightArrow.png" alt="Resources" width="45" onclick="toggleAccountView('posts')">
+            <% } else { %>
+                <img src="/images/leftArrow.png" alt="Account" width="50" onclick="toggleAccountView('posts')">
+                <h1 class="mb-0 ms-5 me-5">No Reviews</h1>
+                <img src="/images/rightArrow.png" alt="Resources" width="45" onclick="toggleAccountView('posts')">
+            <% } %>
+        </div>
+        <div id="userReviews">
+            <% reviews.forEach(review => { %>
+            <div class="card">
+                <div class="d-flex justify-content-between">
+                    <h2 class="ms-3"><%= review.title %></h2>
+                    <h2 class="me-5">Review rating: <%= review.rating %></h2>
+                </div>
+                <div class="card-body">
+                    <p><%= review.description %></p>
+                    <em>Recommended: <%= review.recommended %></em>
+                    <div class="d-flex justify-content-end align-items-center me-4">
+                        <a href="/account/<%= review.userId %>" id="userProfile">
+                            <img src="/images/<%= review.profilePic %>" class="rounded-circle" alt="profile" height="40" style="margin-right: 15px;">
+                            <h3 style="display: inline;"><%= review.fname + " " + review.lname %></h3>
+                        </a>
+                    </div>
+                </div>    
+            </div>    
+            <% }); %>
+        </div>
+    </div>
+
 
     <!-- Filter modal -->
     <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">

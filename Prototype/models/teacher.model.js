@@ -72,7 +72,7 @@ function getAmountofPosts(catName, filterStartDate, filterEndDate) {
 
 function getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser) {
     let sql = `
-    SELECT p.*, u.email, u.profilePic, u.fname, u.lname, u.userId
+    SELECT p.*, u.email, u.profilePic, u.fname, u.lname, u.userId, c.catAbbr
     FROM posts p
     JOIN category c ON p.catId = c.catId
     JOIN users u ON p.userId = u.userId
