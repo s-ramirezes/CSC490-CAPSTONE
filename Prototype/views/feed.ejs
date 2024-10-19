@@ -42,17 +42,17 @@
                   </button>
               </div>
           
-      </div>
+          </div>
       
         <% if (role==='teacher' && subject === catName ) { %>
           <div>
-            <button type="button" id="addResourceButton" class="grows btn btn-secondary" data-bs-toggle="modal" data-bs-target="#resourceModal">
+            <button type="button" id="addResourceButton" class="grows btn btn-secondary" style="display: none;" data-bs-toggle="modal" data-bs-target="#resourceModal">
               Add Resource
             </button>
           </div>
           <% } %>
             <div>
-              <button type="button" id="postButton" class="grows btn btn-secondary" data-bs-toggle="modal"
+              <button type="button" id="postButton" class="grows btn btn-secondary" style="margin-right: 60px;" data-bs-toggle="modal"
                 data-bs-target="#postModal">
                 Post
               </button>

@@ -63,8 +63,10 @@ function toggleView(view) {
     }
     if (view === 'resources') {
         document.getElementById('postButton').style.display = 'none';
+        document.getElementById('addResourceButton').style.display = 'block';
     } else {
         document.getElementById('postButton').style.display = 'block';
+        document.getElementById('addResourceButton').style.display = 'none';
     }
 }
 
