@@ -158,9 +158,12 @@ function updateProfilePic(fileName, userId) {
     return db.run(sql, params);
 }
 
-function postReview(reviewerId, revieweeId, title, description, rating, recommended){
-    const sql = 'INSERT INTO reviews (reviewerId, revieweeId, title, description, rating, recommended) VALUES (?, ?, ?, ?, ?, ?)';
-    const params = [reviewerId, revieweeId, title, description, rating, recommended];
+function postReview(reviewerId, revieweeId, title, description, rating, recommended, subject, courseId){
+    const sql = `
+    INSERT INTO reviews 
+    (reviewerId, revieweeId, title, description, rating, recommended, subject, courseId) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    const params = [reviewerId, revieweeId, title, description, rating, recommended, subject, courseId];
     return db.run(sql, params);
 }
 

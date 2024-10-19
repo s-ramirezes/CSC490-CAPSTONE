@@ -34,7 +34,7 @@
         <button id="viewResourcesButton" class="btn btn-secondary" onclick="toggleView('resources')">
           View Resources
         </button>
-        <% if (role==='teacher' ) { %>
+        <% if (role==='teacher' && subject === catName ) { %>
           <div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resourceModal">
               Add Resource
@@ -135,7 +135,7 @@
                                   data-bs-target="#editModal"
                                   onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
                                 <% } %>
-                                  <% if (userId===post.userId || role==='teacher' || role==='moderator' ) { %>
+                                  <% if (userId===post.userId || role==='teacher' && subject === catName|| role==='moderator' ) { %>
                                       <img class="grows" src="/images/delete.png" style="cursor: pointer me-4;"
                                         alt="deletePost" width="35" height="35" data-bs-toggle="modal"
                                         data-bs-target="#deletePostModal"
@@ -343,7 +343,7 @@
                         <img src="/images/download.png" class="grows" alt="Download" width="50" height="50" />
                       </button>
                     </form>
-                    <% if (role==='teacher' ) { %>
+                    <% if (role==='teacher' && subject === catName) { %>
                       <form action="/deleteResource" method="POST" class="d-inline">
                         <input type="hidden" name="resourceId" value="<%= resource.resourceId %>" />
                         <input type="hidden" name="catId" value="<%= catId %>" />

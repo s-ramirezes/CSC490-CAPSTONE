@@ -28,16 +28,25 @@ function promoteToTutor(userId) {
 }
 
 
-function getLeaderboard(catName) {
-    const sql = `
+function getLeaderboard(catName, filterStartDate, filterEndDate) {
+    let sql = `
     SELECT u.userId, u.profilePic, u.fname, u.lname, u.role, COUNT(p.postId) AS postCount
     FROM users u
     JOIN posts p ON u.userId = p.userId
     JOIN category c ON p.catId = c.catId
-    WHERE c.catName = ? AND u.role != 'teacher'
-    ORDER BY postCount DESC
+    WHERE c.catName = ? AND u.role != 'teacher'`;
+
+    const params = [catName];
+
+    if (filterStartDate || filterEndDate) {
+        sql += ` AND p.postTime BETWEEN ? AND ?`;
+        params.push(filterStartDate, filterEndDate);
+    }
+
+    sql += `ORDER BY postCount DESC
     LIMIT 10`;
-    return db.all(sql, ...[catName]);
+
+    return db.all(sql, ...params);
 }
 
 function getAmountofPosts(catName, filterStartDate, filterEndDate) {
@@ -51,7 +60,7 @@ function getAmountofPosts(catName, filterStartDate, filterEndDate) {
 
     const params = [catName];
 
-    if (filterStartDate && filterEndDate) {
+    if (filterStartDate || filterEndDate) {
         sql += ` AND p.postTime BETWEEN ? AND ?`;
         params.push(filterStartDate, filterEndDate);
     }
@@ -71,7 +80,7 @@ function getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterU
     
     const params = [catName];
 
-    if (filterStartDate && filterEndDate) {
+    if (filterStartDate|| filterEndDate) {
         sql += ` AND p.postTime BETWEEN ? AND ?`;
         params.push(filterStartDate, filterEndDate);
     }
@@ -87,6 +96,70 @@ function getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterU
     return db.all(sql, ...params);
 }
 
+function getReviewLeaderboard(catName, filterStartDate, filterEndDate) {
+    let sql = `
+    SELECT u.userId, u.profilePic, u.fname, u.lname, u.role, COUNT(r.reviewId) AS reviewCount
+    FROM users u
+    JOIN reviews r ON u.userId = r.revieweeId
+    WHERE r.subject = ? AND u.role != 'teacher'`;
+
+    const params = [catName];
+
+    if (filterStartDate || filterEndDate) {
+        sql += ` AND r.reviewTime BETWEEN ? AND ?`;
+        params.push(filterStartDate, filterEndDate);
+    }
+
+    sql += ` ORDER BY reviewCount DESC LIMIT 10`;
+
+    return db.all(sql, ...params);
+}
+
+function getAmountofReviews(catName, filterStartDate, filterEndDate) {
+    let sql = `
+    SELECT 
+        r.courseId, 
+        COUNT(r.reviewId) AS reviewCount
+    FROM reviews r
+    WHERE r.subject = ?`;
+
+    const params = [catName];
+
+    if (filterStartDate || filterEndDate) {
+        sql += ` AND r.reviewTime BETWEEN ? AND ?`;
+        params.push(filterStartDate, filterEndDate);
+    }
+
+    sql += ` GROUP BY r.courseId`;
+
+    return db.all(sql, ...params);
+}
+
+
+function getReviews(catName, filterStartDate, filterEndDate, filterCourse, filterUser){
+    let sql = `
+    SELECT r.*, u.email, u.profilePic, u.fname, u.lname, u.userId
+    FROM reviews r
+    JOIN users u ON r.revieweeId = u.userId
+    WHERE r.subject = ?`;
+    
+    const params = [catName];
+
+    if (filterStartDate|| filterEndDate) {
+        sql += ` AND r.reviewTime BETWEEN ? AND ?`;
+        params.push(filterStartDate, filterEndDate);
+    }
+    if (filterCourse && filterCourse !== 'All' ) {
+        sql += ` AND r.courseId = ?`;
+        params.push(filterCourse);
+    }
+    if (filterUser && filterUser !== 'All') {
+        sql += ` AND r.revieweeId = ?`;
+        params.push(filterUser);
+    }
+
+    return db.all(sql, ...params);
+}
 
 module.exports = {
     uploadResource,
@@ -96,4 +169,7 @@ module.exports = {
     getLeaderboard,
     getAmountofPosts,
     getPosts,
+    getReviewLeaderboard,
+    getAmountofReviews,
+    getReviews
 };

@@ -67,6 +67,7 @@
     background-color: white;
     border-radius: 20px;
     padding-top: 16px;
+    border: 3px solid #fac104;
 }
 
 .login-button {
@@ -143,23 +144,9 @@
 .backBtn {
     background-color: grey;
     border-radius: 20px;
-    border-color: grey;
     color: white;
     height: 40px;
-}
-
-/*    forgot page      */
-
-.forgot-title{
-    margin-bottom: 40px;
-}
-
-.forgot-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    border: 3px solid #fac104;
 }
 
 /*               */

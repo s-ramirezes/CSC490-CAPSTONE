@@ -73,9 +73,11 @@ function reviewPage(req, res) {
     try {
         const revieweeId = req.body.userId2;
         const convId = req.body.convId;
+        const subjects = model.getAllSubjects();
         res.render("reviewPage", {
             revieweeId: revieweeId,
             convId: convId,
+            subjects: subjects,
         });
     } catch (err) {
         console.error("Error while rendering review page: " + err);
@@ -87,10 +89,12 @@ function makeReview(req, res) {
         const reviewerId = req.session.userId;
         const revieweeId = req.body.revieweeId;
         const title = req.body.title;
+        const subject = req.body.subject;
+        const courseId = req.body.courseId;
         const description = req.body.description;
         const rating = req.body.rating;
         const recommended = req.body.recommended;
-        const review = model.postReview(reviewerId, revieweeId, title, description, rating, recommended);
+        const review = model.postReview(reviewerId, revieweeId, title, description, rating, recommended, subject, courseId);
         const convId = req.body.convId;
         res.redirect("/modMessages?convId=" + convId);
     } catch (err) {

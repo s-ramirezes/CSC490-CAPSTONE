@@ -72,7 +72,7 @@ function promoteToTutor(req, res) {
     }
 }
 
-function getAnalytics(req, res){
+function getAnalytics(req, res) {
     try {
         const userId = req.session.userId;
         const catName = req.session.subject;
@@ -82,19 +82,22 @@ function getAnalytics(req, res){
         const filterCourse = req.query.courseId;
         const filterUser = req.query.userId;
 
-        console.log(filterCourse);
-        console.log(filterUser);
-        console.log(filterStartDate + ' ' + filterEndDate );
+        // for reviews
+        const reviewLeaderboard = model.getReviewLeaderboard(catName, filterStartDate, filterEndDate);
+        const reviewCount = model.getAmountofReviews(catName, filterStartDate, filterEndDate);
+        const reviews = model.getReviews(catName, filterStartDate, filterEndDate, filterCourse, filterUser);
 
-
+        // for posts
         const leaderboard = model.getLeaderboard(catName, filterStartDate, filterEndDate);
         const postCount = model.getAmountofPosts(catName, filterStartDate, filterEndDate);
         const posts = model.getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser);
-        res.render("teacherAnalytics", {leaderboard, postCount, posts});
+
+        res.render("teacherAnalytics", { leaderboard, postCount, posts, reviewLeaderboard, reviewCount, reviews });
     } catch (err) {
         console.error("Error while rendering teacher analytics page: " + err.message);
     }
 }
+
 
 module.exports = {
     upload,

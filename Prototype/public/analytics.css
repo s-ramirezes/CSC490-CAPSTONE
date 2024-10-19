@@ -24,9 +24,29 @@
 
 }
 
-.filterBtns {
+.filterBtn {
+    background-color: transparent;
+    border-color: black;
+    border-radius: 10px;
+}
+
+.analytics-table {
+}
+
+.analytics-table thead th {
+    background-color: #16316b;
+    color: white;
+    text-align: center; 
+}
+
+.analytics-table thead {
+    border-radius: 20px;
+}
+
+.analyticsBtns {
     display: flex;
     gap: 8px;
     justify-content: center;
+    align-items: center;
     color: white;
 }
