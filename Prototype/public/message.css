@@ -144,11 +144,14 @@ header {
 .search {
     display: flex;
     justify-content: center;
+    margin-bottom: 16px;
+    /* background-color: #556B2F; */
 }
 
 .user-card{
     border-bottom: 2px solid lightgrey;
     margin-bottom: 8px;
+    /* background-color: #07394b; */
 }
 
 .user-card-info {

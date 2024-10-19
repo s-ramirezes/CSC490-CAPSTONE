@@ -21,7 +21,7 @@ function upload(req, res) {
         const title = req.body.title;
         const url = req.body.url;
         model.uploadResource(userId, catId, title, fileName, url);
-        res.redirect("/category/" + catId);
+        res.redirect(req.get('referer'));
         // const result = model.upload(req.file, req.body);
         // if (result === "success") {
         //     res.redirect("/teacher/upload");
@@ -46,7 +46,7 @@ function deleteResource(req, res) {
         });
 
         model.deleteResource(resourceId);
-        res.redirect("/category/" + catId);
+        res.redirect(req.get('referer'));
     } catch (err) {
         console.error("Error while deleting resource: " + err.message);
     }

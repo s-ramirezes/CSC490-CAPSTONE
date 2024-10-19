@@ -376,6 +376,17 @@ function filterPosts(req, res) {
     }
 }
 
+function updateBio(req, res) {
+    try {
+        const userId = req.session.userId;
+        const bio = req.body.bio;
+        model.updateBio(userId, bio);
+        res.redirect("/account/" + userId);
+    } catch (err) {
+        console.error("Error while updating bio:  " + err.message);
+    }
+}
+
 
 module.exports = {
     homePage,
@@ -399,4 +410,5 @@ module.exports = {
     editPost,
     editReply,
     filterPosts,
+    updateBio
 };

@@ -291,6 +291,7 @@ body {
     color: white; /* Default text color */
     font-family: Inter; 
     font-weight: 400;
+    font-size: 20px;
     transition: color 0.3s ease; /* Smooth transition for color change */
     cursor: pointer; /* Change cursor to pointer to indicate interactivity */
 }
@@ -309,3 +310,20 @@ body {
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
     z-index: 1; /* Ensure it is above other content */
 }
+
+.grows {
+    display: inline-block;
+    /* Ensure the element behaves like a block for scaling */
+
+  }
+
+  .grows:hover {
+    transform: scale(1.1);
+    /* Increase size by 20% */
+    transform-origin: center;
+    /* Center the scaling */
+    transition: transform 0.3s ease;
+    /* Smooth transition */
+    z-index: 1;
+  }
+  

@@ -239,6 +239,12 @@ function filterPosts(catId, userId, courseId, title, startDate, endDate){
     return db.all(sql, ...params);
 }
 
+function updateBio(userId, bio){
+    const sql = 'UPDATE users set bio = ? WHERE userId = ?';
+    const params = [bio, userId];
+    return db.run(sql, params);
+}
+
 // function getUnreadMessages(convId, userId) {
 //     const sql = `
 //         SELECT m.messageId, m.description, ms.isRead
@@ -278,4 +284,5 @@ module.exports = {
     editPost,
     editReply,
     filterPosts,
+    updateBio
 };

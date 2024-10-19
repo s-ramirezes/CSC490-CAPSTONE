@@ -23,9 +23,10 @@
         <%= category.catName %> Feed
       </h1>
       <!-- </div> -->
+       
       <div class="nav-buttons">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
-          Filter
+          <img src="/images/filter.png" alt="Filter" width="40" height="40" />
         </button>
         <button id="viewPostsButton" class="btn btn-secondary" onclick="toggleView('posts')">
           View Posts
@@ -48,8 +49,9 @@
             </div>
       </div>
 
-      <div id="feed-content" style="position: relative;">
+      <div id="feed-content" style="position: relative; ">
         <% if (!posts || posts.length===0) { %>
+          <br>
           <h2>No posts found, be the first to make one!</h2>
           <% } else { %>
             <% posts.forEach(post=> { %>
@@ -85,16 +87,18 @@
                       <% if (userId !==post.userId) { %>
                         <form action="/createConv" method="POST" class="ms-4">
                           <input type="hidden" id="userId2" value="<%= post.userId %>" name="userId2" />
-                          <button type="submit" class="btn btn-link p-0 border-0 me-2">
-                            Message
+                          <button type="submit" class="grows btn btn-link p-0 border-0 me-2">
+                            <img src="/images/message.png" alt="Message" width="30" height="30" />
                           </button>
                         </form>
                         <% } %>
+                    </div> 
+                      <div class="d-flex align-items-center me-4">
                           <button type="button" class="grows btn btn-link p-0 border-0 me-2"
                             onclick="toggleReplySection('<%= post.postId %>')">
                             <img src="/images/comment.png" alt="Comment" width="30" height="30" />
                           </button>
-                          <div class="text-muted small">
+                          <div class="text-muted small flex-grow-1" style="white-space: nowrap;">
                             <%= post.commentCount %> comments
                           </div>
                     </div>
@@ -110,7 +114,7 @@
                             <img src="/images/likeUnclicked.png" alt="Like" width="30" height="30" />
                             <% } %>
                       </button>
-                      <div class="text-muted small">
+                      <div class="text-muted small" style="white-space: nowrap;">
                         <%= post.likeCount %> likes
                       </div>
                     </div>
@@ -132,15 +136,10 @@
                                   onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
                                 <% } %>
                                   <% if (userId===post.userId || role==='teacher' || role==='moderator' ) { %>
-                                    <form action="/deleteUserPost" method="POST">
-                                      <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
-                                      <input type="hidden" name="postId" value="<%= post.postId %>" />
                                       <img class="grows" src="/images/delete.png" style="cursor: pointer me-4;"
-                                        alt="editPost" width="35" height="35" data-bs-toggle="modal"
-                                        data-bs-target="#editModal"
-                                        onclick="setEditModalValues('<%= post.postId %>', '<%= post.title %>', '<%= post.courseId %>', '<%= post.description %>')">
-
-                                    </form>
+                                        alt="deletePost" width="35" height="35" data-bs-toggle="modal"
+                                        data-bs-target="#deletePostModal"
+                                        onclick="setDeletePostModalValues('<%= post.postId %>')">
                                     <% } %>
 
                             </div>
@@ -164,7 +163,7 @@
 
               <!-- <div class="replies"> -->
               <!-- Dynamically calculate height -->
-              <span class="reply-section" id="reply-section-<%= post.postId %>" style="display: none;">
+              <span class="reply-section flex-grow-1" id="reply-section-<%= post.postId %>" style="display: none;">
                 <% if (!post.replies || post.replies.length===0) { %>
                   <!-- <p>No replies found, be the first to make one!</p> -->
                   <% } else { %>
@@ -187,11 +186,11 @@
                         <div
                           style="width: 335px; height: 100px; left: 220px; top: 145px; position: absolute; z-index: 1;">
                           <span
-                            style="color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
-                            <%= reply.fname + " " + reply.lname %>-
+                            style="color: rgb(255, 254, 254); font-size: 24px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+                            <%= reply.fname + " " + reply.lname %>:
                           </span>
                           <span
-                            style="color: black; font-size: 12px; font-family: Inter; font-weight: 400; word-wrap: break-word">
+                            style="color: rgb(255, 255, 255); font-size: 18px; font-family: Inter; font-weight: 400; word-wrap: break-word">
                             <%= reply.description %>
                           </span>
                         </div>
@@ -242,8 +241,9 @@
                             style="width: 604px; height: 51px; left: 130px; top: 120px; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px; border: 2px black solid">
                           </div>
                         </div>
-              </span>
-              <% } %>
+                      <% } %>
+                    </span>
+              
 
 
                 <% }) %>
@@ -255,21 +255,6 @@
 
 
       <style>
-        .grows {
-          display: inline-block;
-          /* Ensure the element behaves like a block for scaling */
-
-        }
-
-        .grows:hover {
-          transform: scale(1.1);
-          /* Increase size by 20% */
-          transform-origin: center;
-          /* Center the scaling */
-          transition: transform 0.3s ease;
-          /* Smooth transition */
-          z-index: 1;
-        }
 
 
         #postBox:hover,
@@ -335,28 +320,27 @@
 
       <!-- Resource feed -->
       <div id="resources-content" style="display: none">
-        <h2>Resources</h2>
+        <!-- <h2>Resources</h2> -->
         <% if (!resources || resources.length===0) { %>
+          <br>
           <h2>No resources found, be the first to make one!</h2>
           <% } else { %>
-            <% resources.forEach(resource=> { %>
-              <div class="resource">
-                <div class="card">
-                  <div class="card-header">
-                    <h2>
-                      <%= resource.title %>
-                    </h2>
-                  </div>
+            <div class="resource-tiles"> <!-- Added a container for tiles -->
+              <% resources.forEach(resource=> { %>
+                <div class="resource-tile"> <!-- Changed to a tile structure -->
+                  <h2>
+                    <%= resource.title %>
+                  </h2>
                   <div class="card-body d-flex justify-content-between align-items-center">
                     <div class="flex-grow-1 text-center">
-                      <a href="https://<%= resource.url %>" class="btn btn-link">
+                      <a href="https://<%= resource.url %>">
                         <%= resource.url %>
                       </a>
                     </div>
                     <form action="/download/<%= resource.fileName %>" method="get" class="d-inline">
                       <input type="hidden" name="fileName" value="<%= resource.fileName %>" />
-                      <button type="submit" class="btn btn-primary">
-                        Download
+                      <button type="submit" style="border: none; background: none;">
+                        <img src="/images/download.png" class="grows" alt="Download" width="50" height="50" />
                       </button>
                     </form>
                     <% if (role==='teacher' ) { %>
@@ -364,18 +348,18 @@
                         <input type="hidden" name="resourceId" value="<%= resource.resourceId %>" />
                         <input type="hidden" name="catId" value="<%= catId %>" />
                         <input type="hidden" name="fileName" value="<%= resource.fileName %>" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" style="border: none; background: none;">
+                          <img src="/images/delete.png" class="grows" alt="Delete" width="45" height="45" />
+                        </button>
                       </form>
-                      <% } %>
+                    <% } %>
                   </div>
                 </div>
-              </div>
-              <br>
               <% }) %>
-                <% } %>
+            </div>
+          <% } %>
       </div>
     </div>
-
     <!-- Message bar -->
     <div id="private-messages">
 
@@ -395,7 +379,7 @@
                     class="rounded-circle" alt="profile" style="width: 100%; height: 100%; object-fit: cover;">
                 </a>
               </div>
-              <div style="width: 220px; height: 30px; left: 77px; top: 34px; position: absolute;">
+              <div style="width: 220px; height: 30px; left: 77px; top: 30px; position: absolute;">
                 <a href="/account/<%= user.otherUser.userId %>">
 
                   <span class="pm-name">
@@ -403,9 +387,7 @@
                   </span>
                 </a>
               </div>
-              <div
-                style="width: 17px; height: 16px; left: 264px; top: 21px; position: absolute; background: #dbd1d1; z-index: 1;">
-              </div>
+            
               <form action="/getMessagePage" method="GET">
                 <input type="hidden" name="convId" value="<%= user.convId %>" />
                 <button type="submit"
@@ -415,28 +397,15 @@
               </form>
 
               <div
-                style="width: 17px; height: 17px; left: 266px; top: 21px; position: absolute; z-index: 1; color: black; font-size: 12px; font-family: Inter; font-weight: bold; word-wrap: break-word">
-                <%= user.unreadCount %> <!-- get rid of box make yellow number when 0> -->
+                style="width: 17px; height: 17px; left: 262px; top: 12px; position: absolute; z-index: 1; font-size: 20px; font-family: Inter; font-weight: bold; word-wrap: break-word">
+                <% if (user.unreadCount > 0) { %>
+                  <p style="color: rgb(255, 196, 0);"><%= user.unreadCount %></p>
+                  <% } else { %>
+                    <p style="color: rgb(255, 255, 255);"><%= user.unreadCount %></p>
+                    <% } %>
               </div>
             </div>
-            <!-- <li class="user-info"> -->
-            <!-- <a href="/account/<%= user.otherUser.userId %>">
-              <img
-                src="/images/<%= user.otherUser.profilePic %>"
-                class="rounded-circle"
-                alt="profile"
-                height="40"
-              />
-              <span>
-                <%= user.otherUser.fname + " " + user.otherUser.lname %>
-              </span>
-            </a>
-            <span> <%= user.unreadCount %> unread messages </span>
-            <form action="/getMessagePage" method="GET">
-              <input type="hidden" name="convId" value="<%= user.convId %>" />
-              <button type="submit" class="btn btn-primary">Message</button>
-            </form> -->
-            <!-- </li> -->
+            
             <br />
             <% }) %>
         </ul>
@@ -634,6 +603,31 @@
     </div>
   </div>
 
+  <!-- Delete Post Modal-->
+
+  <div class="modal fade" id="deletePostModal" tabindex="-1" aria-labelledby="deletePostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deletePostModalLabel">Confirm Deletion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body
+        ">Are you sure you want to delete this post?</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <form action="/deleteUserPost" method="POST">
+            <input type="hidden" id="catId" value="<%= catId %>" name="catId" />
+            <input type="hidden" id="deletePostId" name="postId" />
+            <button type="submit" class="btn btn-primary">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Filter modal -->
 <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -752,6 +746,11 @@
       document.getElementById("flagPostId").value = postId;
     }
 
+    function setDeletePostModalValues(postId, catId) {
+      document.getElementById("deletePostId").value = postId;
+      // document.getElementById("catId").value = catId;
+    }
+
     function toggleButtons(buttonId) {
       const buttonDiv = document.getElementById(buttonId); // Get the specific buttons div
       const isVisible = buttonDiv.classList.contains("visible"); // Check current visibility
@@ -771,6 +770,11 @@
       }
     }
 
+    function confirmDelete(postId) {
+      if (confirm('Are you sure you want to delete this post?')) {
+        document.getElementById('deleteForm-' + postId).submit();
+      }
+    }
   </script>
 </body>
 

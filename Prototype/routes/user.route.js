@@ -31,6 +31,7 @@ module.exports = function (imageUpload) {
     router.post("/editPost", userController.editPost);
     router.post("/editReply", userController.editReply);
     router.post("/searchSubject", userController.searchSubject);
+    router.post("/updateBio", userController.updateBio);
 
     return router; 
 }

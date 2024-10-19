@@ -87,3 +87,60 @@
         inset 2px 0 0 #fac104, 
         0 2px 0 #fac104;   
 }
+
+.nav-buttons {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: rgb(119, 98, 71); */
+    margin-left: 5%;
+    width: 80%;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100px; /* Adjust width to fit the button */
+    background: black;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.nav-buttons button {
+    position: relative;
+    z-index: 1;
+}
+
+.resource-tiles {
+    display: flex;
+    margin-top: 30px;
+    flex-wrap: wrap; /* Allow tiles to wrap to the next line */
+    gap: 10px; /* Space between tiles */
+  }
+
+  .resource-tile {
+    background: #16316b; /* Light background for tiles */
+    border: 1px solid #dee2e6; /* Border for tiles */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Padding inside tiles */
+    width: auto; /* Adjust width for 4 tiles per row */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s; /* Smooth scaling on hover */
+    margin-left: 30px;
+    color: white;
+  }
+
+  .resource-tile a:link {
+    color: white; /* White text color */
+  }
+
+.resource-tile a:hover {
+    color: #fac104; /* Yellow text color on hover */
+}
+
+  .resource-tile:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
