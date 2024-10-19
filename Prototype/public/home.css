@@ -327,3 +327,18 @@ body {
     z-index: 1;
   }
   
+  .btnLook {
+    background-color: #16316b;
+    color: #fac104;
+  }
+
+  .subHeader{
+    align-items: center;
+    background: #16316b;
+    border: 3px solid #fac104;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 40px;
+ }
+  

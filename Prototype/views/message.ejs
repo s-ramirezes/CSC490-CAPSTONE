@@ -22,7 +22,7 @@
    
     <div class="columns">
         <div id="feed">
-            <h1>Users</h1>
+            <h1 class="subHeader">Users</h1>
 
             <div class="search">
                         <nav class="navbar search">
@@ -32,7 +32,7 @@
                                     <input class="form-control me-2" name="email"
                                         type="text" placeholder="Search by email"
                                         aria-label="Search">
-                                    <button class="btn btn-outline-success"
+                                    <button class="btnLook btn btn-secondary"
                                         type="submit">Search</button>
                                 </form>
                             </div>
@@ -41,6 +41,7 @@
             <% if (users.length === 0) { %>
                 <h2>No users found</h2>
             <% } %>
+            <div class="userBox">
             <% users.forEach(user => { %>
             <div class="user-card">
                 <div class="user-card-info">
@@ -80,16 +81,17 @@
                 </div>
             </div>
             <% }); %>
+            </div>
         </div>
             <!--  -->
             <div id="private-messages">
 
-                <h1 id="pm-header">Private Messages</h1>
+                <h1 class="subHeader">Private Messages</h1>
                 <% if (convUsers) { %>
                   <ul class="users">
                     <% convUsers.forEach(user=> { %>
           
-                      <div style=" position: relative; margin-bottom: 80px; display: flex; flex-direction: column;">
+                      <div class="grows" style=" position: relative; margin-bottom: 80px; display: flex; flex-direction: column;">
                         <div
                           style="width: 351px; height: 75px; left: 7px; top: 7px; position: absolute; background: #16316b; box-shadow: 0px 0px 0px 7px rgba(0, 0, 0, 0.25); border-radius: 138px; border: 3px #fac104 solid">
                         </div>

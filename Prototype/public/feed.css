@@ -93,9 +93,64 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* background-color: rgb(119, 98, 71); */
-    margin-left: 5%;
+    background-color: rgba(10, 14, 71, 0.815);
+    border: 1px solid #fac104;
+    margin-left: 11.5%;
     width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#viewPostsButton {
+    background-color: #16316b;
+    color: #fac104;
+    float: left;
+}
+
+#viewResourcesButton {
+    background-color: #16316b;
+    color: #fac104;
+    float: right;
+}
+
+#addResourceButton {
+    background-color: #16316b;
+    color: #fac104;
+}
+
+#postButton {
+    background-color: #16316b;
+    color: #fac104;
+}
+
+
+#viewPosts {
+    float: left;
+    /* background-color: wheat; */
+    padding: 10px;
+}
+
+#viewResources {
+    float: right;
+    /* background-color: wheat; */
+    padding: 10px;
+}
+
+/* Add this to your existing CSS file */
+
+.btn_bg {
+    background-color: #fac104; /* Background color for the sliding effect */
+    height: 60px; /* Height of the background */
+    width: 125px; /* Width for the active button */
+    position: absolute; /* Positioning for sliding effect */
+    top: 0; /* Align to the top of the buttons */
+    transition: margin-left 0.5s ease, width 0.5s ease; /* Smooth transition */
+    border-radius: 5px; /* Rounded corners */
+}
+
+
+.btn_group {
+    position: relative; /* Ensure the background is positioned relative to this */
 }
 
 .slider {

@@ -25,34 +25,43 @@
       <!-- </div> -->
        
       <div class="nav-buttons">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+        <button type="button" class="grows btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filterModal">
           <img src="/images/filter.png" alt="Filter" width="40" height="40" />
         </button>
-        <button id="viewPostsButton" class="btn btn-secondary" onclick="toggleView('posts')">
-          View Posts
-        </button>
-        <button id="viewResourcesButton" class="btn btn-secondary" onclick="toggleView('resources')">
-          View Resources
-        </button>
+        
+          <div class="btn_group">
+              <div class="btn_bg"></div> <!-- Background for sliding effect -->
+              <div id="viewPosts" class="btn_one active"> 
+                  <button id="viewPostsButton" class="grows btn btn-secondary" onclick="toggleView('posts'); toggleBackground('posts')">
+                      View Posts
+                  </button>
+              </div>
+              <div id="viewResources" class="btn_two"> 
+                  <button id="viewResourcesButton" class="grows btn btn-secondary" onclick="toggleView('resources'); toggleBackground('resources')">
+                      View Resources
+                  </button>
+              </div>
+          
+      </div>
+      
         <% if (role==='teacher' && subject === catName ) { %>
           <div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#resourceModal">
+            <button type="button" id="addResourceButton" class="grows btn btn-secondary" data-bs-toggle="modal" data-bs-target="#resourceModal">
               Add Resource
             </button>
           </div>
           <% } %>
             <div>
-              <button type="button" id="postButton" class="btn btn-primary" data-bs-toggle="modal"
+              <button type="button" id="postButton" class="grows btn btn-secondary" data-bs-toggle="modal"
                 data-bs-target="#postModal">
                 Post
               </button>
             </div>
       </div>
 
-      <div id="feed-content" style="position: relative; ">
+      <div id="feed-content" style="position: relative; top: -70px;">
         <% if (!posts || posts.length===0) { %>
-          <br>
-          <h2>No posts found, be the first to make one!</h2>
+          <h2 style="margin-top: 100px;">No posts found, be the first to make one!</h2>
           <% } else { %>
             <% posts.forEach(post=> { %>
               <div class="grows"
@@ -319,7 +328,7 @@
 
 
       <!-- Resource feed -->
-      <div id="resources-content" style="display: none">
+      <div id="resources-content" style="display: none; margin-left: 40px;">
         <!-- <h2>Resources</h2> -->
         <% if (!resources || resources.length===0) { %>
           <br>
@@ -368,7 +377,7 @@
         <ul class="users">
           <% convUsers.forEach(user=> { %>
 
-            <div style=" position: relative; margin-bottom: 80px; display: flex; flex-direction: column;">
+            <div class="grows" style=" position: relative; margin-bottom: 80px; display: flex; flex-direction: column;">
               <div
                 style="width: 351px; height: 75px; left: 7px; top: 7px; position: absolute; background: #16316b; box-shadow: 0px 0px 0px 7px rgba(0, 0, 0, 0.25); border-radius: 138px; border: 3px #fac104 solid">
               </div>
@@ -416,7 +425,7 @@
   <!-- Resource modal -->
   <div class="modal fade" id="resourceModal" tabindex="-1" aria-labelledby="resourceModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div id="squiggle" class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="postModalLabel">Add a resource</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -441,7 +450,7 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btnLook btn btn-success">Submit</button>
           </div>
         </form>
       </div>
@@ -748,25 +757,24 @@
 
     function setDeletePostModalValues(postId, catId) {
       document.getElementById("deletePostId").value = postId;
-      // document.getElementById("catId").value = catId;
     }
 
     function toggleButtons(buttonId) {
-      const buttonDiv = document.getElementById(buttonId); // Get the specific buttons div
-      const isVisible = buttonDiv.classList.contains("visible"); // Check current visibility
+      const buttonDiv = document.getElementById(buttonId); 
+      const isVisible = buttonDiv.classList.contains("visible"); 
       if (isVisible) {
-        buttonDiv.classList.remove("visible"); // Remove visible class
+        buttonDiv.classList.remove("visible"); 
       } else {
-        buttonDiv.classList.add("visible"); // Add visible class
+        buttonDiv.classList.add("visible"); 
       }
     }
 
     function toggleReplySection(postId) {
       const replySection = document.getElementById(`reply-section-${postId}`);
       if (replySection.style.display === "none" || replySection.style.display === "") {
-        replySection.style.display = "block"; // Show the reply section
+        replySection.style.display = "block"; 
       } else {
-        replySection.style.display = "none"; // Hide the reply section
+        replySection.style.display = "none"; 
       }
     }
 
@@ -775,6 +783,18 @@
         document.getElementById('deleteForm-' + postId).submit();
       }
     }
+
+    function toggleBackground(view) {
+              const btnBg = document.querySelector('.btn_bg');
+              
+              if (view === 'posts') {
+                  btnBg.style.marginLeft = '0px'; 
+                  btnBg.style.width = '125px';
+              } else {
+                  btnBg.style.marginLeft = '125px'; 
+                  btnBg.style.width = '162px'; 
+              }
+      }
   </script>
 </body>
 
