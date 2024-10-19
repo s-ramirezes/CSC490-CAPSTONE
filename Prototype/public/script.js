@@ -57,16 +57,35 @@ function toggleView(view) {
     if (view === 'posts') {
         postsContent.style.display = 'block';
         resourcesContent.style.display = 'none';
+        
     } else {
         postsContent.style.display = 'none';
         resourcesContent.style.display = 'block';
     }
     if (view === 'resources') {
         document.getElementById('postButton').style.display = 'none';
-        document.getElementById('addResourceButton').style.display = 'block';
     } else {
         document.getElementById('postButton').style.display = 'block';
-        document.getElementById('addResourceButton').style.display = 'none';
+    }
+}
+
+function toggleViewR(view) {
+    const postsContent = document.getElementById('feed-content');
+    const resourcesContent = document.getElementById('resources-content');
+    if (view === 'posts') {
+        postsContent.style.display = 'block';
+        resourcesContent.style.display = 'none';
+        addResourceButton.style.display = 'none';
+        
+    } else {
+        postsContent.style.display = 'none';
+        resourcesContent.style.display = 'block';
+        addResourceButton.style.display = 'block';
+    }
+    if (view === 'resources') {
+        document.getElementById('postButton').style.display = 'none';
+    } else {
+        document.getElementById('postButton').style.display = 'block';
     }
 }
 

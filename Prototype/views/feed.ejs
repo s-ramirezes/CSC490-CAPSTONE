@@ -29,35 +29,36 @@
           <img src="/images/filter.png" alt="Filter" width="40" height="40" />
         </button>
         
-          <div class="btn_group">
-              <div class="btn_bg"></div> <!-- Background for sliding effect -->
-              <div id="viewPosts" class="btn_one active"> 
-                  <button id="viewPostsButton" class="grows btn btn-secondary" onclick="toggleView('posts'); toggleBackground('posts')">
-                      View Posts
-                  </button>
-              </div>
-              <div id="viewResources" class="btn_two"> 
-                  <button id="viewResourcesButton" class="grows btn btn-secondary" onclick="toggleView('resources'); toggleBackground('resources')">
-                      View Resources
-                  </button>
-              </div>
+        <div class="btn_group">
+          <div class="btn_bg"></div> <!-- Background for sliding effect -->
           
-          </div>
-      
-        <% if (role==='teacher' && subject === catName ) { %>
-          <div>
-            <button type="button" id="addResourceButton" class="grows btn btn-secondary" style="display: none;" data-bs-toggle="modal" data-bs-target="#resourceModal">
-              Add Resource
-            </button>
-          </div>
-          <% } %>
-            <div>
-              <button type="button" id="postButton" class="grows btn btn-secondary" style="margin-right: 60px;" data-bs-toggle="modal"
-                data-bs-target="#postModal">
-                Post
-              </button>
+
+          <% if (role==='teacher' && subject === catName ) { %>
+            <div id="viewPosts" class="btn_one active">
+              <button id="viewPostsButton" class="grows btn btn-secondary" onclick="toggleViewR('posts'); toggleBackground('posts')">View Posts</button>
             </div>
+            <div id="viewResources" class="btn_two">
+              <button id="viewResourcesButton" class="grows btn btn-secondary" onclick="toggleViewR('resources'); toggleBackground('resources')">View Resources</button>
+            </div>
+        
+        <% } else { %>
+          <div id="viewPosts" class="btn_one active">
+            <button id="viewPostsButton" class="grows btn btn-secondary" onclick="toggleView('posts'); toggleBackground('posts')">View Posts</button>
+          </div>
+          <div id="viewResources" class="btn_two">
+            <button id="viewResourcesButton" class="grows btn btn-secondary" onclick="toggleView('resources'); toggleBackground('resources')">View Resources</button>
+          </div>
+        <% } %>
+        </div>
+        <div>
+          <button type="button" id="addResourceButton" class="grows btn btn-secondary" data-bs-toggle="modal" data-bs-target="#resourceModal" style="display: none;">Add Resource</button>
+        </div>
+      
+        <div>
+          <button type="button" id="postButton" class="grows btn btn-secondary" style="margin-right: 20px;" data-bs-toggle="modal" data-bs-target="#postModal">Post</button>
+        </div>
       </div>
+      
 
       <div id="feed-content" style="position: relative; top: -70px;">
         <% if (!posts || posts.length===0) { %>
@@ -785,16 +786,17 @@
     }
 
     function toggleBackground(view) {
-              const btnBg = document.querySelector('.btn_bg');
-              
-              if (view === 'posts') {
-                  btnBg.style.marginLeft = '0px'; 
-                  btnBg.style.width = '125px';
-              } else {
-                  btnBg.style.marginLeft = '125px'; 
-                  btnBg.style.width = '162px'; 
-              }
+      const btnBg = document.querySelector('.btn_bg');
+
+      if (view === 'posts') {
+        btnBg.style.marginLeft = '0px';
+        btnBg.style.width = '125px';
+      } else {
+        btnBg.style.marginLeft = '125px';
+        btnBg.style.width = '162px';
       }
+    }
+
   </script>
 </body>
 
