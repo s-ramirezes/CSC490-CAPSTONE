@@ -33,6 +33,9 @@
                 <% } %>
                 <br><br><h2><%= user.fname + " " + user.lname %></h2>
                 <h4>Role: <%= user.role %></h4>
+                <% if (user.role === 'teacher') { %>
+                    <h4>Teaches: <%= user.subject %></h4>
+                <% } %>
                 <h4>Email: <%= user.email %></h4>
                 <% if (averageRating) { %>
                     <h4>Rating: <%= averageRating %> / 10</h4>
