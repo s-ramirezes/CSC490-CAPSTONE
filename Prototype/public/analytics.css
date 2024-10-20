@@ -1,16 +1,20 @@
-.chart{
-    width: 20%;
-    height: 20%;
+#chartContainer {
+    height: 400px;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .stats{
     display: flex;
-    justify-content: center;
-    gap: 250px;
+    flex-direction: column;
+    gap: 50px;
 }
 
-.analytics-title{
-  
+.analytics-title {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .analytics-posts {
@@ -49,4 +53,17 @@
     justify-content: center;
     align-items: center;
     color: white;
+}
+
+.stats-leaderboard {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 32px;
+}
+
+.stats-card {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 32px;
 }

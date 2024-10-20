@@ -101,6 +101,33 @@ function toggleAccountView(view){
     }
 }
 
+function toggleLeaderboardView(view) {
+    const leaderboard = document.getElementById('leaderboard');
+    const reviewLeaderboard = document.getElementById('reviewLeaderboard');
+
+    if (view === 'leaderboard') {
+        leaderboard.style.display = 'block';
+        reviewLeaderboard.style.display = 'none';
+    } else {
+        leaderboard.style.display = 'none';
+        reviewLeaderboard.style.display = 'block';
+    }
+}
+
+function toggleChartView(view) {
+    const leaderboard = document.getElementById('postCountView');
+    const reviewLeaderboard = document.getElementById('reviewCountView');
+
+    if (view === 'postCountView') {
+        leaderboard.style.display = 'block';
+        reviewLeaderboard.style.display = 'none';
+    } else {
+        leaderboard.style.display = 'none';
+        reviewLeaderboard.style.display = 'block';
+    }
+}
+
+
 
 
 
