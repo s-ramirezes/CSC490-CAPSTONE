@@ -48,6 +48,12 @@
                         <p id="bio" style="border-top: 1px solid black; display: inline-block;"> <%= user.bio %> </p>
                     <% } %>
                     
+                <% } else { %>
+                    <% if (userId === user.userId) { %>
+                    <h4>About Me</h4>
+                    
+                        <p id="bio" style="border-top: 1px solid black; display: inline-block; cursor: pointer;" onclick="openBioModal()"> Click here to add bio</p>
+                    <% } %>
                 <% } %>
                 <% if (role === 'teacher' && user.role === 'student') { %>
                     <form action="/promoteToTutor" method="POST" class="ms-4">
