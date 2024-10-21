@@ -142,13 +142,14 @@
 }
 
 .backBtn {
-    background-color: grey;
-    border-radius: 20px;
-    color: white;
     height: 40px;
-    border: 3px solid #fac104;
 }
 
+.role-select, .subject-select{
+    border-radius: 20px;
+    border: 2px solid black;
+    padding: 2px;
+}
 /*               */
 
 body {
