@@ -146,7 +146,7 @@ p{
     padding-top: 7px;
     padding-bottom: 7px;
     font-size: 16pt;
-    color: black;
+    color: rgb(255, 255, 255);
     font-weight: bold;
     border-radius: 50px;
     float: right;
@@ -164,7 +164,7 @@ p{
     padding-top: 7px;
     padding-bottom: 7px;
     font-size: 16pt;
-    color: black;
+    color: rgb(255, 255, 255);
     font-weight: bold;
     border-radius: 50px;
     float: left;
