@@ -26,7 +26,7 @@
         <div class="login-content">
             <div class="titleBtn">
                 <h1 class="login-title">Sign Up</h1>
-                <button class="backBtn" onclick="window.location.href='/'">Back</button>
+                <button class="btn btn-secondary backBtn" onclick="window.location.href='/'">Back</button>
             </div>
 
                 <img class="spartan" src="../images/Spartan.png" alt="Spartan">
@@ -58,7 +58,7 @@
                         <!-- Role -->
                         <div class="role">
                             <label for="role">Role</label><br>
-                            <select id="role" name="role" required onchange="showSubjects()">
+                            <select id="role" class="role-select" name="role" required onchange="showSubjects()">
                                 <option value="student">student</option>
                                 <option value="teacher">teacher</option>
                             </select><br><br>
@@ -66,7 +66,7 @@
                         <!-- Subject -->
                         <div class="subject" id="subjectDiv" style="display:none;">
                             <label for="subject">Select Subject</label><br>
-                            <select id="subject" name="subject">
+                            <select id="subject" class="subject-select" name="subject">
                                 <% subjects.forEach(subject=> { %>
                                     <option value="<%= subject.catName %>"><%= subject.catName %></option>
                                 <% }); %>

@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <!-- Post Leaderboard Table -->
-                <div id="leaderboardContent">
+                <div id="leaderboardContent" class="table-container">
                     <table class="table table-bordered mt-3">
                         <thead>
                             <tr class="text-center">
@@ -139,7 +139,7 @@
                 </div>
             </div>
             <!-- Review Leaderboard section -->
-            <div id="reviewLeaderboard" style="display: none;">
+            <div id="reviewLeaderboard" style="display: none;" class="table-container">
                 <div id="header" class="d-flex justify-content-center align-items-center">
                     <div class="d-flex align-items-center">
                         <img src="/images/leftArrow.png" alt="Post Leaderboard" width="50"
@@ -217,7 +217,7 @@
                 <div id="userPosts">
                     <% posts.forEach(post => { %>
                     <div class="card">
-                        <h2 class="ms-3" style="text-align: left;"><%= post.catAbbr + "- " + post.title %></h2>
+                        <h2 class="ms-3" style="text-align: left;"><%= post.catAbbr + " " + post.courseId + "- " + post.title %></h2>
                         <div class="card-body">
                             <p><%= post.description %></p>
                             <div class="d-flex justify-content-end align-items-center me-4">
@@ -270,7 +270,7 @@
                     <% reviews.forEach(review => { %>
                     <div class="card">
                         <div class="d-flex justify-content-between">
-                            <h2 class="ms-3"><%= review.title %></h2>
+                            <h2 class="ms-3"><%= review.catAbbr + " " + review.courseId + "- " + review.title %></h2>
                             <h2 class="me-5">Review rating: <%= review.rating %></h2>
                         </div>
                         <div class="card-body">
@@ -308,33 +308,23 @@
                             <label for="filterUserSelect" class="form-label">Select User</label>
                             <select class="form-select" id="filterUserSelect" name="userId">
                                 <option value="All" selected>All</option>
-                                <% 
-                                    const uniqueUsers = new Set();
-                                    
-                                    posts.forEach(post => {
-                                        const userFullName = post.fname + " " + post.lname;
-                                        if (!uniqueUsers.has(userFullName)) {
-                                            uniqueUsers.add(userFullName);
-                                            %>
-                                            <option value="<%= post.userId %>">
-                                                <%= userFullName %>
-                                            </option>
-                                            <% 
-                                        }
-                                    });
-                                    
-                                    reviews.forEach(review => {
+                                <% const uniqueUsers=new Set(); posts.forEach(post=> {
+                                    const userFullName = post.fname + " " + post.lname;
+                                    if (!uniqueUsers.has(userFullName)) {
+                                    uniqueUsers.add(userFullName);
+                                    %>
+                                    <option value="<%= post.userId %>">
+                                        <%= userFullName %>
+                                    </option>
+                                    <% } }); reviews.forEach(review=> {
                                         const reviewUserFullName = review.fname + " " + review.lname;
                                         if (!uniqueUsers.has(reviewUserFullName)) {
-                                            uniqueUsers.add(reviewUserFullName);
-                                            %>
-                                            <option value="<%= review.userId %>">
-                                                <%= reviewUserFullName %>
-                                            </option>
-                                            <% 
-                                        }
-                                    });
-                                %>
+                                        uniqueUsers.add(reviewUserFullName);
+                                        %>
+                                        <option value="<%= review.userId %>">
+                                            <%= reviewUserFullName %>
+                                        </option>
+                                        <% } }); %>
                             </select>
                         </div>
                         <hr>
@@ -343,33 +333,57 @@
                             <label for="filterCourseSelect" class="form-label">Select Course</label>
                             <select class="form-select" id="filterCourseSelect" name="courseId">
                                 <option value="All" selected>All</option>
-                                <% 
-                                    const uniqueCourses = new Set();
-                                    
-                                    posts.forEach(post => {
-                                        if (!uniqueCourses.has(post.courseId)) {
-                                            uniqueCourses.add(post.courseId);
-                                            %>
-                                            <option value="<%= post.courseId %>">
-                                                <%= post.courseId %>
-                                            </option>
-                                            <% 
-                                        }
-                                    });
-                        
-                                    reviews.forEach(review => {
+                                <% const uniqueCourses=new Set(); posts.forEach(post=> {
+                                    if (!uniqueCourses.has(post.courseId)) {
+                                    uniqueCourses.add(post.courseId);
+                                    %>
+                                    <option value="<%= post.courseId %>">
+                                        <%= post.courseId %>
+                                    </option>
+                                    <% } }); reviews.forEach(review=> {
                                         if (!uniqueCourses.has(review.courseId)) {
-                                            uniqueCourses.add(review.courseId);
-                                            %>
-                                            <option value="<%= review.courseId %>">
-                                                <%= review.courseId %>
-                                            </option>
-                                            <% 
-                                        }
-                                    });
-                                %>
+                                        uniqueCourses.add(review.courseId);
+                                        %>
+                                        <option value="<%= review.courseId %>">
+                                            <%= review.courseId %>
+                                        </option>
+                                        <% } }); %>
                             </select>
                         </div>
+    
+                        <hr>
+    
+                        <div class="mb-3">
+                            <label for="filterTitleSelect" class="form-label">Select Post Title</label>
+                            <select class="form-select" id="filterTitleSelect" name="title">
+                                <option value="All" selected>All</option>
+                                <% const uniqueTitles=new Set(); posts.forEach(post=> {
+                                    if (!uniqueTitles.has(post.title)) {
+                                    uniqueTitles.add(post.title);
+                                    %>
+                                    <option value="<%= post.title %>">
+                                        <%= post.title %>
+                                    </option>
+                                    <% } }); %>
+                            </select>
+                        </div>
+    
+                        <hr>
+                        <div class="mb-3">
+                            <label for="reviewFilterTitleSelect" class="form-label">Select Review Title</label>
+                            <select class="form-select" id="reviewFilterTitleSelect" name="reviewTitle">
+                                <option value="All" selected>All</option>
+                                <% const reviewUniqueTitles=new Set(); reviews.forEach(review=> {
+                                    if (!reviewUniqueTitles.has(review.title)) {
+                                    reviewUniqueTitles.add(review.title);
+                                    %>
+                                    <option value="<%= review.title %>">
+                                        <%= review.title %>
+                                    </option>
+                                    <% } }); %>
+                            </select>
+                        </div>
+    
                         <hr>
                         <!-- mm/dd/yyyy -->
                         <div class="mb-3">
@@ -395,6 +409,19 @@
 
 
     <script>
+                function getRandomColor(length) {
+            let randomColors = [];
+            for (var i = 0; i < length; i++) {
+                var letters = '0123456789ABCDEF'.split('');
+                var color = '#';
+                for (var x = 0; x < 6; x++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                randomColors.push(color);
+            }
+            return randomColors;
+        }
+
         const courseLabels = <%- JSON.stringify(postCount.map(stat => stat.courseId)) %>;
         const postCounts = <%- JSON.stringify(postCount.map(stat => stat.postCount)) %>;
 
@@ -406,23 +433,9 @@
                     labels: courseLabels,
                     datasets: [{
                         data: postCounts,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.6)',
-                            'rgba(54, 162, 235, 0.6)',
-                            'rgba(255, 206, 86, 0.6)',
-                            'rgba(75, 192, 192, 0.6)',
-                            'rgba(153, 102, 255, 0.6)',
-                            'rgba(255, 159, 64, 0.6)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
+                        backgroundColor: getRandomColor(courseLabels.length),
+                        
+                    
                     }]
                 },
                 options: {
@@ -432,9 +445,8 @@
                             position: 'top',
                         }
                     },
-
                     onClick: (event) => {
-                        const activePoints = postPieChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
+                        const activePoints = postPieChart.getElementsAtEvent(event);
                         if (activePoints.length) {
                             const clickedIndex = activePoints[0].index;
                             const courseId = courseLabels[clickedIndex];
@@ -455,31 +467,15 @@
         const reviewCourseLabels = <%- JSON.stringify(reviewCount.map(review => review.courseId)) %>;
         const reviewCounts = <%- JSON.stringify(reviewCount.map(review => review.reviewCount)) %>;
 
-        if (courseLabels.length > 0 && postCounts.length > 0) {
+        if (reviewCourseLabels.length > 0 && reviewCounts.length > 0) {
             const ctx = document.getElementById('reviewPieChart').getContext('2d');
-            const postPieChart = new Chart(ctx, {
+            const reviewPieChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: reviewCourseLabels,
                     datasets: [{
                         data: reviewCounts,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.6)',
-                            'rgba(54, 162, 235, 0.6)',
-                            'rgba(255, 206, 86, 0.6)',
-                            'rgba(75, 192, 192, 0.6)',
-                            'rgba(153, 102, 255, 0.6)',
-                            'rgba(255, 159, 64, 0.6)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
+                        backgroundColor: getRandomColor(reviewCourseLabels.length),
                     }]
                 },
                 options: {
@@ -489,12 +485,11 @@
                             position: 'top',
                         }
                     },
-
                     onClick: (event) => {
-                        const activePoints = postPieChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
+                        const activePoints = reviewPieChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
                         if (activePoints.length) {
                             const clickedIndex = activePoints[0].index;
-                            const courseId = courseLabels[clickedIndex];
+                            const courseId = reviewCourseLabels[clickedIndex];
 
                             document.getElementById('reviewCourseIdInput').value = courseId; 
                             document.getElementById('reviewCourseForm').submit(); 

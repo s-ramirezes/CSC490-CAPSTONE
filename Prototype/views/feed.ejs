@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<<head>
   <title>Feed</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="/public/feed.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="/public/home.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" />
   <script src="/public/script.js" defer></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 </head>
 
 <body>
@@ -471,11 +473,21 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" id="title" name="title" required />
+              <select class="form-control" id="posTitle" name="title" required>
+                <option value="">Select or type a Title</option>
+                <% posts.forEach(function(post) { %>
+                  <option value="<%= post.title %>"><%= post.title %></option>
+                <% }); %>
+              </select>
             </div>
             <div class="mb-3">
               <label for="courseId" class="form-label">Course ID</label>
-              <input type="number" class="form-control" id="courseId" name="courseId" min="100" max="999" required />
+              <select class="form-control" id="postCourseId" name="courseId" required>
+                <option value="">Select or type a Course ID</option>
+                <% posts.forEach(function(post) { %>
+                  <option value="<%= post.courseId %>"><%= post.courseId %></option>
+                <% }); %>
+              </select>
             </div>
             <div class="mb-3">
               <label for="description" class="form-label">Description</label>
@@ -797,6 +809,17 @@
       }
     }
 
+    $(document).ready(function() {
+    $('#posTitle').selectize({
+      create: true, // Allows typing a new value
+      sortField: 'text' // Sorts the options
+    });
+
+    $('#postCourseId').selectize({
+      create: true, // Allows typing a new value
+      sortField: 'text'
+    });
+  });
   </script>
 </body>
 
