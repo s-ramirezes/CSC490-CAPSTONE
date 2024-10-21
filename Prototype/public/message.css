@@ -80,6 +80,10 @@ header {
     flex: 2;
 }
 
+#private-messages {
+    overflow: hidden;
+}
+
 .subjects li a{
     display: block;
     padding: 0px;

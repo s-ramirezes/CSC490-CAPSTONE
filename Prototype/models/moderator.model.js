@@ -2,7 +2,7 @@
 const db = require("../models/db-conn");
 const { getUserPost } = require("./user.model");
 function getSubjects (){
-    const sql = "SELECT * FROM category";
+    const sql = "SELECT * FROM category ORDER BY catAbbr ASC";
     return db.all(sql);
 }
 
@@ -19,7 +19,7 @@ function getMessages (convId){
 }
 
 function getReceiver(userId, convId){
-    const sql = `SELECT u.fName, u.lname, u.userId FROM conversation c
+    const sql = `SELECT u.fName, u.lname, u.userId, u.profilePic FROM conversation c
         JOIN users u
         ON u.userId = 
             CASE 

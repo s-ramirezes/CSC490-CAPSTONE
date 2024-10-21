@@ -14,7 +14,11 @@
   </header>
   <div class="split" style="display: flex; justify-content: space-between;">
     <div class="left-column">
+<<<<<<< Updated upstream
       <h1 class="grows">Welcome to Spartan Aid</h1>
+=======
+      <h1 class="grows header-grow">Welcome to Spartan Aid</h1>
+>>>>>>> Stashed changes
       <p class="grows">Find the best tutors and students to help you with your academic needs</p>
     </div>
     <div class="right-column">
@@ -119,6 +123,23 @@
     #container2 { grid-area: container2; }
     #container3 { grid-area: container3; }
     #container4 { grid-area: container4; }
+
+    .header-grow {
+      display: inline-block;
+      transform: scale(0);
+      transition: transform 1s ease-in-out;
+    }
+
+    .header-grow-loaded {
+      transform: scale(1);
+    }
+
   </style>
+  <script>
+    window.onload = function() {
+      var header = document.querySelector('.header-grow');
+      header.classList.add('header-grow-loaded');
+    };
+  </script>  
 </body>
 </html>
