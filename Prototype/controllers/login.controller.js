@@ -76,7 +76,9 @@ function loginUser(req, res, next) {
             res.render("login", { error: "Email not verified" });
         } else if (result === "incorrectPass") {
             res.render("login", { error: "Incorrect password" });
-        } 
+        } else if (result === "banned") {
+            res.render("login", { error: "User is banned" });
+        }
     } catch (err) {
         console.error("Error while logging in user ", err.message);
         next(err);

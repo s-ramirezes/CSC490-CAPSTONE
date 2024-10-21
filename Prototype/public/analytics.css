@@ -69,6 +69,10 @@
 }
 
 .table-container {
-    max-height: 200px;
+    max-height: 400px;
     overflow-y: auto;
+}
+
+.table-container::-webkit-scrollbar{
+    display: none;
 }
