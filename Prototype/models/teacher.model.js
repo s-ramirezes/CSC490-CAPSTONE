@@ -56,8 +56,9 @@ function getLeaderboard(catName, filterStartDate, filterEndDate, filterCourse, f
         params.push(filterTitle);
     }
 
-    sql += `ORDER BY postCount DESC
-    LIMIT 10`;
+    sql += ` GROUP BY u.userId
+             ORDER BY postCount DESC
+             LIMIT 10`;
 
     return db.all(sql, ...params);
 }
@@ -154,7 +155,9 @@ function getReviewLeaderboard(catName, filterStartDate, filterEndDate, filterCou
         params.push(reviewFilterTitle);
     }
 
-    sql += ` ORDER BY reviewCount DESC LIMIT 10`;
+    sql += ` GROUP BY u.userId
+             ORDER BY reviewCount DESC
+             LIMIT 10`;
 
     return db.all(sql, ...params);
 }
@@ -188,7 +191,6 @@ function getAmountofReviews(catName, filterStartDate, filterEndDate, filterCours
     }
 
     sql += ` GROUP BY r.courseId`;
-
     return db.all(sql, ...params);
 }
 

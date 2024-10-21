@@ -70,6 +70,10 @@ function getUser(email, password) {
     return "notFound";
   }
 
+  if(userFound.banned){
+    return 'banned';
+  }
+
   if (userFound.verified == 0) {
     console.log("Email not verified");
     return "notVerified";
