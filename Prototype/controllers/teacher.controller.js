@@ -21,7 +21,7 @@ function upload(req, res) {
         const title = req.body.title;
         const url = req.body.url;
         model.uploadResource(userId, catId, title, fileName, url);
-        res.redirect("/category/" + catId);
+        res.redirect(req.get('referer'));
         // const result = model.upload(req.file, req.body);
         // if (result === "success") {
         //     res.redirect("/teacher/upload");
@@ -46,7 +46,7 @@ function deleteResource(req, res) {
         });
 
         model.deleteResource(resourceId);
-        res.redirect("/category/" + catId);
+        res.redirect(req.get('referer'));
     } catch (err) {
         console.error("Error while deleting resource: " + err.message);
     }
@@ -72,25 +72,34 @@ function promoteToTutor(req, res) {
     }
 }
 
-function getAnalytics(req, res){
+function getAnalytics(req, res) {
     try {
         const userId = req.session.userId;
         const catName = req.session.subject;
 
-        const filterDate = req.params.daterange;
+        const filterStartDate = req.query.startDate;
+        const filterEndDate = req.query.endDate;
         const filterCourse = req.query.courseId;
-        const filterUser = req.params.userId;
+        const filterUser = req.query.userId;
+        const filterTitle = req.query.title;
+        const reviewFilterTitle = req.query.reviewTitle;
 
+        // for reviews
+        const reviewLeaderboard = model.getReviewLeaderboard(catName, filterStartDate, filterEndDate, filterCourse, filterUser, reviewFilterTitle);
+        const reviewCount = model.getAmountofReviews(catName, filterStartDate, filterEndDate, filterCourse, filterUser, reviewFilterTitle);
+        const reviews = model.getReviews(catName, filterStartDate, filterEndDate, filterCourse, filterUser, reviewFilterTitle);
 
-        const leaderboard = model.getLeaderboard(catName, filterDate);
-        const postCount = model.getAmountofPosts(catName, filterDate);
-        const posts = model.getPosts(catName, filterDate, filterCourse, filterUser);
-        console.log(posts);
-        res.render("teacherAnalytics", {leaderboard, postCount, posts});
+        // for posts
+        const leaderboard = model.getLeaderboard(catName, filterStartDate, filterEndDate, filterCourse, filterUser, filterTitle);
+        const postCount = model.getAmountofPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser, filterTitle);
+        const posts = model.getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser, filterTitle);
+
+        res.render("teacherAnalytics", { leaderboard, postCount, posts, reviewLeaderboard, reviewCount, reviews });
     } catch (err) {
         console.error("Error while rendering teacher analytics page: " + err.message);
     }
 }
+
 
 module.exports = {
     upload,

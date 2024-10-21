@@ -2,12 +2,18 @@ img {
    cursor: pointer; 
 }
 
+#account {
+    font-family: "Lato", sans-serif;
+    color: white;
+}
+
 /* .columns {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-inline-start: 12%;
 } */
+
 
 #account {
     align-items: center;
@@ -17,13 +23,13 @@ img {
 
 #header {
     text-align: center;
-    background-color: rgb(219, 128, 8);
+    background-color: #fac104;
     
     
 }
 
 #reviews h1 {
-    background-color: rgb(219, 128, 8);
+    background-color: #fac104;
 }
 
 #userProfile {
@@ -39,3 +45,18 @@ img {
     margin-right: 215px;
     margin-left: 215px;
 }
+
+#bio:hover {
+    color: #fac104;
+}
+
+.content-wrapper {
+    border: 4px solid #fac104; /* Border color and thickness */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside the border */
+    margin: 200px; /* Margin around the border */
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #16316b; /* Background color */
+}
+

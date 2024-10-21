@@ -80,6 +80,10 @@ header {
     flex: 2;
 }
 
+#private-messages {
+    overflow: hidden;
+}
+
 .subjects li a{
     display: block;
     padding: 0px;
@@ -144,11 +148,21 @@ header {
 .search {
     display: flex;
     justify-content: center;
+    margin-bottom: 16px;
+    /* background-color: #556B2F; */
+}
+
+.userBox {
+    /* background-color: rgb(255, 251, 215); */
+    background-color: white;
+    padding: 20px;
+    border-radius: 30px;
 }
 
 .user-card{
     border-bottom: 2px solid lightgrey;
     margin-bottom: 8px;
+    /* background-color: #07394b; */
 }
 
 .user-card-info {

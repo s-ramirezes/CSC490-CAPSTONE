@@ -57,9 +57,30 @@ function toggleView(view) {
     if (view === 'posts') {
         postsContent.style.display = 'block';
         resourcesContent.style.display = 'none';
+        
     } else {
         postsContent.style.display = 'none';
         resourcesContent.style.display = 'block';
+    }
+    if (view === 'resources') {
+        document.getElementById('postButton').style.display = 'none';
+    } else {
+        document.getElementById('postButton').style.display = 'block';
+    }
+}
+
+function toggleViewR(view) {
+    const postsContent = document.getElementById('feed-content');
+    const resourcesContent = document.getElementById('resources-content');
+    if (view === 'posts') {
+        postsContent.style.display = 'block';
+        resourcesContent.style.display = 'none';
+        addResourceButton.style.display = 'none';
+        
+    } else {
+        postsContent.style.display = 'none';
+        resourcesContent.style.display = 'block';
+        addResourceButton.style.display = 'block';
     }
     if (view === 'resources') {
         document.getElementById('postButton').style.display = 'none';
@@ -79,6 +100,33 @@ function toggleAccountView(view){
         accountReviews.style.display = 'block';
     }
 }
+
+function toggleLeaderboardView(view) {
+    const leaderboard = document.getElementById('leaderboard');
+    const reviewLeaderboard = document.getElementById('reviewLeaderboard');
+
+    if (view === 'leaderboard') {
+        leaderboard.style.display = 'block';
+        reviewLeaderboard.style.display = 'none';
+    } else {
+        leaderboard.style.display = 'none';
+        reviewLeaderboard.style.display = 'block';
+    }
+}
+
+function toggleChartView(view) {
+    const leaderboard = document.getElementById('postCountView');
+    const reviewLeaderboard = document.getElementById('reviewCountView');
+
+    if (view === 'postCountView') {
+        leaderboard.style.display = 'block';
+        reviewLeaderboard.style.display = 'none';
+    } else {
+        leaderboard.style.display = 'none';
+        reviewLeaderboard.style.display = 'block';
+    }
+}
+
 
 
 

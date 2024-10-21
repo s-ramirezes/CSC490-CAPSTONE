@@ -113,6 +113,8 @@ p{
 
 .modPageContent{
     padding: 16px;
+    margin-left: 20%;
+    margin-right: 20%;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -122,37 +124,54 @@ p{
     margin-inline-start: 12%;
 }
 
-.messages{
+.messages {
     display: block;
     margin-bottom: 60px;
     padding-bottom: 60px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    max-height: 580px;
+  }
+
+  .messages::-webkit-scrollbar {
+    display: none;
 }
+  
+  
 
 .incoming {
-    background-color: white;
+    background-color: rgb(34, 52, 193);
     background-size:cover;
-    padding: 15px;
-    font-size: 18pt;
-    color: black;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 16pt;
+    color: rgb(255, 255, 255);
     font-weight: bold;
-    border-radius: 100px;
+    border-radius: 50px;
     float: right;
     text-align: right;
     border: 2px solid black;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
 .outgoing {
-    background-color: white;
+    background-color: rgb(146, 146, 146);
     background-size:cover;
-    padding: 15px;
-    font-size: 18pt;
-    color: black;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 16pt;
+    color: rgb(255, 255, 255);
     font-weight: bold;
-    border-radius: 100px;
+    border-radius: 50px;
     float: left;
     text-align: left;
     border: 2px solid black;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
 .messageContainer{
@@ -163,13 +182,18 @@ p{
     display: flex;
     justify-content:baseline;
     padding: 10px;
-    background-color: blue;
+    /* background-color: blue; */
     z-index: 1;
     box-sizing: border-box;
     overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .messageSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20%;
     width: 92%;
     flex-shrink: 1;
 }
@@ -178,8 +202,9 @@ p{
     z-index: 99999; 
 }
 
+
 .messageBox{
-    width: 87%;
+    width: 50%;
     padding: 10px;
     font-size: 16px;
     border-radius: 20px;
@@ -189,7 +214,7 @@ p{
 .sendBtn{
     width: 12%;
     padding: 10px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 20px;
     cursor: pointer;
     flex-shrink: 0;
@@ -197,7 +222,7 @@ p{
 
 .calendarBtn, .reviewBtn, .callBtn{
     padding: 10px;
-    background-color: white;
+    background-color: rgb(205, 204, 204);
     border-radius: 20px;
     cursor: pointer;
     margin-right: 10pt;

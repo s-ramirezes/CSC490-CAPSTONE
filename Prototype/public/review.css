@@ -18,8 +18,9 @@ body {
     font-family: 'Times New Roman', Times, serif;
 }
 .header {
-    background-color: purple;
+    background-color: #16316b;
     border-radius: 20px 20px 0 0;
+    border: 3px solid #fac104;
 }
 
 .content {
@@ -31,9 +32,11 @@ body {
 }
 
 .footer {
-    background-color: purple;
+    background-color: #16316b;
     border-radius: 0 0 20px 20px;
+    border: 3px solid #fac104;
 }
+
 
 form {
     padding-top: 16px;
@@ -52,3 +55,13 @@ form {
     height: 400px;
 }
 
+input, select, textarea {
+    border: 3px solid black;  /* Darker and thicker border for all form elements */
+    border-radius: 5px;       /* Slight rounding for consistency */
+    padding: 8px;             /* Consistent padding for all input fields */
+}
+
+#courseId, #subject {
+    border: 3px solid black;  /* Ensure courseId and subject match the rest */
+    border-radius: 5px;
+}

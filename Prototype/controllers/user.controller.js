@@ -73,9 +73,11 @@ function reviewPage(req, res) {
     try {
         const revieweeId = req.body.userId2;
         const convId = req.body.convId;
+        const subjects = model.getAllSubjects();
         res.render("reviewPage", {
             revieweeId: revieweeId,
             convId: convId,
+            subjects: subjects,
         });
     } catch (err) {
         console.error("Error while rendering review page: " + err);
@@ -87,10 +89,12 @@ function makeReview(req, res) {
         const reviewerId = req.session.userId;
         const revieweeId = req.body.revieweeId;
         const title = req.body.title;
+        const subject = req.body.subject;
+        const courseId = req.body.courseId;
         const description = req.body.description;
         const rating = req.body.rating;
         const recommended = req.body.recommended;
-        const review = model.postReview(reviewerId, revieweeId, title, description, rating, recommended);
+        const review = model.postReview(reviewerId, revieweeId, title, description, rating, recommended, subject, courseId);
         const convId = req.body.convId;
         res.redirect("/modMessages?convId=" + convId);
     } catch (err) {
@@ -337,19 +341,10 @@ function filterPosts(req, res) {
         const filtereduserId = req.query.userId;
         const filteredcourseId = req.query.courseId;
         const filteredtitle = req.query.title;
-        const date = req.query.daterange;
-        console.log(date);
+        const filterStartDate = req.query.startDate;
+        const filterEndDate = req.query.endDate;
 
-        const dateRange = req.query.daterange;
-
-        if (dateRange) {
-            const [startDate, endDate] = dateRange.split(" - ");
-
-            console.log("Start Date:", startDate); // First part of the date range
-            console.log("End Date:", endDate); // Second part of the date range
-        }
-
-        const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, date);
+        const posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle, filterStartDate, filterEndDate);
 
         const category = model.getCategory(filteredcatId);
         const resources = model.getResourcesforCategory(filteredcatId);
@@ -385,6 +380,17 @@ function filterPosts(req, res) {
     }
 }
 
+function updateBio(req, res) {
+    try {
+        const userId = req.session.userId;
+        const bio = req.body.bio;
+        model.updateBio(userId, bio);
+        res.redirect("/account/" + userId);
+    } catch (err) {
+        console.error("Error while updating bio:  " + err.message);
+    }
+}
+
 
 module.exports = {
     homePage,
@@ -408,4 +414,5 @@ module.exports = {
     editPost,
     editReply,
     filterPosts,
+    updateBio
 };

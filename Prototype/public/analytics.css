@@ -1,16 +1,20 @@
-.chart{
-    width: 20%;
-    height: 20%;
+#chartContainer {
+    height: 400px;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .stats{
     display: flex;
-    justify-content: center;
-    gap: 250px;
+    flex-direction: column;
+    gap: 50px;
 }
 
-.analytics-title{
-
+.analytics-title {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .analytics-posts {
@@ -22,4 +26,49 @@
 
 .leaderboard {
 
+}
+
+.filterBtn {
+    background-color: transparent;
+    border-color: black;
+    border-radius: 10px;
+}
+
+.analytics-table {
+}
+
+.analytics-table thead th {
+    background-color: #16316b;
+    color: white;
+    text-align: center; 
+}
+
+.analytics-table thead {
+    border-radius: 20px;
+}
+
+.analyticsBtns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.stats-leaderboard {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 32px;
+}
+
+.stats-card {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 32px;
+}
+
+.table-container {
+    max-height: 200px;
+    overflow-y: auto;
 }
