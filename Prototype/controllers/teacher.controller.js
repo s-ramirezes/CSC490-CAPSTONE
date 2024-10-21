@@ -81,16 +81,18 @@ function getAnalytics(req, res) {
         const filterEndDate = req.query.endDate;
         const filterCourse = req.query.courseId;
         const filterUser = req.query.userId;
+        const filterTitle = req.query.title;
+        const reviewFilterTitle = req.query.reviewTitle;
 
         // for reviews
-        const reviewLeaderboard = model.getReviewLeaderboard(catName, filterStartDate, filterEndDate);
-        const reviewCount = model.getAmountofReviews(catName, filterStartDate, filterEndDate);
-        const reviews = model.getReviews(catName, filterStartDate, filterEndDate, filterCourse, filterUser);
+        const reviewLeaderboard = model.getReviewLeaderboard(catName, filterStartDate, filterEndDate, filterCourse, filterUser, reviewFilterTitle);
+        const reviewCount = model.getAmountofReviews(catName, filterStartDate, filterEndDate, filterCourse, filterUser, reviewFilterTitle);
+        const reviews = model.getReviews(catName, filterStartDate, filterEndDate, filterCourse, filterUser, reviewFilterTitle);
 
         // for posts
-        const leaderboard = model.getLeaderboard(catName, filterStartDate, filterEndDate);
-        const postCount = model.getAmountofPosts(catName, filterStartDate, filterEndDate);
-        const posts = model.getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser);
+        const leaderboard = model.getLeaderboard(catName, filterStartDate, filterEndDate, filterCourse, filterUser, filterTitle);
+        const postCount = model.getAmountofPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser, filterTitle);
+        const posts = model.getPosts(catName, filterStartDate, filterEndDate, filterCourse, filterUser, filterTitle);
 
         res.render("teacherAnalytics", { leaderboard, postCount, posts, reviewLeaderboard, reviewCount, reviews });
     } catch (err) {
