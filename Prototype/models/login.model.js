@@ -21,7 +21,6 @@ function createUser(email, password, fname, lname, role, subject) {
   const sql =
     "INSERT INTO users (email, password, fname, lname, role, subject) VALUES (?, ?, ?, ?, ?, ?)";
 
-  /* add here the check for the teacher and if not in file then chnage the role to student */
   if (role === "teacher") {
     const isTeacher = "SELECT * FROM teachers WHERE email = ?";
     const teacherExists = db.get(isTeacher, ...[email]);

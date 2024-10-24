@@ -1,22 +1,9 @@
 "use strict";
 const express = require("express");
 const app = express();
-// const path = require('path')
 const multer = require("multer");
-// app.use(multer().none());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
 const model = require("../models/moderator.model");
-function homePage (req,res) {
-    try {
-        const subjects = model.getSubjects();
-        req.session.subjects = subjects;
-        const role=req.session.role;
-        res.render ("modHome", {subjects : subjects, role: role});
-    } catch (err) {
-        console.error("Failed to render modHome page: "+ err.message);
-    }
-}
+
 function messages (req, res){
     try{
         const subjects= model.getSubjects();
@@ -252,7 +239,6 @@ function voiceCall (req, res){
     }
 }
 module.exports = {
-    homePage,
     messages,
     sendMessage,
     createCalendar,
@@ -269,5 +255,4 @@ module.exports = {
     addTutor,
     removeTutor,
     voiceCall,
-
 };

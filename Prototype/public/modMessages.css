@@ -41,42 +41,6 @@ p{
     display: none;
 }
 
-.topBar{
-    display: flex;
-    list-style-type: none;
-    justify-content: space-evenly;
-    margin:0;
-    height: 9%;
-    width: 90%;
-    position: fixed;
-    align-items: baseline;
-    text-align: center;
-    right: 0;
-    background-color:purple;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-}
-
-.topBar li a{
-    text-decoration: none;
-    color: black;
-    
-}
-
-.DMs{
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    height:100%;
-    width: 25%;
-    position: fixed;
-    overflow:auto;
-    text-align: center;
-    right:0;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-
 .subjects li a{
     display: block;
     padding: 0px;
@@ -88,27 +52,9 @@ p{
     background-color:rgb(164, 6, 164);
 }
 
-.DMs li{
-    display: flex;
-    border-style: solid;
-    padding: 10px;
-    margin: 5px;
-    overflow: auto;
-    text-decoration: none;
-    color:black;
-    font-size: 20pt;
-    align-items: center;
-    justify-content: space-between;
-}
 .notifications img{
     max-width: 50px;
     border-radius: 100px;
-}
-
-.DMs li p, .DMs li a{
-    font-size: 20px;
-    text-decoration: none;
-    color:black;
 }
 
 .modPageContent{
@@ -136,8 +82,6 @@ p{
     display: none;
 }
   
-  
-
 .incoming {
     background-color: rgb(34, 52, 193);
     background-size:cover;
@@ -182,7 +126,6 @@ p{
     display: flex;
     justify-content:baseline;
     padding: 10px;
-    /* background-color: blue; */
     z-index: 1;
     box-sizing: border-box;
     overflow: hidden;

@@ -9,8 +9,6 @@ function setSessionData(req, res, next) {
         res.locals.fname = req.session.fname;
         res.locals.lname = req.session.lname;
         res.locals.subject = req.session.subject;
-
-       
     }
     next();
 }

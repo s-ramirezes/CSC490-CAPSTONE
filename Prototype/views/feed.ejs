@@ -5,6 +5,7 @@
   <title>Feed</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="/images/spartanIcon.png">
   <link rel="stylesheet" type="text/css" href="/public/feed.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="/public/home.css" />
@@ -20,11 +21,9 @@
 
   <div class="mainPage">
     <div id="feed">
-      <!-- <div id="feed-header"> -->
       <h1 id="feed-header">
         <%= category.catName %> Feed
       </h1>
-      <!-- </div> -->
        
       <div class="nav-buttons">
         <button type="button" class="grows btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filterModal">
@@ -32,9 +31,7 @@
         </button>
         
         <div class="btn_group">
-          <div class="btn_bg"></div> <!-- Background for sliding effect -->
-          
-
+          <div class="btn_bg"></div>
           <% if (role==='teacher' && subject === catName ) { %>
             <div id="viewPosts" class="btn_one active">
               <button id="viewPostsButton" class="grows btn btn-secondary" onclick="toggleViewR('posts'); toggleBackground('posts')">View Posts</button>
@@ -69,7 +66,6 @@
             <% posts.forEach(post=> { %>
               <div class="grows"
                 style="position: relative; margin-bottom: 320px; display: flex; flex-direction: column;">
-                <!-- Added margin for spacing, flex, and column direction -->
                 <div id="postBox"
                   style="width: 700px; height: 300px; left: 76px; top: 107px; position: absolute; background: rgb(255, 251, 215);  border-radius: 19px; border: 3px rgb(0, 0, 0) solid; ">
                 </div>
@@ -87,13 +83,12 @@
                   </a>
                 </div>
                 <div id="dots" class="grows" style="position: absolute; left: 690px; top: 320px;"
-                  onclick="toggleButtons('buttons-<%= post.postId %>')"> <!-- Pass the specific buttons ID -->
+                  onclick="toggleButtons('buttons-<%= post.postId %>')">
                   <div class="dot"></div>
                   <div class="dot"></div>
                   <div class="dot"></div>
                 </div>
                 <div class="buttons" id="buttons-<%= post.postId %>">
-                  <!-- Initially hidden -->
                   <div class="d-flex justify-content-end align-items-center me-1">
                     <div class="d-flex align-items-center me-4">
                       <% if (userId !==post.userId) { %>
@@ -155,33 +150,21 @@
                                     <% } %>
 
                             </div>
-                            <!-- <button type="button" id="flagButton"
-                                                      class="btn btn-link p-0 border-0 me-2" onclick="toggleFlag(event)">
-                                                      <img src="/images/emptyFlag.png" alt="Flag" width="40" height="40">
-                                                  </button> -->
                     </div>
                   </div>
 
                 </div>
                 <div
-                  style="width: 600px; height: 62px; left: 150px; top: 150px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 700; word-wrap: break-word;">
+                  style="width: 600px; height: 62px; left: 150px; top: 150px; position: absolute; color: black; font-size: 22px; font-family: Inter; font-weight: 700; word-wrap: break-word;">
                   <%= post.title %>
                 </div>
                 <div
-                  style="width: 600px; height: 62px; left: 150px; top: 200px; position: absolute; color: black; font-size: 12px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+                  style="width: 600px; height: 62px; left: 150px; top: 190px; position: absolute; color: black; font-size: 17px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
                   <%= post.description %>
                 </div>
               </div>
-
-              <!-- <div class="replies"> -->
-              <!-- Dynamically calculate height -->
               <span class="reply-section flex-grow-1" id="reply-section-<%= post.postId %>" style="display: none;">
-                <% if (!post.replies || post.replies.length===0) { %>
-                  <!-- <p>No replies found, be the first to make one!</p> -->
-                  <% } else { %>
                     <% post.replies.forEach(reply=> { %>
-
-
                       <div
                         style="width: 14px; height: 80px; left: 200px; top: 85px; position: relative; display: flex; flex-direction: column; background: black; pointer-events: none; ">
                       </div>
@@ -209,17 +192,11 @@
                         <div id="postBox"
                           style="width: 459px; height: 158px; left: 140px; top: 115px; position: absolute; background: #16316b; border-radius: 19px; border: 2px #fac104 solid;">
                         </div>
-                        <!-- <div style="width: 8px; height: 8px; left: 431px; top: 165px; position: absolute; background: #0D0D0D; border-radius: 9999px"></div>
-                    <div style="width: 8px; height: 8px; left: 431px; top: 151px; position: absolute; background: #0D0D0D; border-radius: 9999px"></div>
-                    <div style="width: 8px; height: 8px; left: 431px; top: 135px; position: absolute; background: #0D0D0D; border-radius: 9999px"></div> -->
                         <div id="dots" class="grows" style="position: absolute; left: 580px; top: 190px;">
                           <div class="dot"></div>
                           <div class="dot"></div>
                           <div class="dot"></div>
                         </div>
-
-
-
                       </div>
                       <div
                         style="width: 17px; position: relative; background: black; left: 700px; top: 138px; height: 240px;">
@@ -227,13 +204,8 @@
 
 
                       <% }) %>
-                        <!-- <div style="width: 17px; height: 232px; left: 700px; top: -102px; position: relative; background: rgb(0, 0, 0)"></div> -->
                         <div class="grows"
                           style=" position: relative; margin-bottom: 100px; display: flex; flex-direction: column; ">
-
-                          <!-- <div style="width: 92px; height: 29px; left: 600px; top: 128px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
-                      <button>Comment</button>
-                    </div> -->
                           <div
                             style="width: 257px; height: 29px; left: 140px; top: 128px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
                             <form action="/reply" method="POST">
@@ -242,7 +214,7 @@
                               <input type="hidden" id="replyPostId" value="<%= post.postId %>" name="postId" />
                               <textarea
                                 style="width: 404px; height: 35px; border-radius: 80px; border: 2px black solid; resize: none; overflow: hidden; padding-left: 10px;"
-                                placeholder="Comment here" name="description"></textarea>
+                                placeholder="Comment here" name="description" maxlength="99"></textarea>
                               <div
                                 style="width: 92px; height: 29px; left: 450px; top: 0px; z-index: 2; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 400; word-wrap: break-word">
                                 <button type="submit">Comment</button>
@@ -253,93 +225,20 @@
                             style="width: 604px; height: 51px; left: 130px; top: 120px; position: absolute; background: rgb(255, 255, 255); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 65px; border: 2px black solid">
                           </div>
                         </div>
-                      <% } %>
                     </span>
-              
-
-
                 <% }) %>
-                  <% } %>
+        <% } %>
       </div>
-
-
-
-
-
-      <style>
-
-
-        #postBox:hover,
-        .grows:hover #postBox {
-          box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.25);
-        }
-
-
-        #dots {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          /* Adjust spacing as needed */
-        }
-
-        .dot {
-          width: 8px;
-          height: 8px;
-          background: #0D0D0D;
-          border-radius: 9999px;
-          z-index: 1;
-        }
-
-        .buttons {
-          width: 475px;
-          height: 50px;
-          left: 232px;
-          top: 316px;
-          position: absolute;
-          opacity: 0.8;
-          background: #D9D9D9;
-          border-radius: 11px;
-          transform: translateX(50%) scale(0);
-          /* Start off screen to the right */
-          transition: transform 1s ease;
-          /* Add transition for sliding */
-          opacity: 0;
-          /* Make it transparent initially */
-          pointer-events: none;
-          /* Prevent interaction when not visible */
-          display: flex;
-          /* Use flexbox */
-          flex-direction: column;
-          /* Stack items vertically */
-          align-items: center;
-          /* Center items horizontally */
-          justify-content: center;
-          /* transform: scale(0); */
-        }
-
-        .buttons.visible {
-          transform: translateX(0%) scale(1);
-          /* Slide into position */
-          opacity: 1;
-          /* Make it visible */
-          pointer-events: auto;
-          /* Allow interaction when visible */
-          /* transform: scale(1); */
-        }
-      </style>
-
-
 
       <!-- Resource feed -->
       <div id="resources-content" style="display: none; margin-left: 40px;">
-        <!-- <h2>Resources</h2> -->
         <% if (!resources || resources.length===0) { %>
           <br>
           <h2>No resources found, be the first to make one!</h2>
           <% } else { %>
-            <div class="resource-tiles"> <!-- Added a container for tiles -->
+            <div class="resource-tiles">
               <% resources.forEach(resource=> { %>
-                <div class="resource-tile"> <!-- Changed to a tile structure -->
+                <div class="resource-tile">
                   <h2>
                     <%= resource.title %>
                   </h2>
@@ -372,6 +271,7 @@
           <% } %>
       </div>
     </div>
+
     <!-- Message bar -->
     <div id="private-messages">
 
@@ -491,14 +391,14 @@
             </div>
             <div class="mb-3">
               <label for="description" class="form-label">Description</label>
-              <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+              <textarea class="form-control" id="description" name="description" rows="4" maxlength="310" required></textarea>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <button type="submit" class="btnLook btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
       </div>
@@ -626,7 +526,6 @@
   </div>
 
   <!-- Delete Post Modal-->
-
   <div class="modal fade" id="deletePostModal" tabindex="-1" aria-labelledby="deletePostModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -811,12 +710,12 @@
 
     $(document).ready(function() {
     $('#posTitle').selectize({
-      create: true, // Allows typing a new value
-      sortField: 'text' // Sorts the options
+      create: true,
+      sortField: 'text' 
     });
 
     $('#postCourseId').selectize({
-      create: true, // Allows typing a new value
+      create: true, 
       sortField: 'text'
     });
   });

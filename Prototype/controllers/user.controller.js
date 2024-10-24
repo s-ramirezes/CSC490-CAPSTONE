@@ -4,9 +4,6 @@ const express = require("express");
 const app = express();
 const path = require('path')
 const multer = require("multer");
-// app.use(multer().none());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
 
 const model = require("../models/user.model");
 const { deserialize } = require("v8");
@@ -65,7 +62,7 @@ function feedPage(req, res) {
             catName: category.catName
         });
     } catch (err) {
-        // console.error("Error while rendering feed page: " + err.message);
+        console.error("Error while rendering feed page: " + err.message);
     }
 }
 
@@ -185,7 +182,7 @@ function likePost(req, res) {
         model.likePost(userId, postId);
 
     } catch (err) {
-        // console.error("Error while rendering feed page: " + err.message);
+        console.error("Error while liking post: " + err.message);
     }
 }
 
@@ -319,20 +316,6 @@ function editReply(req, res) {
         console.error("Error while editing reply:  " + err.message);
     }
 }
-
-// date still needed
-// function filterPosts(req, res){
-//     try{
-//         const filteredcatId = req.body.catId;
-//         const filtereduserId = req.body.userId;
-//         const filteredcourseId = req.body.courseId;
-//         const filteredtitle = req.body.title;
-//         const Posts = model.filterPosts(filteredcatId, filtereduserId, filteredcourseId, filteredtitle);
-//         res.redirect("/category/" + catId, {filteredPosts});
-//     } catch (err) {
-//         console.error("Error while filtering posts:  " + err.message);
-//     }
-// }
 
 function filterPosts(req, res) {
     try {

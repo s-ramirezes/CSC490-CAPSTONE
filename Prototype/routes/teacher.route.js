@@ -8,7 +8,6 @@ const teacherController = require("../controllers/teacher.controller");
 const { setSessionData, isLoggedIn } = require("./setSessionData");
 
 module.exports = function (fileUpload) {
-    
 
     router.post("/upload", fileUpload.single("file"), teacherController.upload);
     router.post("/deleteResource", teacherController.deleteResource);
@@ -16,8 +15,6 @@ module.exports = function (fileUpload) {
 
     router.get("/resources", teacherController.teacherResourcePage);
     router.get("/analytics", teacherController.getAnalytics);
-
-
 
     return router; 
 }

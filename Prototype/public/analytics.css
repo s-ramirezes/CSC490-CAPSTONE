@@ -24,17 +24,10 @@
     margin-left: auto; 
 }
 
-.leaderboard {
-
-}
-
 .filterBtn {
     background-color: transparent;
     border-color: black;
     border-radius: 10px;
-}
-
-.analytics-table {
 }
 
 .analytics-table thead th {

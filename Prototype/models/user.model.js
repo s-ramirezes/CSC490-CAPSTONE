@@ -6,7 +6,7 @@ function getPosts() {
     const sql = "SELECT * FROM posts";
     return db.all(sql);
 }
-// edited
+
 function getSubjectPosts(catId) {
     const sql = `
         SELECT posts.*, users.email, users.profilePic, users.fname, users.lname 
@@ -135,7 +135,7 @@ function getConversations(userId) {
     const params = [userId, userId, userId, userId];
     return db.all(sql, ...params);
 }
-/* check for existing conversation first and ultimately should send back a convId */
+
 function createConv(userId1, userId2) {
     const checkSql = ` SELECT convId FROM conversation WHERE (userId1 = ? AND userId2 = ?) OR (userId1 = ? AND userId2 = ?) `;
     const checkParams = [userId1, userId2, userId2, userId1];
@@ -247,16 +247,6 @@ function updateBio(userId, bio){
     const params = [bio, userId];
     return db.run(sql, params);
 }
-
-// function getUnreadMessages(convId, userId) {
-//     const sql = `
-//         SELECT m.messageId, m.description, ms.isRead
-//         FROM messageStatus ms
-//         JOIN messages m ON ms.messageId = m.messageId
-//         WHERE m.convId = ? AND ms.isRead = 0 AND ms.userId = ?;
-//     `;
-//     return db.all(sql, convId, userId);
-// }
 
 module.exports = {
     getPosts,

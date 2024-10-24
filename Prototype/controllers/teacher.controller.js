@@ -5,13 +5,8 @@ const app = express();
 const path = require('path')
 const fs = require("fs");
 const multer = require("multer");
-// app.use(multer().none());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
 
 const model = require("../models/teacher.model");
-
-
 
 function upload(req, res) {
     try {
@@ -22,12 +17,6 @@ function upload(req, res) {
         const url = req.body.url;
         model.uploadResource(userId, catId, title, fileName, url);
         res.redirect(req.get('referer'));
-        // const result = model.upload(req.file, req.body);
-        // if (result === "success") {
-        //     res.redirect("/teacher/upload");
-        // } else {
-        //     res.redirect("/teacher/upload");
-        // }
     } catch (err) {
         console.error("Error while uploading file: " + err.message);
     }

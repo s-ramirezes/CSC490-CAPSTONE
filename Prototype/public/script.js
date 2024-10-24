@@ -7,18 +7,8 @@ function toggleFlag() {
     } else {
         flagImage.src = '/images/emptyFlag.png';
     }
-
-    // fetch('/flag', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ userId: userId, postId: postId }),
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
 }
+
 function toggleLike(event) {
     const likeButton = event.currentTarget;
     const likeImage = likeButton.querySelector('img');
@@ -126,10 +116,3 @@ function toggleChartView(view) {
         reviewLeaderboard.style.display = 'block';
     }
 }
-
-
-
-
-
-
-// Add this script at the end of your <body> section

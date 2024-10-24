@@ -28,7 +28,6 @@ function logout(req, res) {
 
 function Signup(req, res) {
     try {
-        // const error = null;
         const subjects = model.getSubjectNames();
         res.render("signup", {subjects});
     } catch (err) {
