@@ -1,22 +1,3 @@
-/* a:link {
-    color: #1ac5d1;
-    text-decoration: none;
-} */
-
-/* body {
-    margin: 0;
-    padding: 0;
-} */
-
-/* header {
-    height: 120px; 
-    margin-bottom: 20px;
-} */
-
-/* main {
-    margin-top: 60px;
-} */
-
 .mainPage {
     display: flex;
     justify-content: space-between;
@@ -35,17 +16,13 @@
 
 #feed, #private-messages {
     flex: 1;
-    
-    /* margin-inline-start: 12%; */
 }
 
 #feed {
     flex: 2;
     margin-left: 200px;
-    margin-right: 100px; /* editted this last */
-    /* height: 1000px; Set a fixed height for the feed */
-    
-    overflow-y: auto; /* Enable vertical scrolling */
+    margin-right: 100px;
+    overflow-y: auto;
 }
 
 #feed::-webkit-scrollbar,
@@ -55,11 +32,8 @@
 
 #private-messages {
     margin-right: 20px;
-    height: 1500px; /* Set a fixed height for private messages */
-    overflow-y: auto; /* Enable vertical scrolling */
-    /* border-left: 12px solid #0f2044; 
-    border-radius: 10px; */
-    /* box-shadow: inset 0 0 0 2px yellow; */
+    height: 1500px;
+    overflow-y: auto;
 }
 
 #comments {
@@ -69,7 +43,6 @@
 }
 
 #feed-header, #pm-header {
-   /* display: inline-flex; */
    align-items: center;
    background: #16316b;
    border: 3px solid #fac104;
@@ -126,31 +99,27 @@
 
 #viewPosts {
     float: left;
-    /* background-color: wheat; */
     padding: 10px;
 }
 
 #viewResources {
     float: right;
-    /* background-color: wheat; */
     padding: 10px;
 }
 
-/* Add this to your existing CSS file */
 
 .btn_bg {
-    background-color: #fac104; /* Background color for the sliding effect */
-    height: 60px; /* Height of the background */
-    width: 125px; /* Width for the active button */
-    position: absolute; /* Positioning for sliding effect */
-    top: 0; /* Align to the top of the buttons */
-    transition: margin-left 0.5s ease, width 0.5s ease; /* Smooth transition */
-    border-radius: 5px; /* Rounded corners */
+    background-color: #fac104;
+    height: 60px;
+    width: 125px;
+    position: absolute;
+    top: 0;
+    transition: margin-left 0.5s ease, width 0.5s ease;
+    border-radius: 5px;
 }
 
-
 .btn_group {
-    position: relative; /* Ensure the background is positioned relative to this */
+    position: relative;
 }
 
 .slider {
@@ -158,7 +127,7 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: 100px; /* Adjust width to fit the button */
+    width: 100px;
     background: black;
     border-radius: 5px;
     transition: transform 0.3s ease;
@@ -172,30 +141,74 @@
 .resource-tiles {
     display: flex;
     margin-top: 30px;
-    flex-wrap: wrap; /* Allow tiles to wrap to the next line */
-    gap: 10px; /* Space between tiles */
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .resource-tile {
-    background: #16316b; /* Light background for tiles */
-    border: 1px solid #dee2e6; /* Border for tiles */
-    border-radius: 8px; /* Rounded corners */
-    padding: 16px; /* Padding inside tiles */
-    width: auto; /* Adjust width for 4 tiles per row */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: transform 0.2s; /* Smooth scaling on hover */
+    background: #16316b;
+    border: 1px solid #dee2e6;
+    border-radius: 8px; 
+    padding: 16px; 
+    width: auto; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s;
     margin-left: 30px;
     color: white;
   }
 
   .resource-tile a:link {
-    color: white; /* White text color */
+    color: white;
   }
 
 .resource-tile a:hover {
-    color: #fac104; /* Yellow text color on hover */
+    color: #fac104;
 }
 
-  .resource-tile:hover {
-    transform: scale(1.05); /* Scale up on hover */
+.resource-tile:hover {
+    transform: scale(1.05);
+}
+
+#postBox:hover,
+.grows:hover #postBox {
+    box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+#dots {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #0D0D0D;
+    border-radius: 9999px;
+    z-index: 1;
+}
+
+.buttons {
+    width: 475px;
+    height: 50px;
+    left: 232px;
+    top: 316px;
+    position: absolute;
+    opacity: 0.8;
+    background: #D9D9D9;
+    border-radius: 11px;
+    transform: translateX(50%) scale(0);
+    transition: transform 1s ease;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons.visible {
+    transform: translateX(0%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}

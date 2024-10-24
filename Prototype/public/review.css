@@ -37,7 +37,6 @@ body {
     border: 3px solid #fac104;
 }
 
-
 form {
     padding-top: 16px;
     padding-top: 16px;
@@ -56,12 +55,12 @@ form {
 }
 
 input, select, textarea {
-    border: 3px solid black;  /* Darker and thicker border for all form elements */
-    border-radius: 5px;       /* Slight rounding for consistency */
-    padding: 8px;             /* Consistent padding for all input fields */
+    border: 3px solid black; 
+    border-radius: 5px;     
+    padding: 8px;             
 }
 
 #courseId, #subject {
-    border: 3px solid black;  /* Ensure courseId and subject match the rest */
+    border: 3px solid black;
     border-radius: 5px;
 }

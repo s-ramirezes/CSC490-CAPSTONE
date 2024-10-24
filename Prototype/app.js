@@ -37,19 +37,12 @@ const uploadStorage = multer.diskStorage({
 });
 const upload = multer({ storage: uploadStorage });
 
-//^^^^^^for storing post images and file resources
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-
-
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));
 app.set('partials', path.join(__dirname, 'views', 'partials'));
-
-
 
 const moderatorRouter = require("./routes/moderator.route");
 const userRouter = require("./routes/user.route")(imageUpload);
@@ -92,17 +85,13 @@ io.on('connection', (socket) => {
 
 app.use("/public", express.static('public'));
 app.use("/images", express.static('images'));
-
 app.use("/", loginRouter);
 app.use(setSessionData);
 app.use(isLoggedIn);
-
-
 app.use("/", moderatorRouter);
 app.use("/", userRouter);
 app.use("/", teacherRouter);
 app.use("/", tutorRouter);
-
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules/socket.io/client-dist')));
 
 const PORT = process.env.PORT || 8000;

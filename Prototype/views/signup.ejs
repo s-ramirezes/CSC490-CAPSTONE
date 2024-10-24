@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/images/spartanIcon.png">
     <link rel="stylesheet" href="../public/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Sign up</title>
@@ -20,7 +21,7 @@
         <video src="https://static.uncg.edu/web-assets/homepage-assets/sept_oct_2024_web_topper.mp4" autoplay muted loop></video>
     </div>
 
-    <!-- signup Form -->
+    <!-- Signup Form -->
     <div class="split signup-info">
 
         <div class="login-content">
@@ -34,28 +35,23 @@
 
                 <form action="/signupinfo" method="post" onsubmit="return emailValidation()">
                     <div class="login-form">
-                        <!-- email -->
                         <div class="email">
                             <label for="email">Email</label><br>
                             <input type="text" id="email" name="email" placeholder="Enter the email" required><br>
                         </div>
-                        <!-- password -->
                         <div class="password">
                             <label for="password">Password</label><br>
                             <input type="password" id="password" name="password" placeholder="Enter the password"
                                 required><br><br>
                         </div>
-                        <!-- First Name -->
                         <div class="fname">
                             <label for="fname">First Name</label><br>
                             <input type="text" id="fname" name="fname" placeholder="Enter first name" required><br><br>
                         </div>
-                        <!-- Last Name -->
                         <div class="lname">
                             <label for="lname">Last Name</label><br>
                             <input type="text" id="lname" name="lname" placeholder="Enter last name" required><br><br>
                         </div>
-                        <!-- Role -->
                         <div class="role">
                             <label for="role">Role</label><br>
                             <select id="role" class="role-select" name="role" required onchange="showSubjects()">
@@ -63,7 +59,6 @@
                                 <option value="teacher">teacher</option>
                             </select><br><br>
                         </div>
-                        <!-- Subject -->
                         <div class="subject" id="subjectDiv" style="display:none;">
                             <label for="subject">Select Subject</label><br>
                             <select id="subject" class="subject-select" name="subject">
