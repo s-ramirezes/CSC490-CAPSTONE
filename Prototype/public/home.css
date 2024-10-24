@@ -279,6 +279,14 @@ body {
     color: #fac104;
 }
 
+#search {
+    background-color: #16316b;
+    resize: none;
+    color: white;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
 body {
     background-color: #818181;
 }

@@ -14,6 +14,8 @@
   <ul class="b">
     <li style="text-align: left; margin-left: 0; margin-right: 20px; list-style-type: none;"><h2 style="color: #fac104; background-color: #0b1835;">Subjects</h2></li>
     <div class="sidebar-columns">
+      <!-- <h3 style="color: white;">Search: </h3> -->
+      <textarea id="search" rows="1" cols="20" placeholder="Search..."></textarea>
       <% subjects.forEach(function(subject) { %>
         <li><a class="subjectLink" href="/category/<%= subject.catId %>" title="<%= subject.catName %>"><%= subject.catAbbr %></a></li>
       <% }); %>
@@ -21,10 +23,30 @@
   </ul>
 </div>
 
+
 <!-- Overlay for dimming effect -->
 <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
 
 <script>
+  document.getElementById('search').addEventListener('keyup', function() {
+  var input = this.value.toLowerCase();
+  var items = document.querySelectorAll('.subjectLink');
+  
+  items.forEach(function(item) {
+    var catAbbr = item.textContent.toLowerCase();
+    var catName = item.title.toLowerCase();
+    
+    if (catAbbr.includes(input) || catName.includes(input)) {
+      item.parentElement.style.display = '';
+    } else {
+      item.parentElement.style.display = 'none';
+    }
+  });
+});
+
+
+
+
 let isOpen = false; // Track the state of the sidebar
 
 function toggleNav() {
