@@ -1,5 +1,9 @@
 /* Login styling */
 
+html {
+    zoom: 0.75;
+}
+
 .filler {
     right: 0;
     background-color: #0f2044;
