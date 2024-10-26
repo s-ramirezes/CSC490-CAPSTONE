@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { setSessionData, isLoggedIn } = require("./setSessionData");
+// const { isMod } = require("./setSessionData");
 
 const moderatorController = require("../controllers/moderator.controller");
 

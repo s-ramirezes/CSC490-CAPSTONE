@@ -23,4 +23,20 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-module.exports = { setSessionData, isLoggedIn };
+function isTeacher(req, res, next) {
+    if(req.session.role === 'teacher'){
+        return next();
+    } else {
+        res.redirect("/home")
+    }
+}
+
+function isMod(req, res, next) {
+    if(req.session.role === 'moderator'){
+        return next();
+    } else {
+        res.redirect("/home")
+    }
+}
+
+module.exports = { setSessionData, isLoggedIn, isMod, isTeacher};
