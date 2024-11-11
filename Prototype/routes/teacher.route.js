@@ -12,6 +12,8 @@ module.exports = function (fileUpload) {
     router.post("/upload", isTeacher, fileUpload.single("file"), teacherController.upload);
     router.post("/deleteResource", isTeacher, teacherController.deleteResource);
     router.post("/promoteToTutor", isTeacher, teacherController.promoteToTutor);
+    router.post("/addCertification", isTeacher, teacherController.addCertification);
+    router.post("/demoteToStudent", isTeacher, teacherController.demoteToStudent);
 
     router.get("/resources", isTeacher, teacherController.teacherResourcePage);
     router.get("/analytics", isTeacher, teacherController.getAnalytics);
