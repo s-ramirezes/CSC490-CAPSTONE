@@ -14,7 +14,7 @@
         <%- include('partials/navbar') %>
     </header>
     <div class="modPageContent">
-        <h1>Tutors</h1>
+        <h1 class="subHeader">Tutors</h1>
         <div class="flaggedUserList">
             <% if (!tutors || tutors.length===0) { %>
                 <p>There are no tutors.</p>
@@ -43,7 +43,7 @@
                 </table>
             <%} %> 
         </div>
-        <h1>Reviews</h1>
+        <h1 class="subHeader">Reviews</h1>
         <div class="allUserList">
             <% if (!reviews || reviews.length===0) { %>
                 <p>There are no reviews.</p>

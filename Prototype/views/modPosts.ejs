@@ -14,7 +14,7 @@
         <%- include('partials/navbar') %>
     </header>
     <div class="modPageContent">
-        <h1>Flagged Posts</h1>
+        <h1 class="subHeader">Flagged Posts</h1>
         <div class="flaggedUserList">
             <% if (!flaggedPosts || flaggedPosts.length===0) { %>
                 <p>There are no flagged posts.</p>
@@ -53,7 +53,7 @@
                 </table>
             <%} %> 
         </div>
-        <h1>All Posts</h1>
+        <h1 class="subHeader">All Posts</h1>
         <div class="allUserList">
             <% if (!allPosts || allPosts.length===0) { %>
                 <p>There are no posts.</p>
