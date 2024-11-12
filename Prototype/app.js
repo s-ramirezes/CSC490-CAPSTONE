@@ -56,7 +56,6 @@ io.on('connection', (socket) => {
 
   socket.on('registerUser', (userId) => {
     userSocketMap[userId] = socket.id;
-    console.log(`User ${userId} registered with socket ID: ${socket.id}`);
   });
 
   socket.on('signal', (data) => {
@@ -66,14 +65,12 @@ io.on('connection', (socket) => {
           signal: data.signal,
           fromUserId: data.fromUserId
         });
-          console.log('Signal relayed from:', data.fromUserId, 'to:', data.toUserId);
         } else {
           console.error('Target user not connected:', data.toUserId);
         }
     });
 
     socket.on('disconnect', () => {
-        console.log('Client disconnected:', socket.id);
         for (const userId in userSocketMap) {
             if (userSocketMap[userId] === socket.id) {
                 delete userSocketMap[userId];

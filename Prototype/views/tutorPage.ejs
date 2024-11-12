@@ -15,21 +15,21 @@
     </header>
     <div class="modPageContent">
         <div class="userName">
-            <h1> <%=user.fname%> <%=user.lname %></h1>
+            <h1 class="subHeader"> <%=user.fname%> <%=user.lname %></h1>
             <% if (user.role == 'tutor'){ %>
                 <form action="/removeTutor?userId=<%= user.userId %>" method="POST">
-                    <button class="flagUser">
+                    <button class="flagUser2">
                         Remove Tutor</button>
                 </form>
             <% } else { %>
                 <form action="/addTutor?userId=<%= user.userId %>" method="POST">
-                    <button class="flagUser">
+                    <button class="flagUser2">
                         Add Tutor</button>
                 </form>
             <% } %>
         </div>
         
-        <h1>Posts</h1>
+        <h1 class="subHeader">Posts</h1>
         <div class="flaggedUserList">
             <% if (!userPosts || userPosts.length===0) { %>
                 <div class="flaggedUser">
@@ -50,7 +50,7 @@
                 </table>
             <% } %>
         </div>
-        <h1>Replies</h1>
+        <h1 class="subHeader">Replies</h1>
         <div class="flaggedUserList">
             <% if (!userReplies || userReplies.length===0) { %>
                 <div class="flaggedUser">

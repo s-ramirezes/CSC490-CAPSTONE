@@ -14,7 +14,7 @@
         <%- include('partials/navbar') %>
     </header>
     <div class="modPageContent">
-        <h1>Flagged Users</h1>
+        <h1 class="subHeader">Flagged Users</h1>
         <div class="flaggedUserList">
             <% if (!flaggedUsers || flaggedUsers.length===0) { %>
                 <p>There are no flagged users.</p>
@@ -49,7 +49,7 @@
                 </table>
             <%} %> 
         </div>
-        <h1>All Users</h1>
+        <h1 class="subHeader">All Users</h1>
         <div class="allUserList">
             <% if (!allUsers || allUsers.length===0) { %>
                 <p>There are no users.</p>
