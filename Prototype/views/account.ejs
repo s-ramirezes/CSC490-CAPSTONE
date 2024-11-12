@@ -35,6 +35,9 @@
                 <% if (user.role === 'teacher') { %>
                     <h4>Teaches: <%= user.subject %></h4>
                 <% } %>
+                <% if (user.role === 'tutor') { %>
+                    <h4>Certification: <%= user.subject %> </h4>
+                <% } %>
                 <h4>Email: <%= user.email %></h4>
                 <% if (averageRating) { %>
                     <h4>Rating: <%= averageRating %> / 10</h4>
@@ -57,7 +60,21 @@
                 <% if (role === 'teacher' && user.role === 'student') { %>
                     <form action="/promoteToTutor" method="POST" class="ms-4">
                         <input type="hidden" name="userId" value="<%= user.userId %>">
+                        <input type="hidden" name="subject" value="<%= subject %>">
                         <button type="submit" class="btn btn-primary"> Promote to Tutor </button>
+                    </form>
+                    <br>
+                <% } %>
+                <% if (role === 'teacher' && user.role === 'tutor') { %>
+                    <form action="/demoteToStudent" method="POST" class="ms-4">
+                        <input type="hidden" name="userId" value="<%= user.userId %>">
+                        <button type="submit" class="btn btn-primary"> Demote to Student </button>
+                    </form>
+                    <br>
+                    <form action="/addCertification" method="POST" class="ms-4">
+                        <input type="hidden" name="userId" value="<%= user.userId %>">
+                        <input type="hidden" name="subject" value="<%= subject %>">
+                        <button type="submit" class="btn btn-primary"> Add Certification </button>
                     </form>
                     <br>
                 <% } %>

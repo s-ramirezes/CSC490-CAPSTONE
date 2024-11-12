@@ -5,16 +5,18 @@ const router = express.Router();
 
 const teacherController = require("../controllers/teacher.controller");
 
-const { setSessionData, isLoggedIn } = require("./setSessionData");
+const { isTeacher } = require("./setSessionData");
 
 module.exports = function (fileUpload) {
 
-    router.post("/upload", fileUpload.single("file"), teacherController.upload);
-    router.post("/deleteResource", teacherController.deleteResource);
-    router.post("/promoteToTutor", teacherController.promoteToTutor);
+    router.post("/upload", isTeacher, fileUpload.single("file"), teacherController.upload);
+    router.post("/deleteResource", isTeacher, teacherController.deleteResource);
+    router.post("/promoteToTutor", isTeacher, teacherController.promoteToTutor);
+    router.post("/addCertification", isTeacher, teacherController.addCertification);
+    router.post("/demoteToStudent", isTeacher, teacherController.demoteToStudent);
 
-    router.get("/resources", teacherController.teacherResourcePage);
-    router.get("/analytics", teacherController.getAnalytics);
+    router.get("/resources", isTeacher, teacherController.teacherResourcePage);
+    router.get("/analytics", isTeacher, teacherController.getAnalytics);
 
     return router; 
 }

@@ -54,10 +54,33 @@ function teacherResourcePage(req, res) {
 function promoteToTutor(req, res) {
     try {
         const userId = req.body.userId;
-        model.promoteToTutor(userId);
+        const subject = req.body.subject;
+        model.promoteToTutor(userId, subject);
         res.redirect("/home");
     } catch (err) {
         console.error("Error while promoting to tutor: " + err.message);
+    }
+}
+
+function addCertification(req, res) {
+    try {
+        const userId = req.body.userId;
+        const subject = req.body.subject;
+        model.addCertification(userId, subject);
+        res.redirect("/home");
+    }
+    catch (err) {
+        console.error("Error while adding certification: " + err.message);
+    }
+}
+
+function demoteToStudent(req, res) {
+    try {
+        const userId = req.body.userId;
+        model.demoteToStudent(userId);
+        res.redirect("/home");
+    } catch (err) {
+        console.error("Error while demoting to student: " + err.message);
     }
 }
 
@@ -95,5 +118,7 @@ module.exports = {
     deleteResource,
     teacherResourcePage,
     promoteToTutor,
+    addCertification,
+    demoteToStudent,
     getAnalytics,
 };

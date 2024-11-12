@@ -69,3 +69,11 @@
 .table-container::-webkit-scrollbar{
     display: none;
 }
+
+th, td {
+    border: 2px solid black;
+  }
+
+tr:hover {
+    background-color: #fac104;
+}

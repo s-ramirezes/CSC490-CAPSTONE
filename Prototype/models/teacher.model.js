@@ -22,11 +22,20 @@ function getTeacherResources(userId) {
     return db.all(sql, userId);
 }
 
-function promoteToTutor(userId) {
-    const sql = "UPDATE users SET role = 'tutor' WHERE userId = ?";
-    return db.run(sql, userId);
+function promoteToTutor(userId, subject) {
+    const sql = "UPDATE users SET role = 'tutor', subject = ? WHERE userId = ?";
+    return db.run(sql, [subject, userId]);
 }
 
+function addCertification(userId, subject) {
+    const sql = "UPDATE users SET role = 'tutor', subject = CONCAT(subject, ', ', ?) WHERE userId = ?";
+    return db.run(sql, [subject, userId]);
+}
+
+function demoteToStudent(userId) {
+    const sql = "UPDATE users SET role = 'student', subject = NULL WHERE userId = ?";
+    return db.run(sql, userId);
+}
 
 function getLeaderboard(catName, filterStartDate, filterEndDate, filterCourse, filterUser, filterTitle) {
     let sql = `
@@ -230,6 +239,8 @@ module.exports = {
     deleteResource,
     getTeacherResources,
     promoteToTutor,
+    addCertification,
+    demoteToStudent,
     getLeaderboard,
     getAmountofPosts,
     getPosts,

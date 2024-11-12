@@ -156,3 +156,12 @@ header {
     background-color: #FFFACD;
     color: #556B2F;
 }
+
+.messageBtn {
+    border-radius: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: 2px solid #fac104;
+    color: white;
+    background-color: #16316b;
+}
