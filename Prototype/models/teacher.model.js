@@ -28,6 +28,13 @@ function promoteToTutor(userId, subject) {
 }
 
 function addCertification(userId, subject) {
+    const subjectCheck = "SELECT subject From users where userId = ?";
+    const user = db.get(subjectCheck, userId);
+
+    if (user && user.subject && user.subject.split(', ').includes(subject)) {
+        return;
+    }
+
     const sql = "UPDATE users SET role = 'tutor', subject = CONCAT(subject, ', ', ?) WHERE userId = ?";
     return db.run(sql, [subject, userId]);
 }
