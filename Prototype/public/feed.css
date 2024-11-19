@@ -14,16 +14,6 @@
     padding: 10px;
 }
 
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.852);
-    z-index: 1040;
-}
-
 #feed, #private-messages {
     flex: 1;
 }
